@@ -222,16 +222,16 @@ namespace DVLD__Business_Tier.Services
         }
 
         //Update 
-        public static bool UpdateUser(string newHashedPassword,bool isActive)
+        public static bool UpdateUserInfo(string newHashedPassword,bool isActive)
         {
-            if (newHashedPassword != string.Empty)
+            if (newHashedPassword == string.Empty)
             {
                 throw new Exception("New Password Cannot be Empty");
             }
+
             try
             {
-                if(
-                UserService.UpdateUser(newHashedPassword,isActive))
+                if(UserRepository.UpdateUser(newHashedPassword,isActive))
                 {
                     return true;
                 }

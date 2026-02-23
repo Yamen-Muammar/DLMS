@@ -39,7 +39,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
             try
             {
-                if (UserService.UpdateUser(hashedNewPassword,true))
+                if (UserService.UpdateUserInfo(hashedNewPassword,true))
                 {
                     MessageBox.Show("Password updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -58,7 +58,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
         private void tbConfirmationNewPassword_Leave(object sender, EventArgs e)
         {
-            if (tbConfirmationNewPassword.Text != tbCurrentPassword.Text)
+            if (tbConfirmationNewPassword.Text != tbNewPassword.Text)
             {
                 errorProvider1.SetError(tbConfirmationNewPassword, "New password and confirmation Does not match.");
             }

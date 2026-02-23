@@ -191,8 +191,8 @@ namespace DVLD__Data_Tier.Repositories
                 string query = @"UPDATE Users 
                             SET 
                                 HashedPassword = @hashedPassword,
-                                isActive = @isActive,
-                            WHERE UserID = @userID";
+                                isActive = @isActive
+                            WHERE UserID = @userID;";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {

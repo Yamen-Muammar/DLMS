@@ -92,7 +92,9 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmChangePassword frmChangePassword = new frmChangePassword();
+            frmChangePassword.ShowDialog();
+            _RefreshData();
         }
 
         private void sendEmailToolStripMenuItem_Click(object sender, EventArgs e)

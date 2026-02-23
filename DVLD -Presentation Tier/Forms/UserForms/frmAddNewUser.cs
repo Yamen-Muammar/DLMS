@@ -47,8 +47,9 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
                 int NewSavedUserID = UserService.AddNewUser(user);
                 if (NewSavedUserID != -1)
                 {
+                    lbNewID.Text = NewSavedUserID.ToString();
                     MessageBox.Show("User saved successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
+                    
                 }
             }
             catch (Exception ex)
