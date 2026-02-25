@@ -48,6 +48,16 @@ namespace DVLD__Presentation_Tier
             
             frmChangePassword frmChangePassword = new frmChangePassword();
             frmChangePassword.ShowDialog();
+        }        
+
+        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -103,6 +103,18 @@
     <Compile Include="Controls\UserControls\ctrlUsersList.Designer.cs">
       <DependentUpon>ctrlUsersList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Application Types Forms\frmManageApplicationTypes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Application Types Forms\frmManageApplicationTypes.Designer.cs">
+      <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Application Types Forms\frmUpdateApplicationTypeInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Application Types Forms\frmUpdateApplicationTypeInfo.Designer.cs">
+      <DependentUpon>frmUpdateApplicationTypeInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserForms\frmAddNewUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UserControls\ctrlUsersList.resx">
       <DependentUpon>ctrlUsersList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Application Types Forms\frmManageApplicationTypes.resx">
+      <DependentUpon>frmManageApplicationTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserForms\frmAddNewUser.resx">
       <DependentUpon>frmAddNewUser.cs</DependentUpon>
