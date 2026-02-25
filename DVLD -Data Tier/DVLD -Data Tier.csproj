@@ -46,6 +46,7 @@
     <Compile Include="Repositories\ApplicationsTypesRepository.cs" />
     <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
+    <Compile Include="Repositories\TestTypesRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
