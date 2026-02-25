@@ -12,9 +12,15 @@ namespace DVLD__Presentation_Tier.Forms.Application_Types_Forms
 {
     public partial class frmUpdateApplicationTypeInfo : Form
     {
+        private int _applicationTypeID;
         public frmUpdateApplicationTypeInfo()
         {
             InitializeComponent();
+        }
+        public frmUpdateApplicationTypeInfo(int applicationTypeID)
+        {
+            InitializeComponent();
+            _applicationTypeID = applicationTypeID;
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DVLD__Presentation_Tier.Forms;
 using DVLD__Presentation_Tier.Forms.UserForms;
 using DVLD__Core;
+using DVLD__Presentation_Tier.Forms.Application_Types_Forms;
 namespace DVLD__Presentation_Tier
 {
     public partial class MainForm : Form
@@ -52,7 +53,8 @@ namespace DVLD__Presentation_Tier
 
         private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmManageApplicationTypes frmManageApplicationTypes = new frmManageApplicationTypes();
+            frmManageApplicationTypes.ShowDialog();
         }
 
         private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)

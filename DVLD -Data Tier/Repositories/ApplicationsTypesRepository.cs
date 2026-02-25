@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -41,6 +42,42 @@ namespace DVLD__Data_Tier.Repositories
                 }
             }          
             return (rowsAffected > 0);
+        }
+
+        public static List<ApplicationType> GetAllApplicationTypes()
+        {
+            
+            List<ApplicationType> types = new List<ApplicationType>();
+            string query = "SELECT * FROM ApplicationTypes ORDER BY ApplicationTypeID ASC";
+
+            // 2. Setup the Connection and Command
+            using (SqlConnection connection = new SqlConnection(DataBaseSettings.DataBaseConnectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    connection.Open();
+
+                    // 3. Use SqlDataReader to fetch the data
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            types.Add(new ApplicationType
+                            {
+                                ApplicationTypeID = (int)reader["ApplicationTypeID"], 
+                                ApplicationTypeTitle = reader["ApplicationTypeTitle"].ToString(),
+                                ApplicationTypeFees = (decimal)reader["ApplicationTypeFees"]
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"***Error GetAllApplicationTypes  :{ex} ***");                    
+                }
+            }            
+            return types;
         }
     }
 }
