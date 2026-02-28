@@ -35,6 +35,20 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
                 return;
             }
 
+            try
+            {
+                if (UserService.isUserExists(_personID))
+                {
+                    MessageBox.Show("User is already Exists", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+          
+
             User user = _loadInfoInUserObject();
 
             if (user == null)
@@ -103,6 +117,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
         private User _loadInfoInUserObject()
         {
+  
             string username = tbUsername.Text;
             string HashedPassword = clsPasswordHasher.HashPassword(tbPassword.Text);
             bool isActive = cbIsActive.Checked;

@@ -172,6 +172,20 @@ namespace DVLD__Business_Tier.Services
             return user;
         }
 
+        public static bool isUserExists(int personId) 
+        {
+            bool isFound = false;
+            try
+            {
+                isFound = UserRepository.IsUserExistOnPersonID(personId);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error While Searching on User");
+            }
+            return isFound;
+        }
+
         //Delete 
         public static bool DeleteUser(int userId)
         {
@@ -203,7 +217,7 @@ namespace DVLD__Business_Tier.Services
             int insertedUser = -1;
             try
             {
-                if(UserRepository.IsUserExist(user.Person_ID))
+                if(UserRepository.IsUserExistOnPersonID(user.Person_ID))
                 {
                     throw new Exception("User Already Exists");
                 }
@@ -216,7 +230,7 @@ namespace DVLD__Business_Tier.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
             return insertedUser;
         }

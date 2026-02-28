@@ -249,17 +249,46 @@ namespace DVLD__Data_Tier.Repositories
         // ---------------------------------------------------------
         // 6. CHECK EXISTENCE (Is User Exists)
         // ---------------------------------------------------------
-        public static bool IsUserExist(int personID)
+        public static bool IsUserExist(int userId)
         {
             bool isFound = false;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT Found=1 FROM Users WHERE Person_ID = @PersonID";
+                string query = "SELECT Found=1 FROM Users WHERE UserID = @userID";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@PersonID", personID);
+                    cmd.Parameters.AddWithValue("@userID", userId);
+
+                    try
+                    {
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            isFound = reader.HasRows;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("** Error IN IsUserExist :" + ex.ToString() + " ***");
+                        throw new Exception("Error While Check if User Exists");
+                    }
+                }
+            }
+            return isFound;
+        }
+        public static bool IsUserExistOnPersonID(int personId)
+        {
+            bool isFound = false;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Found=1 FROM Users WHERE Person_ID = @personid";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@personid", personId);
 
                     try
                     {
@@ -279,7 +308,7 @@ namespace DVLD__Data_Tier.Repositories
             return isFound;
         }
 
-        
+
     }
 
 }
