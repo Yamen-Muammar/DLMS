@@ -29,7 +29,7 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
 
         private void frmUpdateTestType_Load(object sender, EventArgs e)
         {
-            if (_loadTestTypeDataToObject(_testTypeID))
+            if (!_loadTestTypeDataToObject(_testTypeID))
             {
                 return;
             }
@@ -53,7 +53,7 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
         private void _loadDataInForm()
         {
             lblID .Text = _testTypeID.ToString();
-            tbTitle.Text = _testTypeID.ToString();
+            tbTitle.Text = _testType.TestTypeTitle.ToString();
             tbDescription.Text =_testType.TestTypeDescription.ToString();
             tbFees.Text = _testType.TestTypeFees.ToString();
         }

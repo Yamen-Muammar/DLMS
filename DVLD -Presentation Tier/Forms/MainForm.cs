@@ -11,6 +11,7 @@ using DVLD__Presentation_Tier.Forms;
 using DVLD__Presentation_Tier.Forms.UserForms;
 using DVLD__Core;
 using DVLD__Presentation_Tier.Forms.Application_Types_Forms;
+using DVLD__Presentation_Tier.Forms.Test_Types_Forms;
 namespace DVLD__Presentation_Tier
 {
     public partial class MainForm : Form
@@ -59,7 +60,8 @@ namespace DVLD__Presentation_Tier
 
         private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmManageTestTypes frmManageTestTypes = new frmManageTestTypes();
+            frmManageTestTypes.ShowDialog();
         }
     }
 }

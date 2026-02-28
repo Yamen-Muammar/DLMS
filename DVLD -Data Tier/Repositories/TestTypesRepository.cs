@@ -85,7 +85,7 @@ namespace DVLD__Data_Tier.Repositories
         {
             int rowsAffected = 0;
 
-            string query = @"UPDATE ApplicationTypes  
+            string query = @"UPDATE TestTypes  
                          SET
                             TestTypeTitle = @title,
                             TestTypeDescription = @description,
