@@ -32,6 +32,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.PersonInfo = new System.Windows.Forms.TabPage();
             this.btnNext = new System.Windows.Forms.Button();
+            this.ctrlPersonInformationWithFilter1 = new DVLD__Presentation_Tier.Controls.ctrlPersonInformationWithFilter();
             this.LoginInfo = new System.Windows.Forms.TabPage();
             this.cbIsActive = new System.Windows.Forms.CheckBox();
             this.tbConfirmPassword = new System.Windows.Forms.TextBox();
@@ -46,7 +47,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.lblTitle = new System.Windows.Forms.Label();
-            this.ctrlPersonInformationWithFilter1 = new DVLD__Presentation_Tier.Controls.ctrlPersonInformationWithFilter();
             this.tabControl1.SuspendLayout();
             this.PersonInfo.SuspendLayout();
             this.LoginInfo.SuspendLayout();
@@ -87,6 +87,14 @@
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // ctrlPersonInformationWithFilter1
+            // 
+            this.ctrlPersonInformationWithFilter1.Location = new System.Drawing.Point(6, 6);
+            this.ctrlPersonInformationWithFilter1.Name = "ctrlPersonInformationWithFilter1";
+            this.ctrlPersonInformationWithFilter1.Size = new System.Drawing.Size(943, 450);
+            this.ctrlPersonInformationWithFilter1.TabIndex = 0;
+            this.ctrlPersonInformationWithFilter1.ReturnPersonID_OnFindPerson += new DVLD__Presentation_Tier.Controls.ctrlPersonInformationWithFilter.ReturnPersonIDEvent(this.ctrlPersonInformationWithFilter1_ReturnPersonID_OnFindPerson);
             // 
             // LoginInfo
             // 
@@ -231,13 +239,6 @@
             this.lblTitle.Size = new System.Drawing.Size(278, 66);
             this.lblTitle.TabIndex = 17;
             this.lblTitle.Text = "Add New User";
-            // 
-            // ctrlPersonInformationWithFilter1
-            // 
-            this.ctrlPersonInformationWithFilter1.Location = new System.Drawing.Point(6, 6);
-            this.ctrlPersonInformationWithFilter1.Name = "ctrlPersonInformationWithFilter1";
-            this.ctrlPersonInformationWithFilter1.Size = new System.Drawing.Size(943, 450);
-            this.ctrlPersonInformationWithFilter1.TabIndex = 0;
             // 
             // frmAddNewUser
             // 

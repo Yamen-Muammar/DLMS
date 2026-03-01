@@ -12,6 +12,7 @@ using DVLD__Presentation_Tier.Forms.UserForms;
 using DVLD__Core;
 using DVLD__Presentation_Tier.Forms.Application_Types_Forms;
 using DVLD__Presentation_Tier.Forms.Test_Types_Forms;
+using DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms;
 namespace DVLD__Presentation_Tier
 {
     public partial class MainForm : Form
@@ -62,6 +63,17 @@ namespace DVLD__Presentation_Tier
         {
             frmManageTestTypes frmManageTestTypes = new frmManageTestTypes();
             frmManageTestTypes.ShowDialog();
+        }
+
+        private void localLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmNewLocalDrivingLicenseApplication frmNewLocalDrivingLicenseApplication = new frmNewLocalDrivingLicenseApplication();
+            frmNewLocalDrivingLicenseApplication.ShowDialog();
+        }
+
+        private void internationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

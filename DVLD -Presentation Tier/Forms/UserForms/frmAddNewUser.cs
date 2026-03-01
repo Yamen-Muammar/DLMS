@@ -15,7 +15,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 {
     public partial class frmAddNewUser : Form
     {
-        private int _personID { get; set; }
+        private int _personID { get; set; } = -1;
         public frmAddNewUser()
         {
             InitializeComponent();
@@ -75,8 +75,12 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            if(_personID == -1)
+            {
+                MessageBox.Show("Set A Person First", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             tabControl1.SelectedTab = LoginInfo;
-
         }
 
         private void tbConfirmPassword_Leave(object sender, EventArgs e)
@@ -125,6 +129,11 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
 
             return new User { Username=username,HashedPassword=HashedPassword,isActive=isActive,Person_ID =personID };
+        }
+
+        private void ctrlPersonInformationWithFilter1_ReturnPersonID_OnFindPerson(int PersonID)
+        {
+            _personID = PersonID;
         }
     }
 }
