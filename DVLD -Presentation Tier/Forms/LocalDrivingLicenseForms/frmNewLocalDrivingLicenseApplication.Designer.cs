@@ -33,18 +33,18 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbPersonalInfo = new System.Windows.Forms.TabPage();
             this.tbApplicationInfo = new System.Windows.Forms.TabPage();
+            this.cbLicenseClasses = new System.Windows.Forms.ComboBox();
+            this.lblCreatedName = new System.Windows.Forms.Label();
+            this.lblApplicationFees = new System.Windows.Forms.Label();
+            this.lblApplicationDate = new System.Windows.Forms.Label();
             this.lblApplicationID = new System.Windows.Forms.Label();
             this.l4 = new System.Windows.Forms.Label();
+            this.lblLicenseClass = new System.Windows.Forms.Label();
             this.l3 = new System.Windows.Forms.Label();
             this.l2 = new System.Windows.Forms.Label();
             this.l1 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.lblApplicationDate = new System.Windows.Forms.Label();
-            this.lblApplicationFees = new System.Windows.Forms.Label();
-            this.lblCreatedName = new System.Windows.Forms.Label();
-            this.lblLicenseClass = new System.Windows.Forms.Label();
-            this.cbLicenseClasses = new System.Windows.Forms.ComboBox();
             this.ctrlPersonInformationWithFilter1 = new DVLD__Presentation_Tier.Controls.ctrlPersonInformationWithFilter();
             this.tabControl1.SuspendLayout();
             this.tbPersonalInfo.SuspendLayout();
@@ -116,6 +116,47 @@
             this.tbApplicationInfo.Text = "Application Info";
             this.tbApplicationInfo.UseVisualStyleBackColor = true;
             // 
+            // cbLicenseClasses
+            // 
+            this.cbLicenseClasses.FormattingEnabled = true;
+            this.cbLicenseClasses.Location = new System.Drawing.Point(299, 176);
+            this.cbLicenseClasses.Name = "cbLicenseClasses";
+            this.cbLicenseClasses.Size = new System.Drawing.Size(364, 28);
+            this.cbLicenseClasses.TabIndex = 10;
+            // 
+            // lblCreatedName
+            // 
+            this.lblCreatedName.AutoSize = true;
+            this.lblCreatedName.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCreatedName.ForeColor = System.Drawing.Color.Red;
+            this.lblCreatedName.Location = new System.Drawing.Point(299, 270);
+            this.lblCreatedName.Name = "lblCreatedName";
+            this.lblCreatedName.Size = new System.Drawing.Size(54, 23);
+            this.lblCreatedName.TabIndex = 5;
+            this.lblCreatedName.Text = "????";
+            // 
+            // lblApplicationFees
+            // 
+            this.lblApplicationFees.AutoSize = true;
+            this.lblApplicationFees.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblApplicationFees.ForeColor = System.Drawing.Color.Red;
+            this.lblApplicationFees.Location = new System.Drawing.Point(299, 226);
+            this.lblApplicationFees.Name = "lblApplicationFees";
+            this.lblApplicationFees.Size = new System.Drawing.Size(54, 23);
+            this.lblApplicationFees.TabIndex = 5;
+            this.lblApplicationFees.Text = "????";
+            // 
+            // lblApplicationDate
+            // 
+            this.lblApplicationDate.AutoSize = true;
+            this.lblApplicationDate.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblApplicationDate.ForeColor = System.Drawing.Color.Red;
+            this.lblApplicationDate.Location = new System.Drawing.Point(299, 128);
+            this.lblApplicationDate.Name = "lblApplicationDate";
+            this.lblApplicationDate.Size = new System.Drawing.Size(54, 23);
+            this.lblApplicationDate.TabIndex = 5;
+            this.lblApplicationDate.Text = "????";
+            // 
             // lblApplicationID
             // 
             this.lblApplicationID.AutoSize = true;
@@ -136,6 +177,16 @@
             this.l4.Size = new System.Drawing.Size(127, 28);
             this.l4.TabIndex = 6;
             this.l4.Text = "Created By :";
+            // 
+            // lblLicenseClass
+            // 
+            this.lblLicenseClass.AutoSize = true;
+            this.lblLicenseClass.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLicenseClass.Location = new System.Drawing.Point(73, 172);
+            this.lblLicenseClass.Name = "lblLicenseClass";
+            this.lblLicenseClass.Size = new System.Drawing.Size(146, 28);
+            this.lblLicenseClass.TabIndex = 7;
+            this.lblLicenseClass.Text = "License Class :";
             // 
             // l3
             // 
@@ -192,57 +243,6 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // lblApplicationDate
-            // 
-            this.lblApplicationDate.AutoSize = true;
-            this.lblApplicationDate.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApplicationDate.ForeColor = System.Drawing.Color.Red;
-            this.lblApplicationDate.Location = new System.Drawing.Point(299, 128);
-            this.lblApplicationDate.Name = "lblApplicationDate";
-            this.lblApplicationDate.Size = new System.Drawing.Size(54, 23);
-            this.lblApplicationDate.TabIndex = 5;
-            this.lblApplicationDate.Text = "????";
-            // 
-            // lblApplicationFees
-            // 
-            this.lblApplicationFees.AutoSize = true;
-            this.lblApplicationFees.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApplicationFees.ForeColor = System.Drawing.Color.Red;
-            this.lblApplicationFees.Location = new System.Drawing.Point(299, 226);
-            this.lblApplicationFees.Name = "lblApplicationFees";
-            this.lblApplicationFees.Size = new System.Drawing.Size(54, 23);
-            this.lblApplicationFees.TabIndex = 5;
-            this.lblApplicationFees.Text = "????";
-            // 
-            // lblCreatedName
-            // 
-            this.lblCreatedName.AutoSize = true;
-            this.lblCreatedName.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCreatedName.ForeColor = System.Drawing.Color.Red;
-            this.lblCreatedName.Location = new System.Drawing.Point(299, 270);
-            this.lblCreatedName.Name = "lblCreatedName";
-            this.lblCreatedName.Size = new System.Drawing.Size(54, 23);
-            this.lblCreatedName.TabIndex = 5;
-            this.lblCreatedName.Text = "????";
-            // 
-            // lblLicenseClass
-            // 
-            this.lblLicenseClass.AutoSize = true;
-            this.lblLicenseClass.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLicenseClass.Location = new System.Drawing.Point(73, 172);
-            this.lblLicenseClass.Name = "lblLicenseClass";
-            this.lblLicenseClass.Size = new System.Drawing.Size(146, 28);
-            this.lblLicenseClass.TabIndex = 7;
-            this.lblLicenseClass.Text = "License Class :";
-            // 
-            // cbLicenseClasses
-            // 
-            this.cbLicenseClasses.FormattingEnabled = true;
-            this.cbLicenseClasses.Location = new System.Drawing.Point(299, 176);
-            this.cbLicenseClasses.Name = "cbLicenseClasses";
-            this.cbLicenseClasses.Size = new System.Drawing.Size(364, 28);
-            this.cbLicenseClasses.TabIndex = 10;
-            // 
             // ctrlPersonInformationWithFilter1
             // 
             this.ctrlPersonInformationWithFilter1.Location = new System.Drawing.Point(13, 6);
@@ -255,11 +255,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1016, 758);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmNewLocalDrivingLicenseApplication";
             this.Text = "frmNewLocalDrivingLicenseApplication";
             this.Load += new System.EventHandler(this.frmNewLocalDrivingLicenseApplication_Load);

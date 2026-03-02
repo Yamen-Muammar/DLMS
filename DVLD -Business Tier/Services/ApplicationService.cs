@@ -83,7 +83,7 @@ namespace DVLD__Business_Tier.Services
             {
                 try
                 {
-                    newId = ApplicationRepository.AddNewLocalDriveApplication(application, classTypeID);
+                    newId = ApplicationRepository.AddNewLocalDrivingLicesneApplication(application, classTypeID);
 
                     if (newId == -1)
                     {

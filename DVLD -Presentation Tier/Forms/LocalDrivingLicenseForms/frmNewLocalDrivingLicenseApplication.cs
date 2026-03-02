@@ -65,7 +65,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message,"Alert",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                throw;
+                return;
             }
         }
         private void btnCancel_Click(object sender, EventArgs e)
