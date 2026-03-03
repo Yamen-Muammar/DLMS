@@ -84,6 +84,7 @@ namespace DVLD__Data_Tier.Repositories
         {
             
             int newApplicationID = -1;
+
             string query = @"INSERT INTO Applications 
                          (CreatedByUser_ID, ApplicationType_ID, Person_ID, ApplicationDate, PaidFees, LastStatusDate, ApplicationStatus)
                          VALUES 
@@ -119,8 +120,7 @@ namespace DVLD__Data_Tier.Repositories
                     }
                 }
                 catch (Exception ex)
-                {
-                    throw;
+                {                 
                 }
             }
             return newApplicationID;
@@ -163,10 +163,41 @@ namespace DVLD__Data_Tier.Repositories
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    throw;
                 }
             }
             return application;
+        }
+        
+        public static int doesHasAnActiveLocalDrivingLicenseApplication(int personID)
+        {
+            int foundApplicationID = -1;
+            string query = "select Applications.ApplicationID from Applications " +
+                "inner join LocalDrivingLicenseApplications" +
+                " on Applications.ApplicationID = LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID " +
+                "where ApplicationStatus in('New','Completed') and Applications.Person_ID = @person_ID;  ";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@person_ID", personID);
+
+                try
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            foundApplicationID = reader.GetInt32(0);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {                    
+                }
+            }
+            return foundApplicationID;
         }
 
         // ==========================================

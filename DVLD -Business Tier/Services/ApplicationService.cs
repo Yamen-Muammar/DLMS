@@ -143,6 +143,14 @@ namespace DVLD__Business_Tier.Services
                 
                 return false;
             }
+
+            int FounedID = ApplicationRepository.doesHasAnActiveLocalDrivingLicenseApplication(application.Person_ID);
+            if (FounedID != -1)
+            {
+                throw new Exception($"User Already Has an Active Application , Id = {FounedID}");
+                return false;
+            } 
+            
             return true;
         }
     }
