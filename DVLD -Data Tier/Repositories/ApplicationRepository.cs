@@ -194,7 +194,7 @@ namespace DVLD__Data_Tier.Repositories
                     }
                 }
                 catch (Exception ex)
-                {                    
+                {                      
                 }
             }
             return foundApplicationID;

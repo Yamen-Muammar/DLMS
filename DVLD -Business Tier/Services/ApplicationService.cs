@@ -147,8 +147,7 @@ namespace DVLD__Business_Tier.Services
             int FounedID = ApplicationRepository.doesHasAnActiveLocalDrivingLicenseApplication(application.Person_ID);
             if (FounedID != -1)
             {
-                throw new Exception($"User Already Has an Active Application , Id = {FounedID}");
-                return false;
+                throw new Exception($"User Already Has an Active Application , Id = {FounedID}");                
             } 
             
             return true;
