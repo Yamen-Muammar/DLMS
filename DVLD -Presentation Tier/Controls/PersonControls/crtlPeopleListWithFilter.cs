@@ -58,16 +58,19 @@ namespace DVLD__Presentation_Tier
             }
 
             int PersonId = (int)dgvPeopleList.CurrentRow.Cells[0].Value;
-
-            if (!PersonService.Delete(PersonId))
+            try
             {
-                MessageBox.Show("An error occurred while deleting the person.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (PersonService.Delete(PersonId))
+                {
+                    MessageBox.Show("Person Deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _RefreshData();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Person deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _RefreshData();
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
+           
         }
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {

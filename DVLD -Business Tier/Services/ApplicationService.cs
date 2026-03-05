@@ -128,7 +128,7 @@ namespace DVLD__Business_Tier.Services
         {
             try
             {
-                return ApplicationRepository.GetAllLDLApplications();
+                return ApplicationRepository.GetAll_L_D_L_Applications();
             }
             catch (Exception)
             {

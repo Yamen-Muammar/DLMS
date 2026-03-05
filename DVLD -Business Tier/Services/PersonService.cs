@@ -101,7 +101,7 @@ namespace DVLD__Business_Tier.Services
             }
             catch (Exception)
             {
-                throw new Exception("Error While Deleteing Person, Try Again Later");
+                throw new Exception("Can Not Delete Person , Try Again Later");
             }
 
             return true;

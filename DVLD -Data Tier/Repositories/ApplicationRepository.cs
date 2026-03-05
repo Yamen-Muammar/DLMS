@@ -56,9 +56,9 @@ namespace DVLD__Data_Tier.Repositories
                             command.Parameters.AddWithValue("@ApplicationStatus", newApplication.ApplicationStatus);
                             
                             object applicationReturnedID = command.ExecuteScalar();
-                            
+                            newBaseAppID = Convert.ToInt32(applicationReturnedID);
 
-                           
+
                             string query2 = @"INSERT INTO LocalDrivingLicenseApplications 
                                          (Application_ID, LicenseClass_ID)
                                          VALUES 
@@ -70,12 +70,13 @@ namespace DVLD__Data_Tier.Repositories
                             command.Parameters.Clear();
 
                             
+
                             command.Parameters.AddWithValue("@ApplicationID", newBaseAppID);
                             command.Parameters.AddWithValue("@LicenseClassID", licenseClassID);
                             
                             object LDLApplicationReturnedID = command.ExecuteScalar();
 
-                            newBaseAppID = Convert.ToInt32(applicationReturnedID);
+                            
                             newLocalAppID = Convert.ToInt32(LDLApplicationReturnedID);
                         }
                       
@@ -97,10 +98,10 @@ namespace DVLD__Data_Tier.Repositories
             int newApplicationID = -1;
 
             string query = @"INSERT INTO Applications 
-                         (CreatedByUser_ID, ApplicationType_ID, Person_ID, ApplicationDate, PaidFees, LastStatusDate, ApplicationStatus)
-                         VALUES 
-                         (@CreatedByUser_ID, @ApplicationType_ID, @Person_ID, @ApplicationDate, @PaidFees, @LastStatusDate, @ApplicationStatus);
-                         SELECT SCOPE_IDENTITY();";
+                                     (CreatedByUser_ID, ApplicationType_ID, Person_ID, ApplicationDate, PaidFees, LastStatusDate, ApplicationStatus)
+                                     VALUES 
+                                     (@CreatedByUser_ID, @ApplicationType_ID, @Person_ID, @ApplicationDate, @PaidFees, @LastStatusDate, @ApplicationStatus);
+                                     SELECT SCOPE_IDENTITY();";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
@@ -250,10 +251,11 @@ namespace DVLD__Data_Tier.Repositories
             }
             return appsList;
         }
-        public static List<clsLocalDrivingLicesnseApplicationView> GetAllLDLApplications()
+        public static List<clsLocalDrivingLicesnseApplicationView> GetAll_L_D_L_Applications()
         {
             List<clsLocalDrivingLicesnseApplicationView> appsList = new List<clsLocalDrivingLicesnseApplicationView>();
-            string query = "SELECT LocalDrivingLicenseApplicationID,ClassName,NationalNO,FullName,ApplicationDate,ApplicationStatus FROM Applications ORDER BY ApplicationDate DESC"; // Newest first!
+            string query = "SELECT LocalDrivingLicenseApplicationID,ClassName,NationalNO,FullName,ApplicationDate,ApplicationStatus" +
+                " FROM LocalDrivingLicenseApplicationsView ORDER BY ApplicationDate DESC";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
