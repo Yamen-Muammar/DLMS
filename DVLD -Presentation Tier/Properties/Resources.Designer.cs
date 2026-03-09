@@ -143,6 +143,16 @@ namespace DVLD__Presentation_Tier.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Delete {
+            get {
+                object obj = ResourceManager.GetObject("Delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Delete32 {
             get {
                 object obj = ResourceManager.GetObject("Delete32", resourceCulture);
@@ -323,6 +333,16 @@ namespace DVLD__Presentation_Tier.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PersonLicenseHistory32 {
+            get {
+                object obj = ResourceManager.GetObject("PersonLicenseHistory32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RenewDrivingLicense32 {
             get {
                 object obj = ResourceManager.GetObject("RenewDrivingLicense32", resourceCulture);
@@ -346,6 +366,16 @@ namespace DVLD__Presentation_Tier.Properties {
         internal static System.Drawing.Bitmap Save32 {
             get {
                 object obj = ResourceManager.GetObject("Save32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ScheduleTest32 {
+            get {
+                object obj = ResourceManager.GetObject("ScheduleTest32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

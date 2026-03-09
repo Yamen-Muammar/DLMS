@@ -82,5 +82,10 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             lblRecordsCount.Text = _list.Count.ToString();
 
         }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }
