@@ -167,13 +167,21 @@ namespace DVLD__Data_Tier.Repositories
                                 ApplicationDate = (DateTime)reader["ApplicationDate"],
                                 PaidFees = (decimal)reader["PaidFees"],
                                 ApplicationStatus = (string)reader["ApplicationStatus"],
-                                LastStatusDate = (DateTime)reader["LastStatusDate"]
-
-                            };                            
+                                
+                            };
+                            if (reader["LastStatusDate"] == DBNull.Value)
+                            {
+                                application.LastStatusDate =  null;
+                            }
+                            else
+                            {
+                                application.LastStatusDate = (DateTime)reader["LastStatusDate"];
+                            }
+                            
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -294,8 +302,10 @@ namespace DVLD__Data_Tier.Repositories
         {
             int rowsAffected = 0;
 
-            // Notice we do NOT update the ApplicationID, we just use it in the WHERE clause
-            string query = @"UPDATE Applications  
+            // Notice we do NOT update the ApplicationID, we just use it in the WHERE clauSse
+
+            // TODO : SPPLING (Applicationss) ERROR TO SEE HOW THE BBL error handeling works ?
+            string query = @"UPDATE Applicationss  
                          SET CreatedByUser_ID = @CreatedByUser_ID, 
                              ApplicationType_ID = @ApplicationType_ID,
                              Person_ID = @Person_ID,
@@ -323,10 +333,9 @@ namespace DVLD__Data_Tier.Repositories
                     connection.Open();
                     rowsAffected = command.ExecuteNonQuery();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
+                    throw;
                 }
             }
             return (rowsAffected > 0);
@@ -351,8 +360,8 @@ namespace DVLD__Data_Tier.Repositories
                     rowsAffected = command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
+                {                    
+                    throw;
                 }
             }
             return (rowsAffected > 0);

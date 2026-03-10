@@ -12,6 +12,14 @@ namespace DVLD__Business_Tier.Services
 {
     public class ApplicationService
     {
+        public static Application GetApplicationByID(int applicationID)
+        {
+            Application application = null;
+
+            application = ApplicationRepository.GetApplicationByID(applicationID);
+
+            return application;
+        }
         public static bool SaveApplication(Application application)
         {
             int newId = -1;
@@ -136,6 +144,17 @@ namespace DVLD__Business_Tier.Services
                 throw;
             }   
         }
+
+        public static bool UpdateApplication(Application application)
+        {
+            if (! _ValidApplication(application))
+            {
+                throw new Exception("Application Information not Valid");
+            }
+
+            
+            return ApplicationRepository.UpdateApplication(application);
+        }
         private static bool _ValidApplication(Application application)
         {
             if (application.PaidFees < 0)
@@ -148,27 +167,14 @@ namespace DVLD__Business_Tier.Services
             {
                 
                 return false;
-            }
-
-            //int FounedID = ApplicationRepository.doesHasAnActiveLocalDrivingLicenseApplication(application.Person_ID);
-            //if (FounedID != -1)
-            //{
-            //    throw new Exception($"User Already Has an Active Application , Id = {FounedID}");                
-            //} 
+            }           
             
             return true;
         }
         private static bool _ValidApplication(Application application, int licenseClassID)
         {
-            if (application.PaidFees < 0)
+            if (!_ValidApplication(application))
             {
-
-                return false;
-            }
-
-            if (application.ApplicationDate > DateTime.Now)
-            {
-
                 return false;
             }
 

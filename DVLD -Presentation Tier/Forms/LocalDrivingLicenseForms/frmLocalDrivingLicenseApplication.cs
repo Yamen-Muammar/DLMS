@@ -87,5 +87,41 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         {
 
         }
+
+        private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int applicationID = (int)dgvApplicationsList.CurrentRow.Cells[0].Value;
+
+            DVLD__Core.Models.Application selectedApplication = _getApplication(applicationID);
+            if (selectedApplication == null)
+            {
+                return;
+            }
+
+            try
+            {
+                //TODO:TEST THE STATUS CONDITIONS ,IF THE ENTERED ANY THING WRONG.
+                selectedApplication.ApplicationStatus = "Canceled";
+                ApplicationService.UpdateApplication(selectedApplication);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+        }
+
+        private DVLD__Core.Models.Application _getApplication(int appID)
+        {
+            
+            DVLD__Core.Models.Application application = ApplicationService.GetApplicationByID(appID);
+
+            if (application != null)
+            {
+                MessageBox.Show("Application Details Not Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
+            return application;
+        }
     }
 }
