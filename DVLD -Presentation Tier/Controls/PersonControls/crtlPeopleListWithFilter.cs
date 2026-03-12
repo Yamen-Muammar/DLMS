@@ -132,7 +132,7 @@ namespace DVLD__Presentation_Tier
             if (string.IsNullOrEmpty(filterValue) || cbFilterOn.SelectedItem.ToString() == "None")
             {
                 filteredPeopleList.Clear();
-                dgvPeopleList.DataSource = people;
+                _refreshDGVDataSource(people);
                 return;
             }
 
@@ -156,19 +156,23 @@ namespace DVLD__Presentation_Tier
 
                 default:
                     break;
-            }                                           
+            }
 
-            dgvPeopleList.DataSource = null;
-            dgvPeopleList.DataSource = filteredPeopleList;            
+            _refreshDGVDataSource(filteredPeopleList);
         }
 
         // Helper Methods
         private void _RefreshData()
         {
             people = PersonService.GetAll();
-            dgvPeopleList.DataSource = people;
-            lblRecordsCount.Text = people.Count.ToString();
-            dgvPeopleList.Focus();
+            _refreshDGVDataSource(people);
+        }
+
+        private void _refreshDGVDataSource(List<clsPersonView> source)
+        {
+            dgvPeopleList.DataSource = source;
+            lblRecordsCount.Text = source.Count.ToString();
+           
         }
 
         private void _loadFilterComboBoxItems()

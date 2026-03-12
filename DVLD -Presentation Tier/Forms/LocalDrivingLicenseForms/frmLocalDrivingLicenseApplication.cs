@@ -41,45 +41,18 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         {
             _loadComboBox();
             _refreshData(DataBasePiplineSource);
-        }
-
-        private void _loadApplicationsListData(List<clsLocalDrivingLicesnseApplicationView> source)
-        {
-            _list = new List<clsLocalDrivingLicesnseApplicationView>();
-            try
-            {
-                _list = source;
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message, "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                this.Close();
-            }
-
+            _refreshDGVDataSource(DataBasePiplineSource);
         }
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
 
-        }             
+        }
         private void btnAddNewLDApplication_Click(object sender, EventArgs e)
         {
             frmNewLocalDrivingLicenseApplication frmNewLocalDrivingLicenseApplication = new frmNewLocalDrivingLicenseApplication();
             frmNewLocalDrivingLicenseApplication.ShowDialog();
             _refreshData(DataBasePiplineSource);
         }
-
-        private void _refreshData(List<clsLocalDrivingLicesnseApplicationView> source)
-        {
-            dgvApplicationsList.DataSource = null;
-            _loadApplicationsListData(source);
-            dgvApplicationsList.DataSource = _list;
-            lblRecordsCount.Text = _list.Count.ToString();
-            _restartFilterArea();
-
-        }
- 
-
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int localDrivingLicenseApplicationID = (int)dgvApplicationsList.CurrentRow.Cells[0].Value;
@@ -95,9 +68,37 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        // data logic
+        private void _loadApplicationsListData(List<clsLocalDrivingLicesnseApplicationView> source)
+        {
+            _list = new List<clsLocalDrivingLicesnseApplicationView>();
+            try
+            {
+                _list = source;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                this.Close();
+            }
+
+        }   
+        private void _refreshData(List<clsLocalDrivingLicesnseApplicationView> source)
+        {
+            _loadApplicationsListData(source);
+        }
+        private void _refreshDGVDataSource(List<clsLocalDrivingLicesnseApplicationView> source)
+        {
+            dgvApplicationsList.DataSource = null;
+            dgvApplicationsList.DataSource = source;
+            lblRecordsCount.Text = source.Count.ToString();
+        }
+        
 
         //Filtering combo Box Logic
 
@@ -132,9 +133,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         }
         private void tbFilterInput_TextChanged(object sender, EventArgs e)
         {
-            // TODO : Handile if the user set own filter .            
-
-            if (!cbFilterOn.Items.Contains(cbFilterOn.SelectedItem))
+              
+            if (cbFilterOn.SelectedItem == null)
             {
                 MessageBox.Show("Select Filter","Alert",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 return;
@@ -144,13 +144,12 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
             if (string.IsNullOrEmpty(searchingTarget) || searchingTarget.Length < 2)
             {
-                dgvApplicationsList.DataSource = _list;
+                _refreshDGVDataSource(_list);
                 return;
             }
-            dgvApplicationsList.DataSource = null;
 
-            dgvApplicationsList.DataSource = _returnDataOnFilter(selectedFilter,searchingTarget);
-            
+            List<clsLocalDrivingLicesnseApplicationView> filteredList = _returnDataOnFilter(selectedFilter, searchingTarget);
+            _refreshDGVDataSource(filteredList);
         }
 
         private List<clsLocalDrivingLicesnseApplicationView> _returnDataOnFilter(string selectedFilter,string serchingTarget)
