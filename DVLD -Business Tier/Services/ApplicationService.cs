@@ -145,19 +145,21 @@ namespace DVLD__Business_Tier.Services
         {
             DVLD__Core.Models.Application selectedApplication = _getApplicationOnLDLA_ID(localDrivingLicenseApplicationID);
 
-            if (selectedApplication.ApplicationStatus == _getSelectedStatus(status))
-            {
-                throw new Exception($"Status Already {_getSelectedStatus(status)}");
-            }
-
             if (selectedApplication == null)
             {
                 throw new Exception("Application Not Found!");
             }
 
+            if (selectedApplication.ApplicationStatus == _getSelectedStatus(status))
+            {
+                throw new Exception($"Status Already {_getSelectedStatus(status)}");
+            }
+
             selectedApplication.ApplicationStatus = _getSelectedStatus(status);
+            selectedApplication.LastStatusDate = DateTime.Now;
 
             ApplicationRepository.UpdateApplication(selectedApplication);
+
             return true;
         }
         private static DVLD__Core.Models.Application _getApplicationOnLDLA_ID(int localDrivingLicenseApplicationID)
