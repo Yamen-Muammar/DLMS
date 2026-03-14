@@ -37,9 +37,9 @@ namespace DVLD__Data_Tier.Repositories
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine($"***Error GetTestTypeByID  :{ex} ***");
+                    throw;
                 }
             }
             return testType;
@@ -73,9 +73,9 @@ namespace DVLD__Data_Tier.Repositories
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine($"***Error GetAllTestTypes  :{ex} ***");
+                    throw;
                 }
             }
             return types;
@@ -85,7 +85,7 @@ namespace DVLD__Data_Tier.Repositories
         {
             int rowsAffected = 0;
 
-            string query = @"UPDATE TestTypes  
+            string query = @"UPDATE TestTypes 
                          SET
                             TestTypeTitle = @title,
                             TestTypeDescription = @description,
@@ -106,10 +106,9 @@ namespace DVLD__Data_Tier.Repositories
 
                     rowsAffected = command.ExecuteNonQuery();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine($"***Error UpdateTestType  :{ex} ***");
-                    return false;
+                    throw;
                 }
             }
             return (rowsAffected > 0);

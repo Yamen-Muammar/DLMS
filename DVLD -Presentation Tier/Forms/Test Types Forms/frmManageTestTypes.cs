@@ -33,11 +33,29 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
         private void _refreshTestTypes()
         {
             _testTypes = null;
-            _testTypes = TestTypeService.GetAllTestTypes();
+            _testTypes = _getTestTypesList();
+            if (_testTypes == null)
+            {
+                this.Close();
+                return;    
+            }
             dgvListOfTestTypes.DataSource = null;
             dgvListOfTestTypes.DataSource = _testTypes;
             lblRecordsCount.Text = _testTypes.Count.ToString();
         }     
+        private List<TestType> _getTestTypesList()
+        {
+            try
+            {
+                return TestTypeService.GetAllTestTypes();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                return null;
+            }
+        }
         private bool _validateSelectedApplicationType()
         {
             int selectrdID = (int)dgvListOfTestTypes.CurrentRow.Cells[0].Value;

@@ -13,10 +13,7 @@ namespace DVLD__Business_Tier.Services
         public static TestType Find(int id)
         {
             TestType testType = TestTypesRepository.GetTestTypeByID(id);
-            if (testType == null)
-            {
-                throw new Exception("Cant Find Test Type");
-            }
+            
             return testType;
         }
 
@@ -26,30 +23,19 @@ namespace DVLD__Business_Tier.Services
             {
                 return false;
             }
-
+            
             if (!TestTypesRepository.UpdateTestType(testType))
             {
-                throw new Exception("An error occurred while updating the test type. Please try again later.");
+                throw new Exception("Can not update the test type. Please try again later.");
             }
             return true;
         }
         public static List<TestType> GetAllTestTypes()
         {
-            List<TestType> testTypes;
-            try
-            {
-                testTypes = TestTypesRepository.GetAllTestTypes();
-                if (testTypes == null || testTypes.Count == 0)
-                {
-                    throw new Exception("No test types found.");
-                }
+            List<TestType> testTypes; 
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex + " ,Please try again later.");
-            }
-
+            testTypes = TestTypesRepository.GetAllTestTypes();
+            
             return testTypes;
         }
         private static bool _validateTestType(TestType testType)

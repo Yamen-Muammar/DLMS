@@ -128,10 +128,9 @@ namespace DVLD__Data_Tier.Repositories
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN GetUserByUsername :" + ex.ToString() + " ***");
-                        throw new Exception("Error While Get The User Data");
+                        throw;
                     }
                 }
             }
