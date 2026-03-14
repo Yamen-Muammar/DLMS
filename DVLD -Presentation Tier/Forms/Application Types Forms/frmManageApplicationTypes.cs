@@ -22,7 +22,8 @@ namespace DVLD__Presentation_Tier.Forms.Application_Types_Forms
 
         private void frmManageApplicationTypes_Load(object sender, EventArgs e)
         {
-            _refreshApplicationTypes();
+            _refreshApplicationTypesDataList();
+            _refreshDataGridView(_applicationTypesList);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -30,15 +31,26 @@ namespace DVLD__Presentation_Tier.Forms.Application_Types_Forms
             this.Close();
         }
 
-        private  void _refreshApplicationTypes()
+        private  void _refreshApplicationTypesDataList()
         {
             _applicationTypesList = null;
-            _applicationTypesList = ApplicationsTypeService.GetAllApplicationTypes();
-            dgvListOfApplicationsTypes.DataSource = null;
-            dgvListOfApplicationsTypes.DataSource = _applicationTypesList;
-            lblRecordsCount.Text = _applicationTypesList.Count.ToString();
+            try
+            {
+                _applicationTypesList = ApplicationsTypeService.GetAllApplicationTypes();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        private void _refreshDataGridView(List<ApplicationType> source)
+        {
+            dgvListOfApplicationsTypes.DataSource = null;
+            dgvListOfApplicationsTypes.DataSource = source;
+            lblRecordsCount.Text = source.Count.ToString();
+        }
         private void editeApplicationTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!_validateSelectedApplicationType())
@@ -49,8 +61,8 @@ namespace DVLD__Presentation_Tier.Forms.Application_Types_Forms
             int selectedApplicationTypeID = (int)dgvListOfApplicationsTypes.CurrentRow.Cells[0].Value;
             frmUpdateApplicationTypeInfo frmUpdateApplicationTypeInfo = new frmUpdateApplicationTypeInfo(selectedApplicationTypeID);
             frmUpdateApplicationTypeInfo.ShowDialog();
-            _refreshApplicationTypes();
-
+            _refreshApplicationTypesDataList();
+            _refreshDataGridView(_applicationTypesList);
         }
 
         private bool _validateSelectedApplicationType()

@@ -31,9 +31,9 @@ namespace DVLD__Presentation_Tier.Forms.Application_Types_Forms
             try
             {
                 _applicationType = ApplicationsTypeService.GetApplicationTypeByID(_applicationTypeID);
+
                 if (_applicationType == null)
                 {
-                    MessageBox.Show("Application Type not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                     return;
                 }

@@ -35,10 +35,9 @@ namespace DVLD__Data_Tier.Repositories
 
                     rowsAffected = command.ExecuteNonQuery();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine($"***Error UpdateApplicationType  :{ex} ***");
-                    return false;
+                    throw;
                 }
             }
             return (rowsAffected > 0);
@@ -71,9 +70,9 @@ namespace DVLD__Data_Tier.Repositories
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine($"***Error GetAllApplicationTypes  :{ex} ***");
+                    throw;
                 }
             }
             return types;
@@ -103,9 +102,9 @@ namespace DVLD__Data_Tier.Repositories
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Debug.WriteLine($"***Error GetApplicationTypeByID  :{ex} ***");
+                    throw;
                 }
             }
             return applicationType;

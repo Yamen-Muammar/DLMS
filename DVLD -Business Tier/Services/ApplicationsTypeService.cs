@@ -19,27 +19,21 @@ namespace DVLD__Business_Tier.Services
 
             if (!ApplicationsTypesRepository.UpdateApplicationType(applicationType))
             {
-                throw new Exception("An error occurred while updating the application type. Please try again later.");
+                throw new Exception("Can not update!. Please try again later.");
             }
             return true;
         }
         public static List<ApplicationType> GetAllApplicationTypes()
         {
-            List<ApplicationType> applicationTypes;
-            try
-            {
-                applicationTypes = ApplicationsTypesRepository.GetAllApplicationTypes();
-                if (applicationTypes == null || applicationTypes.Count == 0)
-                {
-                    throw new Exception("No application types found.");
-                }
+            List<ApplicationType> applicationTypes = null;
+            
+            applicationTypes = ApplicationsTypesRepository.GetAllApplicationTypes();
 
-            }
-            catch (Exception ex)
+            if (applicationTypes == null)
             {
-                throw new Exception(ex+" ,Please try again later.");
+                throw new Exception("Error While Storeing Data.");
             }
-                      
+         
            return applicationTypes;
         }
         private static bool _validateApplicationType(ApplicationType applicationType)
@@ -62,18 +56,12 @@ namespace DVLD__Business_Tier.Services
         public static ApplicationType GetApplicationTypeByID(int applicationTypeID)
         {
             ApplicationType applicationType = null;
-            try
-            {
-                applicationType = ApplicationsTypesRepository.GetApplicationTypeByID(applicationTypeID);
-                if (applicationType == null)
-                {
-                    throw new Exception("Application type not found.");
-                }
+            
+            applicationType = ApplicationsTypesRepository.GetApplicationTypeByID(applicationTypeID);
 
-            }
-            catch (Exception ex)
+            if (applicationType == null)
             {
-                throw;
+                throw new Exception("Application type not found !");
             }
 
             return applicationType;

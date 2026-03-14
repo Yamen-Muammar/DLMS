@@ -15,18 +15,22 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 {
     public partial class frmNewLocalDrivingLicenseApplication : Form
     {
-        private int _personID = -1; //store id from retriveing event from ctrlPersonInformationWithFilter.
+        private int _personID = -1; //store id from retriveing event in ctrlPersonInformationWithFilter.
         private ApplicationType _applicationType {  get; set; }
         private List<LicenseClass> _licenseClasses;
-
+        private const int LDLApplicationType_ID = 2;
         public frmNewLocalDrivingLicenseApplication()
         {
             InitializeComponent();
-            _applicationType = ApplicationsTypeService.GetApplicationTypeByID(2);
-            if (_applicationType == null)
+            try
             {
-                MessageBox.Show("Error While geting the Application Type.","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                this.Close();
+                _applicationType = ApplicationsTypeService.GetApplicationTypeByID(LDLApplicationType_ID);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error While Getting the Application Type.","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                this.Close(); 
+                return;
             }
         }
 
