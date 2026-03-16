@@ -35,7 +35,7 @@ namespace DVLD__Business_Tier.Services
 
             if (user == null)
             {
-                throw new Exception("User Not Found.");
+                throw new Exception("Invalid username or password. Please try again.");
             }
 
             if (!user.isActive)
