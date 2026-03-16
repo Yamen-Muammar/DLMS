@@ -36,16 +36,12 @@ namespace DVLD__Business_Tier.Services
                 throw new Exception("Error While Update Image");
             }
 
-            try
+            NewPersonID = PersonRepository.AddNewPerson(person);
+            if(NewPersonID == -1)
             {
-                NewPersonID = PersonRepository.AddNewPerson(person);
-                return NewPersonID;
+                throw new Exception("Can not Add the Person");
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("*** Error adding new person: " + ex.Message + "***");
-                throw new Exception("Error While Add New Person");
-            }
+            return NewPersonID;
         }
 
         public static Person Find(int id)
@@ -54,20 +50,26 @@ namespace DVLD__Business_Tier.Services
             {
                 throw new Exception("No Data Passed");
             }
+
             Person person = PersonRepository.GetPersonByID(id);
             if (person == null)
             {
-                throw new Exception("Person Not Found,Try Again");
+                throw new Exception("Person Not Found");
             }
             return person;
         }
 
         public static Person Find(string nationalNO)
         {
+            if (string.IsNullOrEmpty(nationalNO))
+            {
+                throw new ArgumentNullException();
+            }
             Person person = PersonRepository.GetPersonByNationalNO(nationalNO);
+
             if (person == null)
             {
-                throw new Exception("Person Not Found,Try Again");
+                throw new Exception("Person Not Found");
             }
             return person;
         }
@@ -75,15 +77,7 @@ namespace DVLD__Business_Tier.Services
         public static List<clsPersonView> GetAll()
         {
             List<clsPersonView> PeopleList= new List<clsPersonView>();
-            try
-            {
-                 PeopleList = PersonRepository.GetAllPeople();
-            }
-            catch (Exception)
-            {
-
-                throw new Exception("Error While Get All People,Try Again Later");
-            }
+            PeopleList = PersonRepository.GetAllPeople();
             return PeopleList;
         }
 
@@ -95,30 +89,20 @@ namespace DVLD__Business_Tier.Services
                 throw new Exception("Error While Delete Image");
             }
 
-            try
+            isPersonDeleted=PersonRepository.DeletePerson(id);
+            if (!isPersonDeleted)
             {
-                isPersonDeleted=PersonRepository.DeletePerson(id);
+                return false;
             }
-            catch (Exception)
-            {
-                throw new Exception("Can Not Delete Person , Try Again Later");
-            }
-
             return true;
         }
 
         public static bool IsPersonExist(string nationalNO)
         {
             bool isPersonExist = false;
-            try
-            {
-                isPersonExist = PersonRepository.IsPersonExist(nationalNO);
-            }
-            catch (Exception)
-            {
 
-                throw new Exception("Error While Searching on Person, Try Again Later") ;
-            }
+            isPersonExist = PersonRepository.IsPersonExist(nationalNO);
+
             return isPersonExist;
         }
 
@@ -141,18 +125,9 @@ namespace DVLD__Business_Tier.Services
                     throw new Exception("Error While Update Image");
                 }
             }
-
-            try
-            {
-                PersonRepository.UpdatePerson(person);
-                isPersonUpdated = true;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("*** Error updating person: " + ex.Message + "***");
-                throw new Exception("Error While Update Person");
-            }
-
+             PersonRepository.UpdatePerson(person);
+             isPersonUpdated = true;
+            
             return isPersonUpdated;
         }
 
@@ -180,7 +155,7 @@ namespace DVLD__Business_Tier.Services
             catch (Exception ex)
             {
                 Debug.WriteLine("*** Error copying image: " + ex.Message + "***");
-                throw new Exception("Error While Copying Image");
+                throw;
             }
             return string.Empty;
         }
@@ -241,13 +216,13 @@ namespace DVLD__Business_Tier.Services
                 ||string.IsNullOrEmpty(person.NationalNO)||string.IsNullOrEmpty(person.Email)||
                 string.IsNullOrEmpty(person.Address) || string.IsNullOrEmpty(person.ImageName))
             {
-                throw new Exception("Fill All the Feilds");
+                throw new ArgumentException("Fill All the Feilds");
             }
 
             bool isAgeValid = DateTime.Now.Year - person.DateOfBirth.Year >= 18;
             if (!isAgeValid)
             {
-                throw new Exception("Age Is Not inValid");
+                throw new ArgumentException("Age Is Not inValid");
             }
 
             return true;

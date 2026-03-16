@@ -63,10 +63,9 @@ namespace DVLD__Data_Tier.Repositories
                             newPersonID = insertedID;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN AddNewPerson :" + ex.ToString() + " ***");
-                        throw new Exception("Error in Database while inserting new Person");
+                        throw;
                     }
                 }
             }
@@ -114,9 +113,8 @@ namespace DVLD__Data_Tier.Repositories
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("** Error IN GetPersonByID :" + ex.ToString() + " ***");
+                    catch (Exception)
+                    { 
                         throw;
                     }
                 }
@@ -161,10 +159,9 @@ namespace DVLD__Data_Tier.Repositories
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN GetPersonByNationalNO :" + ex.ToString() + " ***");
-                        throw new Exception("Error While Searching on The Person");
+                        throw;
                     }
                 }
             }
@@ -208,9 +205,8 @@ namespace DVLD__Data_Tier.Repositories
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN GetAllPeople :" + ex.ToString() + " ***");
                         throw;
                     }
                 }
@@ -264,10 +260,9 @@ namespace DVLD__Data_Tier.Repositories
                         conn.Open();
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN UpdatePerson :" + ex.ToString() + " ***");   
-                        throw new Exception("Error in Database while updating Person");                        
+                        throw;                        
                     }
                 }
             }
@@ -294,9 +289,8 @@ namespace DVLD__Data_Tier.Repositories
                         conn.Open();
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN DeletePerson :" + ex.ToString() + " ***");
                         throw;
                     }
                 }
@@ -327,9 +321,8 @@ namespace DVLD__Data_Tier.Repositories
                             isFound = reader.HasRows;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("** Error IN IsPersonExist :" + ex.ToString() + " ***");
+                    catch (Exception)
+                    {  
                         throw;
                     }
                 }
@@ -357,9 +350,8 @@ namespace DVLD__Data_Tier.Repositories
                             isFound = reader.HasRows;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("** Error IN IsPersonExist :" + ex.ToString() + " ***");
+                    catch (Exception)
+                    {    
                         throw;
                     }
                 }
