@@ -43,9 +43,9 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
                     return;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
           
 

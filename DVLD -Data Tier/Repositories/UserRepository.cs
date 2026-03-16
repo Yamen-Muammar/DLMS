@@ -46,10 +46,9 @@ namespace DVLD__Data_Tier.Repositories
                             newUserID = insertedID;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN AddNewUser :" + ex.ToString() + " ***");
-                        throw new Exception("Error in Database while inserting new User");
+                        throw;
                     }
                 }
             }
@@ -89,10 +88,9 @@ namespace DVLD__Data_Tier.Repositories
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("** Error IN GetPersonByID :" + ex.ToString() + " ***");
-                        throw new Exception("Error While Get The User Data");
+                    catch (Exception)
+                    { 
+                        throw;
                     }
                 }
             }
@@ -168,10 +166,9 @@ namespace DVLD__Data_Tier.Repositories
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN GetAllPeople :" + ex.ToString() + " ***");
-                        throw new Exception("Error While Geting the User Data");
+                        throw;
                     }
                 }
             }
@@ -205,10 +202,9 @@ namespace DVLD__Data_Tier.Repositories
                         conn.Open();
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN UpdateUser :" + ex.ToString() + " ***");
-                        throw new Exception("Error in Database while updating User");
+                        throw;
                     }
                 }
             }
@@ -235,10 +231,9 @@ namespace DVLD__Data_Tier.Repositories
                         conn.Open();
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN DeleteUser :" + ex.ToString() + " ***");
-                        throw new Exception("Error While Delete User");
+                        throw;
                     }
                 }
             }
@@ -268,10 +263,9 @@ namespace DVLD__Data_Tier.Repositories
                             isFound = reader.HasRows;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN IsUserExist :" + ex.ToString() + " ***");
-                        throw new Exception("Error While Check if User Exists");
+                        throw;
                     }
                 }
             }
@@ -297,10 +291,9 @@ namespace DVLD__Data_Tier.Repositories
                             isFound = reader.HasRows;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Debug.WriteLine("** Error IN IsUserExist :" + ex.ToString() + " ***");
-                        throw new Exception("Error While Check if User Exists");
+                        throw;
                     }
                 }
             }

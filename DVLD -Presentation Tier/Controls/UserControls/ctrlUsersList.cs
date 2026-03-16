@@ -37,7 +37,17 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
 
         private List<clsUserView> _getAllUsers()
         {
-            return UserService.GetAllUsers();
+            List<clsUserView> list = new List<clsUserView>();
+            try
+            {
+                list= UserService.GetAllUsers();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return list;
         }
 
         private void btnAddNewUser_Click(object sender, EventArgs e)

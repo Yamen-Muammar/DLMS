@@ -24,15 +24,7 @@ namespace DVLD__Business_Tier.Services
                 throw new ArgumentException("Username AND Password cannot be Empty.");
             }
 
-            try
-            {
-                user = UserRepository.GetUserByUsername(username);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Error While Find User");
-            }
-
+            user = UserRepository.GetUserByUsername(username);
             if (user == null)
             {
                 throw new Exception("Invalid username or password. Please try again.");
@@ -147,42 +139,23 @@ namespace DVLD__Business_Tier.Services
         public static List<clsUserView> GetAllUsers()
         {
             List<clsUserView> usersList = new List<clsUserView>();
-            try
-            {
-                usersList = UserRepository.GetAllUser();
-            }
-            catch (Exception)
-            {
-                throw new Exception("Error While Retriveing Users Data");
-            }
+            
+            usersList = UserRepository.GetAllUser();
+           
             return usersList;
         }
 
         public static User GetUserById(int userId)
         {
             User user = null;
-            try
-            {
-                user = UserRepository.GetUserByID(userId);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Error While Retriveing User Data");
-            }
+            user = UserRepository.GetUserByID(userId);
             return user;
         }
 
         public static bool isUserExists(int personId) 
         {
             bool isFound = false;
-            try
-            {
-                isFound = UserRepository.IsUserExistOnPersonID(personId);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Error While Searching on User");
-            }
+            isFound = UserRepository.IsUserExistOnPersonID(personId);
             return isFound;
         }
 
@@ -190,13 +163,15 @@ namespace DVLD__Business_Tier.Services
         public static bool DeleteUser(int userId)
         {         
             bool isDeleted = false;
-            try
-            {
-                User userToDelete = UserService.GetUserById(userId);
+            
+            
+                User userToDelete = GetUserById(userId);
+
                 if (userToDelete == null)
                 {
                     throw new Exception("User Not Found");
                 }
+
                 if (userToDelete.UserID == Global.User.UserID)
                 {
                     throw new Exception("You Can not delete yourself");
@@ -210,11 +185,7 @@ namespace DVLD__Business_Tier.Services
                 {
                     isDeleted = true;
                 }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+           
             return isDeleted;
         }
 
@@ -223,23 +194,18 @@ namespace DVLD__Business_Tier.Services
         public static int AddNewUser(User user)
         {
             int insertedUser = -1;
-            try
+            
+            if(UserRepository.IsUserExistOnPersonID(user.Person_ID))
             {
-                if(UserRepository.IsUserExistOnPersonID(user.Person_ID))
-                {
-                    throw new Exception("User Already Exists");
-                }
+                throw new Exception("User Already Exists");
+            }
 
-                insertedUser = UserRepository.AddNewUser(user);
-                if (insertedUser == -1)
-                {
-                    throw new Exception("Can not Add the User");
-                }
-            }
-            catch (Exception ex)
+            insertedUser = UserRepository.AddNewUser(user);
+            if (insertedUser == -1)
             {
-                throw;
+                throw new Exception("Can not Add the User");
             }
+           
             return insertedUser;
         }
 
@@ -251,21 +217,13 @@ namespace DVLD__Business_Tier.Services
                 throw new Exception("New Password Cannot be Empty");
             }
 
-            try
+            if(UserRepository.UpdateUser(newHashedPassword,isActive))
             {
-                if(UserRepository.UpdateUser(newHashedPassword,isActive))
-                {
-                    return true;
-                }
-                else
-                {
-                    throw new Exception("Can not Update the User");
-                }
+                return true;
             }
-            catch (Exception ex)
+            else
             {
-
-                throw ex;
+                throw new Exception("Can not Update the User");
             }
         }
     }
