@@ -67,10 +67,21 @@ namespace DVLD__Presentation_Tier
             if (Mode == enMode.eUpdate)
             {
                 lblTitle.Text = "Update Person";
-
-                PersonInfo = PersonService.Find(FormPersonId);
-                if (PersonInfo == null) { MessageBox.Show("Person Not Found", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information); return; }
-                _loadDataInForm();
+                try
+                {
+                    PersonInfo = _getPerson(FormPersonId);
+                    if (PersonInfo == null) 
+                    { 
+                        MessageBox.Show("Person Not Found", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    _loadDataInForm();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                  
+                }        
             }
 
             // UI Load Logic.
@@ -101,9 +112,12 @@ namespace DVLD__Presentation_Tier
                     {
                         Mode = enMode.eUpdate;
                         MessageBox.Show("Person information Saved successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
-                        PersonInfo = null;
-                        PersonInfo = PersonService.Find(InsertedPersonId);
-                        if (PersonInfo == null) { MessageBox.Show("Person Not Found after Insert", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information); return; }
+                        PersonInfo = _getPerson(InsertedPersonId);
+                        if (PersonInfo == null)
+                        { 
+                            MessageBox.Show("Person Not Found after Insert", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
                         lblTitle.Text = "Update Person";
                         _loadDataInForm();
                     }
@@ -309,6 +323,13 @@ namespace DVLD__Presentation_Tier
             return countriesList;
         }
 
+        private Person _getPerson(int personId)
+        {
+            Person personInfo = null;
+            personInfo = PersonService.Find(personId);
+            return personInfo;
+        }
+
         //Image Handling Functions
         private Image _loadImageWithoutLock(string path)
         {
@@ -348,15 +369,23 @@ namespace DVLD__Presentation_Tier
 
             if (Mode == enMode.eAdd)
             {
-                if (PersonService.IsPersonExist(tbNationalNo.Text))
+                try
                 {
-                    EPNationalNO.SetError(tbNationalNo, "This National Number already exists");
-                    tbNationalNo.Focus();
+                    if (PersonService.IsPersonExist(tbNationalNo.Text))
+                    {
+                        EPNationalNO.SetError(tbNationalNo, "This National Number already exists");
+                        tbNationalNo.Focus();
+                    }
+                    else
+                    {
+                        EPNationalNO.SetError(tbNationalNo, string.Empty);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    EPNationalNO.SetError(tbNationalNo, string.Empty);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+               
             }
             
         }
@@ -376,11 +405,18 @@ namespace DVLD__Presentation_Tier
                 return false;
             }
 
-            if (Mode == enMode.eAdd && PersonService.IsPersonExist(tbNationalNo.Text))
+            try
             {
-                return false;
+                if (Mode == enMode.eAdd && PersonService.IsPersonExist(tbNationalNo.Text))
+                {
+                    return false;
+                }
             }
+            catch (Exception ex)
+            {
 
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             return true;
         }
     }

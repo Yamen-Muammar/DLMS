@@ -38,7 +38,12 @@ namespace DVLD__Presentation_Tier
         public ctrlPersonInformation(int personId)
         {
             InitializeComponent();
-            FindAndSetPersonInfo(personId);
+            SetPersonInfo(personId);
+            if (PersonInfo == null)
+            {
+                return;
+            }
+            _personId = PersonInfo.PersonID;
         }
 
         private void ctrlPersonInformation_Load(object sender, EventArgs e)
@@ -48,6 +53,13 @@ namespace DVLD__Presentation_Tier
                 return;
             }
             _loadDataInForm();
+        }
+
+        private Person _getPerson(int personId)
+        {
+            Person personInfo = null;
+            personInfo = PersonService.Find(personId);
+            return personInfo;
         }
 
 
@@ -123,18 +135,16 @@ namespace DVLD__Presentation_Tier
             
             return countryName;
         }
-        private void FindAndSetPersonInfo(int PersonID)
+        private void SetPersonInfo(int PersonID)
         {
             try
             {
-                PersonInfo = PersonService.Find(PersonID);
+                PersonInfo = _getPerson(PersonID);                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Person Not Found", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);                              
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);                              
             }
-                       
-            _personId = PersonID;
         }
 
         //OUTSIDE CALLs TO UPDATE PERSON INFO IN THIS CONTROL AND REFRESH THE UI

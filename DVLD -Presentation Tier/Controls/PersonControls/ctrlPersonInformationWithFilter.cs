@@ -84,9 +84,9 @@ namespace DVLD__Presentation_Tier.Controls
                     person = PersonService.Find(nationalNO.ToUpper());
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Person Not Found", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             return person;

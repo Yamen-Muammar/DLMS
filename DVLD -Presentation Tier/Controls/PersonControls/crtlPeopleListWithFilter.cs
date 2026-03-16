@@ -164,7 +164,15 @@ namespace DVLD__Presentation_Tier
         // Helper Methods
         private void _RefreshData()
         {
-            people = PersonService.GetAll();
+            try
+            {
+                people = PersonService.GetAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
             _refreshDGVDataSource(people);
         }
 

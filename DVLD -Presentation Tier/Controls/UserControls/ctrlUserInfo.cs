@@ -57,10 +57,9 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
                 return;
             }
 
-            Person person = PersonService.Find(user.Person_ID);
+            Person person = _loadPersonInformation(user.Person_ID);
             if (person == null)
-            {
-               MessageBox.Show("Associated person information not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            { 
                 return;
             }
             ctrlPersonInformation1.UpdatePersonInfoANDRefreshUI(person);
@@ -68,7 +67,19 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
             lblUsername.Text = user.Username;
             lblIsActive.Text = (user.isActive) ? "Active" : "InActive";  
         }
-
+        private Person _loadPersonInformation(int personID)
+        {
+            Person person = null;
+            try
+            {
+                person = PersonService.Find(personID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return person;           
+        }
         
     }
 }
