@@ -15,7 +15,7 @@ namespace DVLD__Business_Tier.Services
     public class UserService
     {
         //Login Helper Methodes
-        public static bool Login(string username, string password, bool isRemaindMeActive)
+        public async static Task<bool> Login(string username, string password, bool isRemaindMeActive)
         {
             User user = null;
 
@@ -24,7 +24,7 @@ namespace DVLD__Business_Tier.Services
                 throw new ArgumentException("Username AND Password cannot be Empty.");
             }
 
-            user = UserRepository.GetUserByUsername(username);
+            user = await UserRepository.GetUserByUsername(username);
             if (user == null)
             {
                 throw new Exception("Invalid username or password. Please try again.");
@@ -54,7 +54,7 @@ namespace DVLD__Business_Tier.Services
             return true; // Placeholder for successful login
         }
 
-        private static bool SaveRemaindMeInfo(string username, string password)
+        private  static bool SaveRemaindMeInfo(string username, string password)
         {
             string seperator = "|||";
             string line = username + seperator + password;
@@ -63,7 +63,7 @@ namespace DVLD__Business_Tier.Services
 
             try
             {
-                File.WriteAllLines(filePath, new[] { line });
+                 File.WriteAllLines(filePath, new[] { line });
             }
             catch (Exception)
             {

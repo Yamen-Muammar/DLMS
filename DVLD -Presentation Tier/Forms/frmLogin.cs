@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLD__Business_Tier.Services;
@@ -36,8 +38,11 @@ namespace DVLD__Presentation_Tier.Forms
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
+            btnLogin.Enabled = false;
+            btnLogin.Text = "Wating...";
+
             if (!_validationInput())
             {
                 MessageBox.Show("Please Fill All Fields With Right Inforamtion","Alert",MessageBoxButtons.OK,MessageBoxIcon.Warning);
@@ -50,12 +55,17 @@ namespace DVLD__Presentation_Tier.Forms
             bool isLoginSuccessful = false;
 
             try
-            {
-                isLoginSuccessful = UserService.Login(username, password, isRememberMeChecked); // Placeholder for login success status
+            { 
+                isLoginSuccessful =await UserService.Login(username, password, isRememberMeChecked);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnLogin.Enabled = true;
+                btnLogin.Text = "Login";
             }
             
 

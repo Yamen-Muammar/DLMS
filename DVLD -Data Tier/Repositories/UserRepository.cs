@@ -96,13 +96,13 @@ namespace DVLD__Data_Tier.Repositories
             }
             return foundUser;
         }
-        public static User GetUserByUsername(string username)
+        public async static Task<User> GetUserByUsername(string username)
         {
             User foundUser = null;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM Users WHERE Username = @username";
+                string query = "SELECT UserID,Person_ID,Username,HashedPassword,isActive FROM Users WHERE Username = @username";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -110,10 +110,11 @@ namespace DVLD__Data_Tier.Repositories
 
                     try
                     {
-                        conn.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        await conn.OpenAsync();
+
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
-                            if (reader.Read())
+                            if (await reader.ReadAsync())
                             {
                                 foundUser = new User
                                 {
