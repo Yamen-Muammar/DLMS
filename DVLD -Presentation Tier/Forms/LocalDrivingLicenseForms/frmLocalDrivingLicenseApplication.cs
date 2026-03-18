@@ -16,32 +16,29 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
     {
         private List<clsLocalDrivingLicesnseApplicationView> _list { get; set; }
 
-        private  List<clsLocalDrivingLicesnseApplicationView> DataBasePiplineSource 
-        {
-            get
-            {
-                try
-                {
-                    return ApplicationService.GetAllLDLApplications();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                    this.Close();
-                }
-                return null;
-            }            
-        }
+        private  List<clsLocalDrivingLicesnseApplicationView> _dataBasePiplineSource {  get; set; }
         public frmLocalDrivingLicenseApplication()
         {
             InitializeComponent();
         }
-        
-        private void frmLocalDrivingLicenseApplication_Load(object sender, EventArgs e)
+        private async Task _loadDataAsync()
+        {
+            _dataBasePiplineSource = new List<clsLocalDrivingLicesnseApplicationView>();
+            try
+            {
+                _dataBasePiplineSource = await ApplicationService.GetAllLDLApplications(); 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+        private async void frmLocalDrivingLicenseApplication_Load(object sender, EventArgs e)
         {
             _loadComboBox();
-            _refreshData(DataBasePiplineSource);
-            _refreshDGVDataSource(DataBasePiplineSource);
+            await _refreshDataOnSource(_dataBasePiplineSource);
+            _refreshDGVDataSource(_dataBasePiplineSource);
         }
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
@@ -51,8 +48,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         {
             frmNewLocalDrivingLicenseApplication frmNewLocalDrivingLicenseApplication = new frmNewLocalDrivingLicenseApplication();
             frmNewLocalDrivingLicenseApplication.ShowDialog();
-            _refreshData(DataBasePiplineSource);
-            _refreshDGVDataSource(DataBasePiplineSource);
+            _refreshDataOnSource(_dataBasePiplineSource);
+            _refreshDGVDataSource(_dataBasePiplineSource);
         }
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -63,8 +60,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
                 if (ApplicationService.UpdateLDLApplicationStatus(localDrivingLicenseApplicationID, ApplicationService.enStatus.Canceled))
                 {
                     MessageBox.Show("Application Status Updated Successfully", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    _refreshData(DataBasePiplineSource);
-                    _refreshDGVDataSource(DataBasePiplineSource);
+                    _refreshDataOnSource(_dataBasePiplineSource);
+                    _refreshDGVDataSource(_dataBasePiplineSource);
                 }
             }
             catch (Exception ex)
@@ -75,7 +72,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         }
 
         // data logic
-        private void _loadApplicationsListData(List<clsLocalDrivingLicesnseApplicationView> source)
+        private void _storeListDataFromSource(List<clsLocalDrivingLicesnseApplicationView> source)
         {
             _list = new List<clsLocalDrivingLicesnseApplicationView>();
             try
@@ -90,13 +87,25 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             }
 
         }   
-        private void _refreshData(List<clsLocalDrivingLicesnseApplicationView> source)
+        private async Task _refreshDataOnSource(List<clsLocalDrivingLicesnseApplicationView> source)
         {
-            _loadApplicationsListData(source);
+            if (source == _dataBasePiplineSource)
+            {
+                await _loadDataAsync();
+                _storeListDataFromSource(_dataBasePiplineSource);
+                return;
+            }
+
+            _storeListDataFromSource(source);
         }
         private void _refreshDGVDataSource(List<clsLocalDrivingLicesnseApplicationView> source)
         {
             dgvApplicationsList.DataSource = null;
+            if (source == null)
+            {
+                this.Close();
+                return;
+            }
             dgvApplicationsList.DataSource = source;
             lblRecordsCount.Text = source.Count.ToString();
         }

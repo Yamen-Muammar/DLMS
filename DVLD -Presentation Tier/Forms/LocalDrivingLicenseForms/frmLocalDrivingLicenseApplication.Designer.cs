@@ -1,4 +1,6 @@
-﻿namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
+﻿using System.Threading.Tasks;
+
+namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 {
     partial class frmLocalDrivingLicenseApplication
     {

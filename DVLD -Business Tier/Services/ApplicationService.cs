@@ -96,7 +96,6 @@ namespace DVLD__Business_Tier.Services
 
             return true;
         }
-
         private static string _getSelectedStatus(enStatus status)
         {
             switch (status)
@@ -167,9 +166,9 @@ namespace DVLD__Business_Tier.Services
             DVLD__Core.Models.Application application = ApplicationRepository.GetApplicationByLDL_ID(localDrivingLicenseApplicationID);
             return application;
         }      
-        public static List<clsLocalDrivingLicesnseApplicationView> GetAllLDLApplications()
+        public async static Task<List<clsLocalDrivingLicesnseApplicationView>> GetAllLDLApplications()
         {       
-              return ApplicationRepository.GetAll_L_D_L_Applications();          
+              return await ApplicationRepository.GetAll_L_D_L_Applications();          
         }
         private static bool _ValidApplication(Application application, int licenseClassID)
         {

@@ -38,10 +38,14 @@ namespace DVLD__Data_Tier.Repositories
                     
                         transaction.Commit();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {                        
                         transaction.Rollback();
-                        throw new Exception(ex.Message);
+                        throw;
+                    }
+                    finally
+                    {
+                        connection.Close();
                     }
                 }
             }
@@ -139,7 +143,12 @@ namespace DVLD__Data_Tier.Repositories
                     }
                 }
                 catch (Exception ex)
-                {                 
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
                 }
             }
             return newApplicationID;
@@ -200,6 +209,10 @@ namespace DVLD__Data_Tier.Repositories
                 {
                     throw;
                 }
+                finally
+                {
+                    connection.Close();
+                }
             }
             return application;
         }
@@ -229,7 +242,12 @@ namespace DVLD__Data_Tier.Repositories
                     }
                 }
                 catch (Exception ex)
-                {                      
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
                 }
             }
             return foundApplicationID;
@@ -271,11 +289,16 @@ namespace DVLD__Data_Tier.Repositories
                 {
                     throw;
                 }
+                finally
+                {
+                    connection.Close();
+                }
             }
             return appsList;
         }
-        public static List<clsLocalDrivingLicesnseApplicationView> GetAll_L_D_L_Applications()
+        public static async Task<List<clsLocalDrivingLicesnseApplicationView>> GetAll_L_D_L_Applications()
         {
+            TestRepository testRepository = new TestRepository();
             List<clsLocalDrivingLicesnseApplicationView> appsList = new List<clsLocalDrivingLicesnseApplicationView>();
             string query = "SELECT LocalDrivingLicenseApplicationID,ClassName,NationalNO,FullName,ApplicationDate,ApplicationStatus" +
                 " FROM LocalDrivingLicenseApplicationsView ORDER BY ApplicationDate DESC";
@@ -285,10 +308,10 @@ namespace DVLD__Data_Tier.Repositories
             {
                 try
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
                             appsList.Add(new clsLocalDrivingLicesnseApplicationView
                             {
@@ -297,12 +320,13 @@ namespace DVLD__Data_Tier.Repositories
                                 NationalNO = reader["NationalNO"].ToString(),
                                 FullName = reader["FullName"].ToString(),
                                 ApplicationDate = (DateTime)reader["ApplicationDate"],
-                                Status = reader["ApplicationStatus"].ToString()
+                                Status = reader["ApplicationStatus"].ToString(),
+                                PassedTests = await testRepository.GetPassedTestsAsync(reader["NationalNO"].ToString())
                             });                            
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -357,6 +381,10 @@ namespace DVLD__Data_Tier.Repositories
                 {
                     throw;
                 }
+                finally
+                {
+                    connection.Close();
+                }
             }
             return (rowsAffected > 0);
         }
@@ -379,9 +407,13 @@ namespace DVLD__Data_Tier.Repositories
                     connection.Open();
                     rowsAffected = command.ExecuteNonQuery();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {                    
                     throw;
+                }
+                finally
+                {
+                    connection.Close();
                 }
             }
             return (rowsAffected > 0);
