@@ -22,15 +22,15 @@ namespace DVLD__Business_Tier.Services
         {
             _appRepo = new ApplicationRepository();
         }
-        public  Application GetApplicationByID(int applicationID)
+        public async Task<Application> GetApplicationByID(int applicationID)
         {
             Application application = null;
 
-            application = _appRepo.GetApplicationByID(applicationID);
+            application = await _appRepo.GetApplicationByID(applicationID);
 
             return application;
         }     
-        public  bool SaveApplication(Application application)
+        public async Task<bool> SaveApplication(Application application)
         {
             int newId = -1;
 
@@ -43,25 +43,16 @@ namespace DVLD__Business_Tier.Services
             // If the ID is -1, it means this object hasn't been saved to the database yet.
             if (application.ApplicationID == -1)
             {
-                try
+                newId = await _appRepo.AddNewApplication(application);
+               
+                if (newId == -1)
                 {
-                    newId = _appRepo.AddNewApplication(application);
-
-                    if (newId == -1)
-                    {
-                        return false;
-                        throw new Exception("Can't Create New Application");
-                    }
-
+                    return false;
+                    throw new Exception("Can't Create New Application");
                 }
-                catch (Exception ex)
+                else
                 {
-                    Debug.WriteLine("**** Error SaveApplication >>"+ex + "****");
-                    throw;
-                }
-                finally
-                {
-                    application.ApplicationID = newId; 
+                    application.ApplicationID = newId;
                 }
                 return true;
             }
@@ -69,20 +60,12 @@ namespace DVLD__Business_Tier.Services
             // If the ID is greater than 0, it already exists. We are Updating it!
             if (application.ApplicationID > 0)
             {
-                
-                try
-                {
-                    if (!_appRepo.UpdateApplication(application))
+
+                    if (!await _appRepo.UpdateApplication(application))
                     {
                         throw new Exception("Error While Updateing");
                     }
                     return true;
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-             
             }
             return false;
         }
@@ -120,11 +103,11 @@ namespace DVLD__Business_Tier.Services
 
 
         // For Local driving license applications only!!
-        public  bool SaveLocalDrivingLicenseApplication(Application application,int licenseClassID)
+        public async Task<bool> SaveLocalDrivingLicenseApplication(Application application,int licenseClassID)
         {
             int newId = -1;
 
-            if (!_ValidApplication(application, licenseClassID))
+            if (!await _ValidApplication(application, licenseClassID))
             {
                 return false;
             }
@@ -132,7 +115,7 @@ namespace DVLD__Business_Tier.Services
             if (application.ApplicationID == -1)
             {
                 
-                newId = _appRepo.AddNewLocalDrivingLicesneApplicationAsync(application, licenseClassID);
+                newId = await _appRepo.AddNewLocalDrivingLicesneApplicationAsync(application, licenseClassID);
 
                 if (newId == -1)
                 {                        
@@ -146,9 +129,9 @@ namespace DVLD__Business_Tier.Services
 
             return false;
         }
-        public  bool UpdateLDLApplicationStatus(int localDrivingLicenseApplicationID , enStatus status)
+        public async Task<bool> UpdateLDLApplicationStatus(int localDrivingLicenseApplicationID , enStatus status)
         {
-            DVLD__Core.Models.Application selectedApplication = _getApplicationOnLDLA_ID(localDrivingLicenseApplicationID);
+            DVLD__Core.Models.Application selectedApplication = await _getApplicationOnLDLA_ID(localDrivingLicenseApplicationID);
 
             if (selectedApplication == null)
             {
@@ -163,28 +146,27 @@ namespace DVLD__Business_Tier.Services
             selectedApplication.ApplicationStatus = _getSelectedStatus(status);
             selectedApplication.LastStatusDate = DateTime.Now;
 
-            _appRepo.UpdateApplication(selectedApplication);
+            await _appRepo.UpdateApplication(selectedApplication);
 
             return true;
         }
-        private  DVLD__Core.Models.Application _getApplicationOnLDLA_ID(int localDrivingLicenseApplicationID)
+        private async Task<DVLD__Core.Models.Application> _getApplicationOnLDLA_ID(int localDrivingLicenseApplicationID)
         {
-            DVLD__Core.Models.Application application = _appRepo.GetApplicationByLDL_ID(localDrivingLicenseApplicationID);
+            DVLD__Core.Models.Application application = await _appRepo.GetApplicationByLDL_ID(localDrivingLicenseApplicationID);
             return application;
         }      
         public async  Task<List<clsLocalDrivingLicesnseApplicationView>> GetAllLDLApplications()
         {       
-
               return await _appRepo.GetAll_L_D_L_Applications();          
         }
-        private bool _ValidApplication(Application application, int licenseClassID)
+        private async Task<bool> _ValidApplication(Application application, int licenseClassID)
         {
             if (!_ValidApplication(application))
             {
                 return false;
             }
 
-            int FounedID = _appRepo.doesHasAnActiveLocalDrivingLicenseApplication(application.Person_ID, licenseClassID);
+            int FounedID = await _appRepo.doesHasAnActiveLocalDrivingLicenseApplication(application.Person_ID, licenseClassID);
             if (FounedID != -1)
             {
                 throw new Exception($"User Already Has an Active Application , Id = {FounedID}");

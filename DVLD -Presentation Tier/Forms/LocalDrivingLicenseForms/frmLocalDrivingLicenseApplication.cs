@@ -18,7 +18,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private ApplicationService _applicationService;
         private List<clsLocalDrivingLicesnseApplicationView> _list { get; set; }
 
-        private  List<clsLocalDrivingLicesnseApplicationView> _dataBasePiplineSource { get; set; }
+        private  List<clsLocalDrivingLicesnseApplicationView> _dataBaseSource { get; set; }
         public frmLocalDrivingLicenseApplication()
         {
             InitializeComponent();
@@ -26,10 +26,10 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private async Task _loadDataAsync()
         {
             _applicationService = new ApplicationService();
-            _dataBasePiplineSource = new List<clsLocalDrivingLicesnseApplicationView>();
+            _dataBaseSource = new List<clsLocalDrivingLicesnseApplicationView>();
             try
             {
-                _dataBasePiplineSource = await _applicationService.GetAllLDLApplications(); 
+                _dataBaseSource = await _applicationService.GetAllLDLApplications(); 
             }
             catch (Exception ex)
             {
@@ -40,8 +40,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private async void frmLocalDrivingLicenseApplication_Load(object sender, EventArgs e)
         {
             _loadComboBox();
-            await _refreshDataOnSource(_dataBasePiplineSource);
-            _refreshDGVDataSource(_dataBasePiplineSource);
+            await _refreshDataOnSource(_dataBaseSource);
+            _refreshDGVDataSource(_dataBaseSource);
         }
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
@@ -51,8 +51,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         {
             frmNewLocalDrivingLicenseApplication frmNewLocalDrivingLicenseApplication = new frmNewLocalDrivingLicenseApplication();
             frmNewLocalDrivingLicenseApplication.ShowDialog();
-            await _refreshDataOnSource(_dataBasePiplineSource);
-            _refreshDGVDataSource(_dataBasePiplineSource);
+            await _refreshDataOnSource(_dataBaseSource);
+            _refreshDGVDataSource(_dataBaseSource);
         }
         private async void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -60,11 +60,11 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
             try
             {
-                if (_applicationService.UpdateLDLApplicationStatus(localDrivingLicenseApplicationID, ApplicationService.enStatus.Canceled))
+                if (await _applicationService.UpdateLDLApplicationStatus(localDrivingLicenseApplicationID, ApplicationService.enStatus.Canceled))
                 {
                     MessageBox.Show("Application Status Updated Successfully", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    await _refreshDataOnSource(_dataBasePiplineSource);
-                    _refreshDGVDataSource(_dataBasePiplineSource);
+                    await _refreshDataOnSource(_dataBaseSource);
+                    _refreshDGVDataSource(_dataBaseSource);
                 }
             }
             catch (Exception ex)
@@ -92,10 +92,10 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         }   
         private async Task _refreshDataOnSource(List<clsLocalDrivingLicesnseApplicationView> source)
         {
-            if (source == _dataBasePiplineSource)
+            if (source == _dataBaseSource)
             {
                 await _loadDataAsync();
-                _storeListDataFromSource(_dataBasePiplineSource);
+                _storeListDataFromSource(_dataBaseSource);
                 return;
             }
 

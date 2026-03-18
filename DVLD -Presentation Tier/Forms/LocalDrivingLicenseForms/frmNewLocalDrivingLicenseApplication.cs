@@ -49,7 +49,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             tabControl1.SelectedTab = tbApplicationInfo;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             _applicationService = new ApplicationService();
             if (!_validateInputs())
@@ -63,7 +63,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
             try
             {
-                if(_applicationService.SaveLocalDrivingLicenseApplication(application, ClassTypeID))
+                if(await _applicationService.SaveLocalDrivingLicenseApplication(application, ClassTypeID))
                 {
                     lblApplicationID.Text = application.ApplicationID.ToString();
                     MessageBox.Show("Application Added Successfully", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
