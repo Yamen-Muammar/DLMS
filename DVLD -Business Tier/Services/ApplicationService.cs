@@ -12,19 +12,25 @@ namespace DVLD__Business_Tier.Services
 {
     public class ApplicationService
     {
+        private ApplicationRepository _appRepo;
         public enum enStatus
         {
             New = 1 , Completed = 2, Canceled = 3
         }
-        public static Application GetApplicationByID(int applicationID)
+
+        public ApplicationService()
+        {
+            _appRepo = new ApplicationRepository();
+        }
+        public  Application GetApplicationByID(int applicationID)
         {
             Application application = null;
 
-            application = ApplicationRepository.GetApplicationByID(applicationID);
+            application = _appRepo.GetApplicationByID(applicationID);
 
             return application;
         }     
-        public static bool SaveApplication(Application application)
+        public  bool SaveApplication(Application application)
         {
             int newId = -1;
 
@@ -39,7 +45,7 @@ namespace DVLD__Business_Tier.Services
             {
                 try
                 {
-                    newId = ApplicationRepository.AddNewApplication(application);
+                    newId = _appRepo.AddNewApplication(application);
 
                     if (newId == -1)
                     {
@@ -66,7 +72,7 @@ namespace DVLD__Business_Tier.Services
                 
                 try
                 {
-                    if (!ApplicationRepository.UpdateApplication(application))
+                    if (!_appRepo.UpdateApplication(application))
                     {
                         throw new Exception("Error While Updateing");
                     }
@@ -80,7 +86,7 @@ namespace DVLD__Business_Tier.Services
             }
             return false;
         }
-        private static bool _ValidApplication(Application application)
+        private  bool _ValidApplication(Application application)
         {
             if (application.PaidFees < 0)
             {
@@ -96,7 +102,7 @@ namespace DVLD__Business_Tier.Services
 
             return true;
         }
-        private static string _getSelectedStatus(enStatus status)
+        private  string _getSelectedStatus(enStatus status)
         {
             switch (status)
             {
@@ -114,7 +120,7 @@ namespace DVLD__Business_Tier.Services
 
 
         // For Local driving license applications only!!
-        public static bool SaveLocalDrivingLicenseApplication(Application application,int licenseClassID)
+        public  bool SaveLocalDrivingLicenseApplication(Application application,int licenseClassID)
         {
             int newId = -1;
 
@@ -126,7 +132,7 @@ namespace DVLD__Business_Tier.Services
             if (application.ApplicationID == -1)
             {
                 
-                newId = ApplicationRepository.AddNewLocalDrivingLicesneApplication(application, licenseClassID);
+                newId = _appRepo.AddNewLocalDrivingLicesneApplicationAsync(application, licenseClassID);
 
                 if (newId == -1)
                 {                        
@@ -140,7 +146,7 @@ namespace DVLD__Business_Tier.Services
 
             return false;
         }
-        public static bool UpdateLDLApplicationStatus(int localDrivingLicenseApplicationID , enStatus status)
+        public  bool UpdateLDLApplicationStatus(int localDrivingLicenseApplicationID , enStatus status)
         {
             DVLD__Core.Models.Application selectedApplication = _getApplicationOnLDLA_ID(localDrivingLicenseApplicationID);
 
@@ -157,27 +163,28 @@ namespace DVLD__Business_Tier.Services
             selectedApplication.ApplicationStatus = _getSelectedStatus(status);
             selectedApplication.LastStatusDate = DateTime.Now;
 
-            ApplicationRepository.UpdateApplication(selectedApplication);
+            _appRepo.UpdateApplication(selectedApplication);
 
             return true;
         }
-        private static DVLD__Core.Models.Application _getApplicationOnLDLA_ID(int localDrivingLicenseApplicationID)
+        private  DVLD__Core.Models.Application _getApplicationOnLDLA_ID(int localDrivingLicenseApplicationID)
         {
-            DVLD__Core.Models.Application application = ApplicationRepository.GetApplicationByLDL_ID(localDrivingLicenseApplicationID);
+            DVLD__Core.Models.Application application = _appRepo.GetApplicationByLDL_ID(localDrivingLicenseApplicationID);
             return application;
         }      
-        public async static Task<List<clsLocalDrivingLicesnseApplicationView>> GetAllLDLApplications()
+        public async  Task<List<clsLocalDrivingLicesnseApplicationView>> GetAllLDLApplications()
         {       
-              return await ApplicationRepository.GetAll_L_D_L_Applications();          
+
+              return await _appRepo.GetAll_L_D_L_Applications();          
         }
-        private static bool _ValidApplication(Application application, int licenseClassID)
+        private bool _ValidApplication(Application application, int licenseClassID)
         {
             if (!_ValidApplication(application))
             {
                 return false;
             }
 
-            int FounedID = ApplicationRepository.doesHasAnActiveLocalDrivingLicenseApplication(application.Person_ID, licenseClassID);
+            int FounedID = _appRepo.doesHasAnActiveLocalDrivingLicenseApplication(application.Person_ID, licenseClassID);
             if (FounedID != -1)
             {
                 throw new Exception($"User Already Has an Active Application , Id = {FounedID}");

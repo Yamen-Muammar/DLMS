@@ -14,19 +14,22 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 {
     public partial class frmLocalDrivingLicenseApplication : Form
     {
+
+        private ApplicationService _applicationService;
         private List<clsLocalDrivingLicesnseApplicationView> _list { get; set; }
 
-        private  List<clsLocalDrivingLicesnseApplicationView> _dataBasePiplineSource {  get; set; }
+        private  List<clsLocalDrivingLicesnseApplicationView> _dataBasePiplineSource { get; set; }
         public frmLocalDrivingLicenseApplication()
         {
             InitializeComponent();
         }
         private async Task _loadDataAsync()
         {
+            _applicationService = new ApplicationService();
             _dataBasePiplineSource = new List<clsLocalDrivingLicesnseApplicationView>();
             try
             {
-                _dataBasePiplineSource = await ApplicationService.GetAllLDLApplications(); 
+                _dataBasePiplineSource = await _applicationService.GetAllLDLApplications(); 
             }
             catch (Exception ex)
             {
@@ -44,23 +47,23 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         {
 
         }
-        private void btnAddNewLDApplication_Click(object sender, EventArgs e)
+        private async void btnAddNewLDApplication_Click(object sender, EventArgs e)
         {
             frmNewLocalDrivingLicenseApplication frmNewLocalDrivingLicenseApplication = new frmNewLocalDrivingLicenseApplication();
             frmNewLocalDrivingLicenseApplication.ShowDialog();
-            _refreshDataOnSource(_dataBasePiplineSource);
+            await _refreshDataOnSource(_dataBasePiplineSource);
             _refreshDGVDataSource(_dataBasePiplineSource);
         }
-        private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int localDrivingLicenseApplicationID = (int)dgvApplicationsList.CurrentRow.Cells[0].Value;
 
             try
             {
-                if (ApplicationService.UpdateLDLApplicationStatus(localDrivingLicenseApplicationID, ApplicationService.enStatus.Canceled))
+                if (_applicationService.UpdateLDLApplicationStatus(localDrivingLicenseApplicationID, ApplicationService.enStatus.Canceled))
                 {
                     MessageBox.Show("Application Status Updated Successfully", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    _refreshDataOnSource(_dataBasePiplineSource);
+                    await _refreshDataOnSource(_dataBasePiplineSource);
                     _refreshDGVDataSource(_dataBasePiplineSource);
                 }
             }

@@ -15,6 +15,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 {
     public partial class frmNewLocalDrivingLicenseApplication : Form
     {
+        private ApplicationService _applicationService;
         private int _personID = -1; //store id from retriveing event in ctrlPersonInformationWithFilter.
         private ApplicationType _applicationType {  get; set; }
         private List<LicenseClass> _licenseClasses;
@@ -50,6 +51,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            _applicationService = new ApplicationService();
             if (!_validateInputs())
             {
                 return;
@@ -61,7 +63,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
             try
             {
-                if(ApplicationService.SaveLocalDrivingLicenseApplication(application, ClassTypeID))
+                if(_applicationService.SaveLocalDrivingLicenseApplication(application, ClassTypeID))
                 {
                     lblApplicationID.Text = application.ApplicationID.ToString();
                     MessageBox.Show("Application Added Successfully", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);

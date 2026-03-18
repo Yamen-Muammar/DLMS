@@ -13,19 +13,19 @@ namespace DVLD__Data_Tier.Repositories
 {
     public class ApplicationRepository
     {
-        private static string _connectionString = DataBaseSettings.DataBaseConnectionString;
+        private string _connectionString = DataBaseSettings.DataBaseConnectionString;
         // ==========================================
         // 1. CREATE (Insert)
         // ==========================================
 
-        public static int AddNewLocalDrivingLicesneApplication(Application newApplication, int licenseClassID)
+        public async Task<int> AddNewLocalDrivingLicesneApplicationAsync(Application newApplication, int licenseClassID)
         {            
             int newLocalAppID = -1;
             int newBaseAppID = -1;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 
-                connection.Open();
+                await connection.OpenAsync();
 
                 // 2. Begin the transaction
                 using (SqlTransaction transaction = connection.BeginTransaction())
@@ -33,8 +33,8 @@ namespace DVLD__Data_Tier.Repositories
                     try
                     {
                        
-                        newBaseAppID = _insertApplication(connection, transaction, newApplication);
-                        newLocalAppID = _insertLDLAppliaction(newBaseAppID, licenseClassID, connection, transaction);
+                        newBaseAppID = Convert.ToInt32(await _insertApplication(connection, transaction, newApplication));
+                        newLocalAppID = Convert.ToInt32(await _insertLDLAppliaction(newBaseAppID, licenseClassID, connection, transaction));
                     
                         transaction.Commit();
                     }
@@ -52,7 +52,7 @@ namespace DVLD__Data_Tier.Repositories
 
             return newBaseAppID;
         }
-        private static int _insertApplication(SqlConnection connection, SqlTransaction transaction, Application newApplication)
+        private async Task<int> _insertApplication(SqlConnection connection, SqlTransaction transaction, Application newApplication)
         {
             int newLocalAppID = -1;
             string query = @"INSERT INTO Applications 
@@ -79,13 +79,13 @@ namespace DVLD__Data_Tier.Repositories
 
                 command.Parameters.AddWithValue("@ApplicationStatus", newApplication.ApplicationStatus);
 
-                object applicationReturnedID = command.ExecuteScalar();
+                object applicationReturnedID = await command.ExecuteScalarAsync();
                 int.TryParse(applicationReturnedID.ToString(), out newLocalAppID);
             }
             return 
                 newLocalAppID;
         }
-        private static int _insertLDLAppliaction(int insertedApplicationID,int LicenseClassTypeID, SqlConnection connection, SqlTransaction transaction)
+        private async Task<int> _insertLDLAppliaction(int insertedApplicationID,int LicenseClassTypeID, SqlConnection connection, SqlTransaction transaction)
         {
             int newLocalAppID = -1;
             string query = @"INSERT INTO LocalDrivingLicenseApplications
@@ -98,12 +98,12 @@ namespace DVLD__Data_Tier.Repositories
                 cmd.Parameters.AddWithValue("@ApplicationID", insertedApplicationID);
                 cmd.Parameters.AddWithValue("@LicenseClassID",LicenseClassTypeID);
 
-                object applicationReturnedID = cmd.ExecuteScalar();
+                object applicationReturnedID = await cmd.ExecuteScalarAsync();
                 int.TryParse(applicationReturnedID.ToString(), out newLocalAppID);
             }
             return newLocalAppID;
         }
-        public static int AddNewApplication(DVLD__Core.Models.Application newApplication)
+        public async Task<int> AddNewApplication(DVLD__Core.Models.Application newApplication)
         {
             
             int newApplicationID = -1;
@@ -135,14 +135,15 @@ namespace DVLD__Data_Tier.Repositories
 
                 try
                 {
-                    connection.Open();                    
-                    object result = command.ExecuteScalar();
+                    await connection.OpenAsync();                    
+                    object result = await command.ExecuteScalarAsync();
+
                     if (result != null && int.TryParse(result.ToString(), out int insertedID))
                     {
                         newApplicationID = insertedID;
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -157,11 +158,11 @@ namespace DVLD__Data_Tier.Repositories
         // ==========================================
         // 2. READ (Get By ID)
         // ==========================================
-        public static DVLD__Core.Models.Application GetApplicationByID(int appID)
+        public async Task<DVLD__Core.Models.Application> GetApplicationByID(int appID)
         {
             throw new NotImplementedException();
         }
-        public static DVLD__Core.Models.Application GetApplicationByLDL_ID(int localDrivingLicenseApplicationID)
+        public async Task<DVLD__Core.Models.Application> GetApplicationByLDL_ID(int localDrivingLicenseApplicationID)
         {
             Application application = null;
             string query = "SELECT ApplicationID,CreatedByUser_ID,ApplicationType_ID,Person_ID,ApplicationDate,PaidFees,LastStatusDate,ApplicationStatus" +
@@ -177,10 +178,10 @@ namespace DVLD__Data_Tier.Repositories
 
                 try
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        if (reader.Read())
+                        if (await reader.ReadAsync())
                         {
                             application = new Application
                             {
@@ -217,7 +218,7 @@ namespace DVLD__Data_Tier.Repositories
             return application;
         }
         
-        public static int doesHasAnActiveLocalDrivingLicenseApplication(int personID,int licenseClassID)
+        public async Task<int> doesHasAnActiveLocalDrivingLicenseApplication(int personID,int licenseClassID)
         {
             int foundApplicationID = -1;
             string query = "select Applications.ApplicationID from Applications " +
@@ -232,16 +233,17 @@ namespace DVLD__Data_Tier.Repositories
                 command.Parameters.AddWithValue("@licenseClassID", licenseClassID);
                 try
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    await connection.OpenAsync();
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        if (reader.Read())
+                        if (await reader.ReadAsync())
                         {
                             foundApplicationID = reader.GetInt32(0);
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -256,7 +258,7 @@ namespace DVLD__Data_Tier.Repositories
         // ==========================================
         // 3. READ ALL (Get All as List)
         // ==========================================
-        public static List<Application> GetAllApplications()
+        public async Task<List<Application>> GetAllApplications()
         {
             List<Application> appsList = new List<Application>();
             string query = "SELECT * FROM Applications ORDER BY ApplicationDate DESC"; // Newest first!
@@ -266,10 +268,11 @@ namespace DVLD__Data_Tier.Repositories
             {
                 try
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    await connection.OpenAsync();
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
                             appsList.Add(new Application
                             {
@@ -285,7 +288,7 @@ namespace DVLD__Data_Tier.Repositories
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -296,7 +299,7 @@ namespace DVLD__Data_Tier.Repositories
             }
             return appsList;
         }
-        public static async Task<List<clsLocalDrivingLicesnseApplicationView>> GetAll_L_D_L_Applications()
+        public  async Task<List<clsLocalDrivingLicesnseApplicationView>> GetAll_L_D_L_Applications()
         {
             TestRepository testRepository = new TestRepository();
             List<clsLocalDrivingLicesnseApplicationView> appsList = new List<clsLocalDrivingLicesnseApplicationView>();
@@ -309,6 +312,7 @@ namespace DVLD__Data_Tier.Repositories
                 try
                 {
                     await connection.OpenAsync();
+
                     using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
@@ -337,7 +341,7 @@ namespace DVLD__Data_Tier.Repositories
         // ==========================================
         // 4. UPDATE
         // ==========================================
-        public static bool UpdateApplication(Application app)
+        public async Task<bool> UpdateApplication(Application app)
         {
             int rowsAffected = 0;
 
@@ -374,8 +378,8 @@ namespace DVLD__Data_Tier.Repositories
 
                 try
                 {
-                    connection.Open();
-                    rowsAffected = command.ExecuteNonQuery();
+                    await connection.OpenAsync();
+                    rowsAffected = await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception)
                 {
@@ -392,7 +396,7 @@ namespace DVLD__Data_Tier.Repositories
         // ==========================================
         // 5. DELETE
         // ==========================================
-        public static bool DeleteApplication(int applicationID)
+        public async Task<bool> DeleteApplication(int applicationID)
         {
             int rowsAffected = 0;
             string query = "DELETE FROM Applications WHERE ApplicationID = @ApplicationID";
@@ -404,8 +408,9 @@ namespace DVLD__Data_Tier.Repositories
 
                 try
                 {
-                    connection.Open();
-                    rowsAffected = command.ExecuteNonQuery();
+                    await connection.OpenAsync();
+
+                    rowsAffected = await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception)
                 {                    
