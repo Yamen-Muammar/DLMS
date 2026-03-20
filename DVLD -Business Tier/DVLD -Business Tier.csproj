@@ -66,6 +66,7 @@
     <Compile Include="Services\CountryService.cs" />
     <Compile Include="Services\LicenseClassService.cs" />
     <Compile Include="Services\PersonService.cs" />
+    <Compile Include="Services\TestService.cs" />
     <Compile Include="Services\TestTypeService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
@@ -78,6 +79,9 @@
       <Project>{1cf9b99c-5359-4358-a0b4-be7ce6c7c181}</Project>
       <Name>DVLD -Data Tier</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Services\.editorconfig" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLD__Business_Tier.Services;
+using DVLD__Core.Models;
 using DVLD__Core.View_Models;
 
 namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
@@ -21,37 +22,69 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private  List<clsLocalDrivingLicesnseApplicationView> _dataBaseSource { get; set; }
         public frmLocalDrivingLicenseApplication()
         {
-            InitializeComponent();
+            InitializeComponent();    
+            _applicationService = new ApplicationService();
         }
        
         private async void frmLocalDrivingLicenseApplication_Load(object sender, EventArgs e)
         {
             _loadComboBox();
-            await _refreshDataOnSource(_dataBaseSource);
-            _refreshDGVDataSource(_dataBaseSource);
+            await _refreshUIDataHoldersAsync(_dataBaseSource);
         }
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        private async void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-
+            TestService testService = new TestService();
+            // TODO : Viabilty logic 
+            string nationalNo = _getSelectedNationalNo();
+            int CountOfPassedTest= await testService.PassedTestCount(nationalNo);
+            _visbleComboItemsOnPassedTests(CountOfPassedTest);
         }
+
+        private async void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int lDLAppID = _getSelectedLDLApplicationID();
+            bool isDeleted = false;
+
+            if (MessageBox.Show($"Application ID :{lDLAppID} Will Be Deleted, Are You Sure ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                isDeleted = await _applicationService.DeleteLDLApplicationAsync(lDLAppID);
+                if (!isDeleted)
+                {
+                    MessageBox.Show("Something Went Wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Application Deleted Successfully", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    await _refreshUIDataHoldersAsync(_dataBaseSource);
+                }
+            }
+            catch (Exception EX)
+            {
+                MessageBox.Show(EX.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
+        }      
         private async void btnAddNewLDApplication_Click(object sender, EventArgs e)
         {
             frmNewLocalDrivingLicenseApplication frmNewLocalDrivingLicenseApplication = new frmNewLocalDrivingLicenseApplication();
             frmNewLocalDrivingLicenseApplication.ShowDialog();
-            await _refreshDataOnSource(_dataBaseSource);
-            _refreshDGVDataSource(_dataBaseSource);
+            await _refreshUIDataHoldersAsync(_dataBaseSource);
         }
         private async void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int localDrivingLicenseApplicationID = (int)dgvApplicationsList.CurrentRow.Cells[0].Value;
+            int localDrivingLicenseApplicationID = _getSelectedLDLApplicationID();
 
             try
             {
                 if (await _applicationService.UpdateLDLApplicationStatus(localDrivingLicenseApplicationID, ApplicationService.enStatus.Canceled))
                 {
                     MessageBox.Show("Application Status Updated Successfully", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    await _refreshDataOnSource(_dataBaseSource);
-                    _refreshDGVDataSource(_dataBaseSource);
+                     await _refreshUIDataHoldersAsync(_dataBaseSource);
                 }
             }
             catch (Exception ex)
@@ -99,9 +132,21 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             dgvApplicationsList.DataSource = source;
             lblRecordsCount.Text = source.Count.ToString();
         }
+        private async Task _refreshUIDataHoldersAsync(List<clsLocalDrivingLicesnseApplicationView> source)
+        {
+            await _refreshDataOnSource(source);
+            _refreshDGVDataSource(_list);
+        }
+        private int _getSelectedLDLApplicationID()
+        {
+            return (int)dgvApplicationsList.CurrentRow.Cells[0].Value;
+        }
+        private string _getSelectedNationalNo()
+        {
+            return (string)dgvApplicationsList.CurrentRow.Cells["NationalNo"].Value;
+        }
         private async Task _loadDataAsync()
         {
-            _applicationService = new ApplicationService();
             _dataBaseSource = new List<clsLocalDrivingLicesnseApplicationView>();
             try
             {
@@ -187,5 +232,29 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
             return filteredList;
         }
+
+        private void _visbleComboItemsOnPassedTests(int PassedTestsCount)
+        {
+            switch (PassedTestsCount)
+            {
+                case 0:
+                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                    showLicenseToolStripMenuItem.Enabled = false;
+
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                    // TODO : if he is got license you can show this create it when we make the license service class.
+                    showLicenseToolStripMenuItem.Enabled = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }

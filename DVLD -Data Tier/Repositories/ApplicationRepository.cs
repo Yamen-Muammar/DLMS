@@ -423,5 +423,85 @@ namespace DVLD__Data_Tier.Repositories
             }
             return (rowsAffected > 0);
         }
+
+        public async Task<bool> DeleteLDLApplication(int lDLApplicationID)
+        {
+            bool isBaseApplicationDeleted = false;
+            bool isLDLApplicationDeleted = false;
+            int ApplicationId = -1;
+            Application ApplicationBeforeDelete = null;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+
+                await connection.OpenAsync();
+
+                // 2. Begin the transaction
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        ApplicationBeforeDelete = await GetApplicationByLDL_ID(lDLApplicationID);
+                        if (ApplicationBeforeDelete == null)
+                        {
+                            throw new ArgumentNullException("Returnd LDLApplication is Null");
+                        }
+
+                        ApplicationId = ApplicationBeforeDelete.ApplicationID;
+
+                        isLDLApplicationDeleted = await DeleteLDLApplicationFromLDLTable(lDLApplicationID);
+                        if (!isLDLApplicationDeleted)
+                        {
+                            throw new Exception("LDLApplication is not Deleted");
+                        }
+
+                        isBaseApplicationDeleted = await DeleteApplication(ApplicationId);
+                        if (!isLDLApplicationDeleted)
+                        {
+                            throw new Exception("Base Application is not Deleted");
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+            return true;
+        }
+        private async Task<bool> DeleteLDLApplicationFromLDLTable(int lDLApplicationID)
+        {
+            int rowsAffected = 0;
+            string query = "DELETE FROM LocalDrivingLicenseApplications WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", lDLApplicationID);
+
+                try
+                {
+                    await connection.OpenAsync();
+
+                    rowsAffected = await command.ExecuteNonQueryAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return (rowsAffected > 0);
+        }
+
     }
 }

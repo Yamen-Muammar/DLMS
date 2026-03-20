@@ -174,5 +174,17 @@ namespace DVLD__Business_Tier.Services
 
             return true;
         }
+
+        public async Task<bool> DeleteLDLApplicationAsync(int lDLappID) 
+        {
+            if (lDLappID < 0)
+            {
+                throw new ArgumentException("Value Error");               
+            }
+
+            await _appRepo.DeleteLDLApplication(lDLappID);
+            return true;
+                
+        } 
     }
 }

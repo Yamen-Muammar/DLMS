@@ -33,7 +33,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvApplicationsList = new System.Windows.Forms.DataGridView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CMStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showApplicationDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +43,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.sechduleTestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.issToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.issueDrivingLicenseFirstTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.showLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +55,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddNewLDApplication = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationsList)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
+            this.CMStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -75,7 +74,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.dgvApplicationsList.AllowUserToAddRows = false;
             this.dgvApplicationsList.AllowUserToDeleteRows = false;
             this.dgvApplicationsList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvApplicationsList.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgvApplicationsList.ContextMenuStrip = this.CMStrip;
             this.dgvApplicationsList.Location = new System.Drawing.Point(12, 228);
             this.dgvApplicationsList.Name = "dgvApplicationsList";
             this.dgvApplicationsList.ReadOnly = true;
@@ -84,10 +83,10 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.dgvApplicationsList.Size = new System.Drawing.Size(1257, 476);
             this.dgvApplicationsList.TabIndex = 1;
             // 
-            // contextMenuStrip1
+            // CMStrip
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CMStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.CMStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showApplicationDetailsToolStripMenuItem,
             this.toolStripSeparator1,
             this.editeApplicationToolStripMenuItem,
@@ -97,15 +96,14 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.toolStripSeparator3,
             this.sechduleTestsToolStripMenuItem,
             this.toolStripSeparator4,
-            this.issToolStripMenuItem,
             this.issueDrivingLicenseFirstTimeToolStripMenuItem,
             this.toolStripSeparator5,
             this.showLicenseToolStripMenuItem,
             this.toolStripSeparator6,
             this.showPersonLicenseHistoryToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(347, 302);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            this.CMStrip.Name = "contextMenuStrip1";
+            this.CMStrip.Size = new System.Drawing.Size(347, 329);
+            this.CMStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // showApplicationDetailsToolStripMenuItem
             // 
@@ -132,6 +130,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.deleteApplicationToolStripMenuItem.Name = "deleteApplicationToolStripMenuItem";
             this.deleteApplicationToolStripMenuItem.Size = new System.Drawing.Size(346, 32);
             this.deleteApplicationToolStripMenuItem.Text = "Delete Application";
+            this.deleteApplicationToolStripMenuItem.Click += new System.EventHandler(this.deleteApplicationToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -162,11 +161,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(343, 6);
-            // 
-            // issToolStripMenuItem
-            // 
-            this.issToolStripMenuItem.Name = "issToolStripMenuItem";
-            this.issToolStripMenuItem.Size = new System.Drawing.Size(343, 6);
             // 
             // issueDrivingLicenseFirstTimeToolStripMenuItem
             // 
@@ -281,7 +275,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.Text = "frmLocalDrivingLicenseApplication";
             this.Load += new System.EventHandler(this.frmLocalDrivingLicenseApplication_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationsList)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.CMStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -296,7 +290,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private System.Windows.Forms.Label lblRecordsCount;
         private System.Windows.Forms.TextBox tbFilterInput;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip CMStrip;
         private System.Windows.Forms.ToolStripMenuItem showApplicationDetailsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem editeApplicationToolStripMenuItem;
@@ -306,7 +300,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem sechduleTestsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator issToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem issueDrivingLicenseFirstTimeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem showLicenseToolStripMenuItem;
