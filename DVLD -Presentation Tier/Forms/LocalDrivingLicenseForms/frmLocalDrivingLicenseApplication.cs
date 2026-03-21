@@ -238,22 +238,31 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             switch (PassedTestsCount)
             {
                 case 0:
-                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
-                    showLicenseToolStripMenuItem.Enabled = false;
-
+                    SetVisibleMenuItems(true, false, false, true, false);
                     break;
                 case 1:
+                    SetVisibleMenuItems(false, true, false, true, false);
                     break;
                 case 2:
+                    SetVisibleMenuItems(false, false, true, true, false);
                     break;
                 case 3:
-                    issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
-                    // TODO : if he is got license you can show this create it when we make the license service class.
-                    showLicenseToolStripMenuItem.Enabled = false;
+                    SetVisibleMenuItems(false, false, false, true, false);
                     break;
                 default:
+                    SetVisibleMenuItems(false, false, false, false, false);
                     break;
             }
+        }
+
+        private void SetVisibleMenuItems(bool VisionTest,bool WrittenTest,bool StreetTest,bool issueDrivingLicense, bool showLicense)
+        {
+            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = issueDrivingLicense;
+            // TODO : if he is got license you can show this create it when we make the license service class.
+            showLicenseToolStripMenuItem.Enabled = showLicense;
+            sechduleStreetTestToolStripMenuItem.Enabled = StreetTest;
+            sechduleVisionTestToolStripMenuItem.Enabled = VisionTest;
+            sechduleWrittenTestToolStripMenuItem.Enabled = WrittenTest;
         }
 
     }

@@ -42,6 +42,9 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             this.cancelApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.sechduleTestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sechduleVisionTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sechduleWrittenTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sechduleStreetTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.issueDrivingLicenseFirstTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -152,10 +155,35 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             // 
             // sechduleTestsToolStripMenuItem
             // 
+            this.sechduleTestsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sechduleVisionTestToolStripMenuItem,
+            this.sechduleWrittenTestToolStripMenuItem,
+            this.sechduleStreetTestToolStripMenuItem});
             this.sechduleTestsToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.ScheduleTest32;
             this.sechduleTestsToolStripMenuItem.Name = "sechduleTestsToolStripMenuItem";
             this.sechduleTestsToolStripMenuItem.Size = new System.Drawing.Size(346, 32);
             this.sechduleTestsToolStripMenuItem.Text = "Sechdule Tests";
+            // 
+            // sechduleVisionTestToolStripMenuItem
+            // 
+            this.sechduleVisionTestToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.Vision;
+            this.sechduleVisionTestToolStripMenuItem.Name = "sechduleVisionTestToolStripMenuItem";
+            this.sechduleVisionTestToolStripMenuItem.Size = new System.Drawing.Size(283, 34);
+            this.sechduleVisionTestToolStripMenuItem.Text = "Sechdule Vision Test";
+            // 
+            // sechduleWrittenTestToolStripMenuItem
+            // 
+            this.sechduleWrittenTestToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.edit32;
+            this.sechduleWrittenTestToolStripMenuItem.Name = "sechduleWrittenTestToolStripMenuItem";
+            this.sechduleWrittenTestToolStripMenuItem.Size = new System.Drawing.Size(283, 34);
+            this.sechduleWrittenTestToolStripMenuItem.Text = "Sechdule Written Test";
+            // 
+            // sechduleStreetTestToolStripMenuItem
+            // 
+            this.sechduleStreetTestToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.StreetTest32;
+            this.sechduleStreetTestToolStripMenuItem.Name = "sechduleStreetTestToolStripMenuItem";
+            this.sechduleStreetTestToolStripMenuItem.Size = new System.Drawing.Size(283, 34);
+            this.sechduleStreetTestToolStripMenuItem.Text = "Sechdule Street Test";
             // 
             // toolStripSeparator4
             // 
@@ -306,5 +334,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem showPersonLicenseHistoryToolStripMenuItem;
         private System.Windows.Forms.ComboBox cbFilterOn;
+        private System.Windows.Forms.ToolStripMenuItem sechduleVisionTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sechduleWrittenTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sechduleStreetTestToolStripMenuItem;
     }
 }
