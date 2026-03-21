@@ -15,32 +15,36 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
     public partial class frmUpdateTestType : Form
     {
         private int _testTypeID = -1;
-        private TestType _testType;
+        private TestType TestType { get; set; }
+        private TestTypeService _testTypeService;
         public frmUpdateTestType()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            _testTypeService = new TestTypeService();
         }
 
         public frmUpdateTestType(int testTypeID)
         {
             InitializeComponent();
             _testTypeID = testTypeID;
+            _testTypeService = new TestTypeService();
         }
 
-        private void frmUpdateTestType_Load(object sender, EventArgs e)
+        private async void frmUpdateTestType_Load(object sender, EventArgs e)
         {
-            if (!_loadTestTypeDataToObject(_testTypeID))
+            if (! await _loadTestTypeDataToObject(_testTypeID))
             {
+                this.Close();
                 return;
             }
             _loadDataInForm();
         }
 
-        private bool _loadTestTypeDataToObject(int id)
+        private async Task<bool> _loadTestTypeDataToObject(int id)
         {
             try
             {
-                _testType = TestTypeService.Find(id);
+                TestType =await _testTypeService.Find(id);
                 return true;
             }
             catch (Exception ex)
@@ -53,11 +57,11 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
         private void _loadDataInForm()
         {
             lblID .Text = _testTypeID.ToString();
-            tbTitle.Text = _testType.TestTypeTitle.ToString();
-            tbDescription.Text =_testType.TestTypeDescription.ToString();
-            tbFees.Text = _testType.TestTypeFees.ToString();
+            tbTitle.Text = TestType.TestTypeTitle.ToString();
+            tbDescription.Text =TestType.TestTypeDescription.ToString();
+            tbFees.Text = TestType.TestTypeFees.ToString();
         }
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private async void btnUpdate_Click(object sender, EventArgs e)
         {
             if (!_loadInfoToObject())
             {
@@ -66,7 +70,7 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
 
             try
             {
-                if (TestTypeService.UpdateTestType(_testType))
+                if (await _testTypeService.UpdateTestType(TestType))
                 {
                     MessageBox.Show("Test Type updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
@@ -88,9 +92,9 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
                 return false;
             }
 
-            _testType.TestTypeTitle = tbTitle.Text.ToString();
+            TestType.TestTypeTitle = tbTitle.Text.ToString();
             tbDescription.Text = tbDescription.Text.ToString();
-            _testType.TestTypeFees = decimal.Parse(tbFees.Text);
+            TestType.TestTypeFees = decimal.Parse(tbFees.Text);
             return
                 true;
         }

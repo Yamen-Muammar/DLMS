@@ -10,35 +10,40 @@ namespace DVLD__Business_Tier.Services
 {
     public class TestTypeService
     {
-        public static TestType Find(int id)
+        private TestTypesRepository _repository;
+
+        public TestTypeService()
         {
-            TestType testType = TestTypesRepository.GetTestTypeByID(id);
+            _repository = new TestTypesRepository();
+        }
+        public  async Task<TestType> Find(int id)
+        {
+            TestType testType = await _repository.GetTestTypeByID(id);
             
             return testType;
         }
-
-        public static bool UpdateTestType(TestType testType)
+        public  async Task<bool> UpdateTestType(TestType testType)
         {
             if (!_validateTestType(testType))
             {
                 return false;
             }
             
-            if (!TestTypesRepository.UpdateTestType(testType))
+            if (!await _repository.UpdateTestType(testType))
             {
                 throw new Exception("Can not update the test type. Please try again later.");
             }
             return true;
         }
-        public static List<TestType> GetAllTestTypes()
+        public  async Task<List<TestType>> GetAllTestTypes()
         {
             List<TestType> testTypes; 
 
-            testTypes = TestTypesRepository.GetAllTestTypes();
+            testTypes = await _repository.GetAllTestTypes();
             
             return testTypes;
         }
-        private static bool _validateTestType(TestType testType)
+        private bool _validateTestType(TestType testType)
         {
             if (testType == null)
             {

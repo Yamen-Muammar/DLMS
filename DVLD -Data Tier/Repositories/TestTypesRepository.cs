@@ -11,7 +11,7 @@ namespace DVLD__Data_Tier.Repositories
 {
     public class TestTypesRepository
     {
-        public static TestType GetTestTypeByID(int testTypeID)
+        public async Task<TestType> GetTestTypeByID(int testTypeID)
         {
             TestType testType = null;
 
@@ -22,10 +22,11 @@ namespace DVLD__Data_Tier.Repositories
                 command.Parameters.AddWithValue("@ID", testTypeID);
                 try
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    await connection.OpenAsync();
+
+                    using (SqlDataReader reader =await command.ExecuteReaderAsync())
                     {
-                        if (reader.Read())
+                        if (await reader.ReadAsync())
                         {
                             testType = new TestType
                             {
@@ -44,8 +45,7 @@ namespace DVLD__Data_Tier.Repositories
             }
             return testType;
         }
-
-        public static List<TestType> GetAllTestTypes()
+        public  async Task<List<TestType>> GetAllTestTypes()
         {
 
             List<TestType> types = new List<TestType>();
@@ -57,11 +57,11 @@ namespace DVLD__Data_Tier.Repositories
             {
                 try
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
                     
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
                             types.Add(new TestType
                             {
@@ -80,8 +80,7 @@ namespace DVLD__Data_Tier.Repositories
             }
             return types;
         }
-
-        public static bool UpdateTestType(TestType testType)
+        public  async Task<bool> UpdateTestType(TestType testType)
         {
             int rowsAffected = 0;
 
@@ -102,9 +101,9 @@ namespace DVLD__Data_Tier.Repositories
                 command.Parameters.AddWithValue("@description", testType.TestTypeDescription);
                 try
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    rowsAffected = command.ExecuteNonQuery();
+                    rowsAffected =await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception)
                 {

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,9 +16,12 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
     public partial class frmManageTestTypes : Form
     {
         private List<TestType> _testTypes;
+
+        private TestTypeService _testTypeService;
         public frmManageTestTypes()
         {
             InitializeComponent();
+            _testTypeService = new TestTypeService();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -25,15 +29,15 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
             this.Close();
         }
 
-        private void frmManageTestTypes_Load(object sender, EventArgs e)
+        private async void frmManageTestTypes_Load(object sender, EventArgs e)
         {
-            _refreshTestTypes();
+            await _refreshTestTypes();
         }
 
-        private void _refreshTestTypes()
+        private async Task _refreshTestTypes()
         {
             _testTypes = null;
-            _testTypes = _getTestTypesList();
+            _testTypes = await _getTestTypesList();
             if (_testTypes == null)
             {
                 this.Close();
@@ -43,11 +47,11 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
             dgvListOfTestTypes.DataSource = _testTypes;
             lblRecordsCount.Text = _testTypes.Count.ToString();
         }     
-        private List<TestType> _getTestTypesList()
+        private async Task<List<TestType>> _getTestTypesList()
         {
             try
             {
-                return TestTypeService.GetAllTestTypes();
+                return await _testTypeService.GetAllTestTypes();
             }
             catch (Exception ex)
             {
