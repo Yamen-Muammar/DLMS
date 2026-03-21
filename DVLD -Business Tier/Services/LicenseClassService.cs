@@ -10,9 +10,14 @@ namespace DVLD__Business_Tier.Services
 {
     public class LicenseClassService
     {
-        public static List<LicenseClass> GetAlllicenseClasses()
+        private LicenseClassRepository _repository;
+        public LicenseClassService()
         {
-            List<LicenseClass> list = LicenseClassRepository.GetAllLicenseClasses();
+            _repository = new LicenseClassRepository();
+        }
+        public  async Task<List<LicenseClass>> GetAlllicenseClasses()
+        {
+            List<LicenseClass> list = await _repository.GetAllLicenseClasses();
 			return list;
         }
     }

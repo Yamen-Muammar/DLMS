@@ -16,20 +16,30 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
     public partial class frmNewLocalDrivingLicenseApplication : Form
     {
         private ApplicationService _applicationService;
+
         private int _personID = -1; //store id from retriveing event in ctrlPersonInformationWithFilter.
         private ApplicationType _applicationType {  get; set; }
+
         private List<LicenseClass> _licenseClasses;
+
+        ApplicationsTypeService _applicationsTypeService;
+
         private const int LDLApplicationType_ID = 2;
+
+        LicenseClassService _licenseClassService;
+
+
         public frmNewLocalDrivingLicenseApplication()
         {
             InitializeComponent();
+            _licenseClassService = new LicenseClassService();
+            _applicationsTypeService = new ApplicationsTypeService();
         }
         private async Task _getApplicationTypeByID(int LDLApplicationType_ID)
-        {
-            ApplicationsTypeService applicationsTypeService = new ApplicationsTypeService();
+        {  
             try
             {
-                _applicationType = await applicationsTypeService.GetApplicationTypeByID(LDLApplicationType_ID);
+                _applicationType = await _applicationsTypeService.GetApplicationTypeByID(LDLApplicationType_ID);
             }
             catch (Exception)
             {
@@ -87,20 +97,22 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             _personID = PersonID;
         }
 
-        private void _loadDataInForm()
+        // TODO : FIND THE DIFFERENCE BETWEEN ASYNC VOID AND ASYNC TASK
+        private async void _loadDataInForm()
         {
             lblApplicationDate.Text = DateTime.Now.ToString("d");
             lblCreatedName.Text = Global.User.Username;
             lblApplicationFees.Text = _applicationType.ApplicationTypeFees.ToString();
-            _loadLicenseClassComboBox();
+            await _loadLicenseClassComboBox();
         }
 
-        private void _loadLicenseClassComboBox()
+        private async Task _loadLicenseClassComboBox()
         {
             _licenseClasses = new List<LicenseClass>();
+            
             try
             {
-                _licenseClasses = LicenseClassService.GetAlllicenseClasses();
+                _licenseClasses = await _licenseClassService.GetAlllicenseClasses();
 
                 foreach (LicenseClass licenseClass in _licenseClasses)
                 {

@@ -10,7 +10,7 @@ namespace DVLD__Data_Tier.Repositories
 {
     public class LicenseClassRepository
     {
-        public static List<LicenseClass> GetAllLicenseClasses()
+        public  async Task<List<LicenseClass>> GetAllLicenseClasses()
         {         
             List<LicenseClass> classesList = new List<LicenseClass>();
           
@@ -21,11 +21,11 @@ namespace DVLD__Data_Tier.Repositories
             {
                 try
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader =await command.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
                             classesList.Add(new LicenseClass
                             {
