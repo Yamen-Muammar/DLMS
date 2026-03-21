@@ -71,7 +71,7 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
             return true;
         }
 
-        private void editeTestTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editeTestTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!_validateSelectedApplicationType())
             {
@@ -81,7 +81,7 @@ namespace DVLD__Presentation_Tier.Forms.Test_Types_Forms
             int selectedTestTypeID = (int)dgvListOfTestTypes.CurrentRow.Cells[0].Value;
             frmUpdateTestType frmUpdateApplicationTypeInfo = new frmUpdateTestType(selectedTestTypeID);
             frmUpdateApplicationTypeInfo.ShowDialog();
-            _refreshTestTypes();
+            await _refreshTestTypes();
         }
     }
 }

@@ -14,8 +14,13 @@ namespace DVLD__Business_Tier.Services
 {
     public class UserService
     {
+        private UserRepository _userRepository;
+        public UserService()
+        {
+            _userRepository = new UserRepository();
+        }
         //Login Helper Methodes
-        public async static Task<bool> Login(string username, string password, bool isRemaindMeActive)
+        public async Task<bool> Login(string username, string password, bool isRemaindMeActive)
         {
             User user = null;
 
@@ -24,7 +29,7 @@ namespace DVLD__Business_Tier.Services
                 throw new ArgumentException("Username AND Password cannot be Empty.");
             }
 
-            user = await UserRepository.GetUserByUsername(username);
+            user = await _userRepository.GetUserByUsername(username);
             if (user == null)
             {
                 throw new Exception("Invalid username or password. Please try again.");
@@ -54,7 +59,7 @@ namespace DVLD__Business_Tier.Services
             return true; // Placeholder for successful login
         }
 
-        private  static bool SaveRemaindMeInfo(string username, string password)
+        private bool SaveRemaindMeInfo(string username, string password)
         {
             string seperator = "|||";
             string line = username + seperator + password;
@@ -74,7 +79,7 @@ namespace DVLD__Business_Tier.Services
             return true;
         }
 
-        private static bool RemoveDataInRemaindMeFile()
+        private bool RemoveDataInRemaindMeFile()
         {
             string filePath = @"F:\yamen - 2024\C#\Course\projects\remaindInfo.txt";
 
@@ -89,7 +94,7 @@ namespace DVLD__Business_Tier.Services
             return true;
         }
 
-        public static List<string> GetRemaindMeInfo()
+        public  List<string> GetRemaindMeInfo()
         {
             List<string> list = new List<string>();
 
@@ -115,7 +120,7 @@ namespace DVLD__Business_Tier.Services
             return list;
         }
 
-        private static List<string> _decodeLine(string line, string seperator)
+        private List<string> _decodeLine(string line, string seperator)
         {
             List<string> list = new List<string>();
 
@@ -136,71 +141,71 @@ namespace DVLD__Business_Tier.Services
 
         // Gets
 
-        public static List<clsUserView> GetAllUsers()
+        public  async Task<List<clsUserView>> GetAllUsers()
         {
             List<clsUserView> usersList = new List<clsUserView>();
             
-            usersList = UserRepository.GetAllUser();
+            usersList = await _userRepository.GetAllUser();
            
             return usersList;
         }
 
-        public static User GetUserById(int userId)
+        public  async Task<User> GetUserById(int userId)
         {
             User user = null;
-            user = UserRepository.GetUserByID(userId);
+            user = await _userRepository.GetUserByID(userId);
             return user;
         }
 
-        public static bool isUserExists(int personId) 
+        public  async Task<bool> isUserExists(int personId) 
         {
             bool isFound = false;
-            isFound = UserRepository.IsUserExistOnPersonID(personId);
+            isFound = await _userRepository.IsUserExistOnPersonID(personId);
             return isFound;
         }
 
         //Delete 
-        public static bool DeleteUser(int userId)
+        public  async Task<bool> DeleteUser(int userId)
         {         
             bool isDeleted = false;
             
             
-                User userToDelete = GetUserById(userId);
+            User userToDelete =await GetUserById(userId);
 
-                if (userToDelete == null)
-                {
-                    throw new Exception("User Not Found");
-                }
+            if (userToDelete == null)
+            {
+                throw new Exception("User Not Found");
+            }
 
-                if (userToDelete.UserID == Global.User.UserID)
-                {
-                    throw new Exception("You Can not delete yourself");
-                }
+            if (userToDelete.UserID == Global.User.UserID)
+            {
+                throw new Exception("You Can not delete yourself");
+            }
 
-                if (!UserRepository.DeleteUser(userId))
-                {                                        
-                    throw new Exception("Can not Delete the User");
-                }
-                else
-                {
-                    isDeleted = true;
-                }
+            if (!await _userRepository.DeleteUser(userId))
+            {                                        
+                throw new Exception("Can not Delete the User");
+            }
+            else
+            {
+                isDeleted = true;
+            }
            
             return isDeleted;
         }
 
         // Add 
 
-        public static int AddNewUser(User user)
+        public  async Task<int> AddNewUser(User user)
         {
             int insertedUser = -1;
             
-            if(UserRepository.IsUserExistOnPersonID(user.Person_ID))
+            if(await _userRepository.IsUserExistOnPersonID(user.Person_ID))
             {
                 throw new Exception("User Already Exists");
             }
 
-            insertedUser = UserRepository.AddNewUser(user);
+            insertedUser = await _userRepository.AddNewUser(user);
             if (insertedUser == -1)
             {
                 throw new Exception("Can not Add the User");
@@ -210,14 +215,14 @@ namespace DVLD__Business_Tier.Services
         }
 
         //Update 
-        public static bool UpdateUserInfo(string newHashedPassword,bool isActive)
+        public  async Task<bool> UpdateUserInfo(string newHashedPassword,bool isActive)
         {
             if (newHashedPassword == string.Empty)
             {
                 throw new Exception("New Password Cannot be Empty");
             }
 
-            if(UserRepository.UpdateUser(newHashedPassword,isActive))
+            if(await _userRepository.UpdateUser(newHashedPassword,isActive))
             {
                 return true;
             }

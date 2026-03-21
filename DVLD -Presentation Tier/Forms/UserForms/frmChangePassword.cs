@@ -15,12 +15,19 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 {
     public partial class frmChangePassword : Form
     {
+        private UserService _userService;
         public frmChangePassword()
         {
             InitializeComponent();
+            _userService = new UserService();
         }
-      
-        private void btnSave_Click(object sender, EventArgs e)
+        public frmChangePassword(int userId)
+        {
+            InitializeComponent(userId);
+            _userService = new UserService();
+        }
+
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             if (!_isInputsValid())
             {
@@ -33,13 +40,14 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             if (!isCurrentPasswordVerified)
             {
                 MessageBox.Show("Current password is incorrect. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             string hashedNewPassword = clsPasswordHasher.HashPassword(tbNewPassword.Text);
 
             try
             {
-                if (UserService.UpdateUserInfo(hashedNewPassword,true))
+                if (await _userService.UpdateUserInfo(hashedNewPassword,true))
                 {
                     MessageBox.Show("Password updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
@@ -49,7 +57,6 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -16,27 +16,46 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
     public partial class ctrlUserInfo : UserControl
     {
         private User UserInfo { get; set; }
+
+        private UserService _userService;
+
+        private int _userId;
         public ctrlUserInfo()
         {
             InitializeComponent();
-            UserInfo = Global.User;
+            _userService = new UserService();
+            _userId = -1;
         }
 
         public ctrlUserInfo(int UserId)
         {
             InitializeComponent();
-            UserInfo = _getUserInfo(UserId);
+            _userService = new UserService();
+            _userId = UserId;
         }
-        private void ctrlUserInfo_Load(object sender, EventArgs e)
-        {      
+        private async void ctrlUserInfo_Load(object sender, EventArgs e)
+        {
+            if (_userId == -1)
+            {
+                UserInfo = Global.User;
+            }
+            else
+            {
+                UserInfo = await _getUserInfo(_userId);
+            }
+            
+            if (UserInfo == null)
+            {
+                return;
+            }
             _loadUserInforamtionInForm(UserInfo);
         }
-        private User _getUserInfo(int userId)
+        private async Task<User> _getUserInfo(int userId)
         {
             User userInfo = null;
             try
             {
-                userInfo = UserService.GetUserById(userId);
+                userInfo = await _userService.GetUserById(userId);
                 if (userInfo == null)
                 {
                     MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -49,7 +68,6 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
             }
             return userInfo;
         }
-
         private void _loadUserInforamtionInForm(User user)
         {
             if (user == null)

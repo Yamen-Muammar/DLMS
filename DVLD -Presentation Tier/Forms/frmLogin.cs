@@ -15,9 +15,11 @@ namespace DVLD__Presentation_Tier.Forms
 {
     public partial class frmLogin : Form
     {
+        private UserService _userService;
         public frmLogin()
         {
             InitializeComponent();
+            _userService= new UserService();
         }
         //Event Handeling 
         private void frmLogin_Load(object sender, EventArgs e)
@@ -56,7 +58,7 @@ namespace DVLD__Presentation_Tier.Forms
 
             try
             { 
-                isLoginSuccessful =await UserService.Login(username, password, isRememberMeChecked);
+                isLoginSuccessful =await _userService.Login(username, password, isRememberMeChecked);
             }
             catch (Exception ex)
             {
@@ -89,7 +91,7 @@ namespace DVLD__Presentation_Tier.Forms
         {
             try
             {
-                List<string> data = UserService.GetRemaindMeInfo();
+                List<string> data = _userService.GetRemaindMeInfo();
                 if (data != null && data.Count > 0)
                 {
                     tbUsername.Text = data[0];

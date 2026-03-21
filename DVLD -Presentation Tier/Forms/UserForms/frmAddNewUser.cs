@@ -16,10 +16,13 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
     public partial class frmAddNewUser : Form
     {
         private int _personID { get; set; } = -1;
+
+        private UserService _userService;
         public frmAddNewUser()
         {
             InitializeComponent();
             ctrlPersonInformationWithFilter1.ReturnPersonID_OnFindPerson += OnReturnPersonID_OnFindPerson;
+            _userService = new UserService();               
         }
 
         // Button Events
@@ -28,7 +31,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             this.Close();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             if (!_validateInputs())
             {
@@ -37,7 +40,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
             try
             {
-                if (UserService.isUserExists(_personID))
+                if (await _userService.isUserExists(_personID))
                 {
                     MessageBox.Show("User is already Exists", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -58,7 +61,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             
             try
             {
-                int NewSavedUserID = UserService.AddNewUser(user);
+                int NewSavedUserID =await _userService.AddNewUser(user);
                 if (NewSavedUserID != -1)
                 {
                     lbNewID.Text = NewSavedUserID.ToString();

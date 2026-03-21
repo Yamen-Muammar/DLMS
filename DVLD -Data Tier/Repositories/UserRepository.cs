@@ -11,14 +11,14 @@ using DVLD__Core.View_Models;
 
 namespace DVLD__Data_Tier.Repositories
 {    
-    public static class UserRepository
+    public class UserRepository
     {
-        private static string connectionString = DataBaseSettings.DataBaseConnectionString;
+        private string connectionString = DataBaseSettings.DataBaseConnectionString;
 
         // ---------------------------------------------------------
         // 1. CREATE (Insert New User)
         // ---------------------------------------------------------
-        public static int AddNewUser(User user)
+        public async Task<int> AddNewUser(User user)
         {
             int newUserID = -1;
 
@@ -38,8 +38,8 @@ namespace DVLD__Data_Tier.Repositories
                     cmd.Parameters.AddWithValue("@personID", user.Person_ID);                    
                     try
                     {
-                        conn.Open();
-                        object result = cmd.ExecuteScalar();
+                        await conn.OpenAsync();
+                        object result =await cmd.ExecuteScalarAsync();
 
                         if (result != null && int.TryParse(result.ToString(), out int insertedID))
                         {
@@ -58,7 +58,7 @@ namespace DVLD__Data_Tier.Repositories
         // ---------------------------------------------------------
         // 2. READ (Get User)
         // ---------------------------------------------------------
-        public static User GetUserByID(int userID)
+        public  async Task<User> GetUserByID(int userID)
         {
             User foundUser = null;
 
@@ -72,10 +72,10 @@ namespace DVLD__Data_Tier.Repositories
 
                     try
                     {
-                        conn.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        await conn.OpenAsync();
+                        using (SqlDataReader reader =await cmd.ExecuteReaderAsync())
                         {
-                            if (reader.Read())
+                            if (await reader.ReadAsync())
                             {
                                 foundUser = new User
                                 {
@@ -96,7 +96,7 @@ namespace DVLD__Data_Tier.Repositories
             }
             return foundUser;
         }
-        public async static Task<User> GetUserByUsername(string username)
+        public async  Task<User> GetUserByUsername(string username)
         {
             User foundUser = null;
 
@@ -139,7 +139,7 @@ namespace DVLD__Data_Tier.Repositories
         // ---------------------------------------------------------
         // 3. READ ALL (Get List of Users)
         // ---------------------------------------------------------                        
-        public static List<clsUserView> GetAllUser()
+        public  async Task<List<clsUserView>> GetAllUser()
         {
             List<clsUserView> usersList = new List<clsUserView>();
 
@@ -151,10 +151,10 @@ namespace DVLD__Data_Tier.Repositories
                 {
                     try
                     {
-                        conn.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        await conn.OpenAsync();
+                        using (SqlDataReader reader =await cmd.ExecuteReaderAsync())
                         {
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 usersList.Add(new clsUserView
                                 {
@@ -179,7 +179,7 @@ namespace DVLD__Data_Tier.Repositories
         // ---------------------------------------------------------
         // 4. UPDATE (Update Existing User)
         // ---------------------------------------------------------
-        public static bool UpdateUser(string newHashedPassword, bool isActive)
+        public async Task<bool> UpdateUser(string newHashedPassword, bool isActive)
         {
             int rowsAffected = 0;
 
@@ -200,8 +200,8 @@ namespace DVLD__Data_Tier.Repositories
 
                     try
                     {
-                        conn.Open();
-                        rowsAffected = cmd.ExecuteNonQuery();
+                        await conn.OpenAsync();
+                        rowsAffected =await cmd.ExecuteNonQueryAsync();
                     }
                     catch (Exception)
                     {
@@ -215,7 +215,7 @@ namespace DVLD__Data_Tier.Repositories
         // ---------------------------------------------------------
         // 5. DELETE (Delete User)
         // ---------------------------------------------------------
-        public static bool DeleteUser(int userID)
+        public async Task<bool> DeleteUser(int userID)
         {
             int rowsAffected = 0;
 
@@ -229,8 +229,9 @@ namespace DVLD__Data_Tier.Repositories
 
                     try
                     {
-                        conn.Open();
-                        rowsAffected = cmd.ExecuteNonQuery();
+                        await conn.OpenAsync();
+
+                        rowsAffected =await cmd.ExecuteNonQueryAsync();
                     }
                     catch (Exception)
                     {
@@ -244,7 +245,7 @@ namespace DVLD__Data_Tier.Repositories
         // ---------------------------------------------------------
         // 6. CHECK EXISTENCE (Is User Exists)
         // ---------------------------------------------------------
-        public static bool IsUserExist(int userId)
+        public async Task<bool> IsUserExist(int userId)
         {
             bool isFound = false;
 
@@ -258,8 +259,8 @@ namespace DVLD__Data_Tier.Repositories
 
                     try
                     {
-                        conn.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        await conn.OpenAsync();
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
                             isFound = reader.HasRows;
                         }
@@ -272,7 +273,7 @@ namespace DVLD__Data_Tier.Repositories
             }
             return isFound;
         }
-        public static bool IsUserExistOnPersonID(int personId)
+        public async Task<bool> IsUserExistOnPersonID(int personId)
         {
             bool isFound = false;
 
@@ -286,8 +287,9 @@ namespace DVLD__Data_Tier.Repositories
 
                     try
                     {
-                        conn.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        await conn.OpenAsync();
+
+                        using (SqlDataReader reader =await cmd.ExecuteReaderAsync())
                         {
                             isFound = reader.HasRows;
                         }
@@ -300,9 +302,6 @@ namespace DVLD__Data_Tier.Repositories
             }
             return isFound;
         }
-
-
     }
-
 }
 
