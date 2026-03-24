@@ -19,7 +19,7 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
             InitializeComponent();
             _userService = new UserService();
             _personService = new PersonService();
-            _userId = -2;
+            _userId = -1;
         }
 
         public ctrlUserInfo(int UserId)
