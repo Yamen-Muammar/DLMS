@@ -16,7 +16,10 @@ A comprehensive desktop application designed to streamline the processes of the 
 • Architecture: 3-Tier Architecture (Presentation, Business, and Data Access Layers)
 
 🚀 Key Features
+
+
 1. Application Management
+   
 • New Local Driving Licenses: Full workflow for first-time applicants.
 
 • International Licenses: Issuance of international permits based on valid local licenses.
@@ -47,6 +50,7 @@ A comprehensive desktop application designed to streamline the processes of the 
 
 
 🏗 System Architecture
+
 The project follows a strict 3-Tier Architecture to ensure scalability and maintainability:
 
 • Presentation Layer: Handles the UI/UX using Windows Forms.
