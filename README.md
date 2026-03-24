@@ -31,6 +31,8 @@ A comprehensive desktop application designed to streamline the processes of the 
 • Result Tracking: Historical logging of all test attempts and outcomes.
 4. License Classes
 • Support for multiple license categories (e.g., Small Motorcycles, Regular Driving, Commercial, Heavy Vehicles) with distinct requirements for age and fees.
+
+
 🏗 System Architecture
 The project follows a strict 3-Tier Architecture to ensure scalability and maintainability:
 • Presentation Layer: Handles the UI/UX using Windows Forms.
