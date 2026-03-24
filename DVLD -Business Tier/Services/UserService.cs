@@ -15,9 +15,11 @@ namespace DVLD__Business_Tier.Services
     public class UserService
     {
         private UserRepository _userRepository;
+        private clsPasswordHasher _clsPasswordHasher;
         public UserService()
         {
             _userRepository = new UserRepository();
+            _clsPasswordHasher = new clsPasswordHasher();
         }
         //Login Helper Methodes
         public async Task<bool> Login(string username, string password, bool isRemaindMeActive)
@@ -40,7 +42,7 @@ namespace DVLD__Business_Tier.Services
                 throw new Exception("User Is Not Active.");
             }
 
-            if (!clsPasswordHasher.VerifyPassword(password, user.HashedPassword))
+            if (!await _clsPasswordHasher.VerifyPassword(password, user.HashedPassword))
             {
                 throw new Exception("Invalid username or password. Please try again.");
             }

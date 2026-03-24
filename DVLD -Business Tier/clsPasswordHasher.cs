@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DVLD__Business_Tier
 {
-    public static class clsPasswordHasher
+    public class clsPasswordHasher
     {
         // The sizes of the salt and hash in bytes
         private const int SaltSize = 16;
@@ -20,7 +20,7 @@ namespace DVLD__Business_Tier
         /// Hashes a password and returns a single Base64 string containing both the salt and the hash.
         /// Save this string directly to your database.
         /// </summary>
-        public static string HashPassword(string password)
+        public async Task<string> HashPassword(string password)
         {
             // 1. Generate a random "Salt"
             byte[] salt = new byte[SaltSize];
@@ -47,7 +47,7 @@ namespace DVLD__Business_Tier
         /// <summary>
         /// Compares a plain-text password typed by the user with the hashed string from the database.
         /// </summary>
-        public static bool VerifyPassword(string passwordEntered, string savedHash)
+        public async Task<bool> VerifyPassword(string passwordEntered, string savedHash)
         {
             try
             {

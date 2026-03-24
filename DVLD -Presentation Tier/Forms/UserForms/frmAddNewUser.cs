@@ -18,11 +18,13 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
         private int _personID { get; set; } = -1;
 
         private UserService _userService;
+        private clsPasswordHasher _passwordHasher;
         public frmAddNewUser()
         {
             InitializeComponent();
             ctrlPersonInformationWithFilter1.ReturnPersonID_OnFindPerson += OnReturnPersonID_OnFindPerson;
-            _userService = new UserService();               
+            _userService = new UserService(); 
+            _passwordHasher = new clsPasswordHasher();
         }
 
         // Button Events
@@ -52,7 +54,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             }
           
 
-            User user = _loadInfoInUserObject();
+            User user =await _loadInfoInUserObject();
 
             if (user == null)
             {
@@ -122,11 +124,11 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             return true;
         }
 
-        private User _loadInfoInUserObject()
+        private async Task<User> _loadInfoInUserObject()
         {
   
             string username = tbUsername.Text;
-            string HashedPassword = clsPasswordHasher.HashPassword(tbPassword.Text);
+            string HashedPassword  = await _passwordHasher.HashPassword(tbPassword.Text);
             bool isActive = cbIsActive.Checked;
             int personID = _personID;            
 

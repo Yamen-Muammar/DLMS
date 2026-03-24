@@ -16,15 +16,18 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
     public partial class frmChangePassword : Form
     {
         private UserService _userService;
+        private clsPasswordHasher _clsPasswordHasher;
         public frmChangePassword()
         {
             InitializeComponent();
             _userService = new UserService();
+            _clsPasswordHasher = new clsPasswordHasher();
         }
         public frmChangePassword(int userId)
         {
             InitializeComponent(userId);
             _userService = new UserService();
+            _clsPasswordHasher = new clsPasswordHasher();
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -35,7 +38,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             }
 
             string CurrentPassword = tbCurrentPassword.Text;    
-            bool isCurrentPasswordVerified = clsPasswordHasher.VerifyPassword(CurrentPassword,Global.User.HashedPassword);
+            bool isCurrentPasswordVerified = await _clsPasswordHasher.VerifyPassword(CurrentPassword,Global.User.HashedPassword);
 
             if (!isCurrentPasswordVerified)
             {
@@ -43,7 +46,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
                 return;
             }
 
-            string hashedNewPassword = clsPasswordHasher.HashPassword(tbNewPassword.Text);
+            string hashedNewPassword = await _clsPasswordHasher.HashPassword(tbNewPassword.Text);
 
             try
             {
