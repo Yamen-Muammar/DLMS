@@ -152,7 +152,7 @@ namespace DVLD__Business_Tier.Services
             return usersList;
         }
 
-        public  async Task<User> GetUserById(int userId)
+        public  async Task<User> GetUserByIdAsync(int userId)
         {
             User user = null;
             user = await _userRepository.GetUserByID(userId);
@@ -172,7 +172,7 @@ namespace DVLD__Business_Tier.Services
             bool isDeleted = false;
             
             
-            User userToDelete =await GetUserById(userId);
+            User userToDelete =await GetUserByIdAsync(userId);
 
             if (userToDelete == null)
             {
@@ -217,14 +217,39 @@ namespace DVLD__Business_Tier.Services
         }
 
         //Update 
-        public  async Task<bool> UpdateUserInfo(string newHashedPassword,bool isActive)
+        public  async Task<bool> UpdateUserPassword(int userID, string newHashedPassword)
         {
             if (newHashedPassword == string.Empty)
             {
                 throw new Exception("New Password Cannot be Empty");
             }
 
-            if(await _userRepository.UpdateUser(newHashedPassword,isActive))
+            if (userID <1)
+            {
+                throw new ArgumentException("ID Not Valid");
+            }
+            if(await _userRepository.UpdateUser(userID,newHashedPassword))
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception("Can not Update the User");
+            }
+        }
+        public async Task<bool> UpdateUserStatus(int userID, bool isActive)
+        {
+           
+            if (userID < 1)
+            {
+                throw new ArgumentException("ID Not Valid");
+            }
+            if (userID == Global.User.UserID)
+            {
+                throw new Exception("You Can not Update Status for yourself");
+            }
+
+            if (await _userRepository.UpdateUser(userID,isActive))
             {
                 return true;
             }

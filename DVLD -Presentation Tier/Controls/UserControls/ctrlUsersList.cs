@@ -70,9 +70,12 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
             frmAddNewUser.ShowDialog();
             await _RefreshData();
         }
-        private void editeToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This Function has not implemented yet!");
+            int userID = (int)dgvUsersList.CurrentRow.Cells[0].Value;
+            frmUpdateUserStatus frmUpdateUserStatus = new frmUpdateUserStatus(userID);
+            frmUpdateUserStatus.ShowDialog();
+            await _RefreshData();
         }
         private async void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {

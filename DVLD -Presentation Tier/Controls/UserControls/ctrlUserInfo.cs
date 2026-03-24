@@ -51,7 +51,7 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
             User userInfo = null;
             try
             {
-                userInfo = await _userService.GetUserById(userId);
+                userInfo = await _userService.GetUserByIdAsync(userId);
                 if (userInfo == null)
                 {
                     MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

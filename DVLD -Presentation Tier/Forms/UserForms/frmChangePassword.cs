@@ -17,6 +17,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
     {
         private UserService _userService;
         private clsPasswordHasher _clsPasswordHasher;
+        private int _passedUserID;
         public frmChangePassword()
         {
             InitializeComponent();
@@ -28,6 +29,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             InitializeComponent(userId);
             _userService = new UserService();
             _clsPasswordHasher = new clsPasswordHasher();
+            _passedUserID = userId;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
             try
             {
-                if (await _userService.UpdateUserInfo(hashedNewPassword,true))
+                if (await _userService.UpdateUserPassword(_passedUserID,hashedNewPassword))
                 {
                     MessageBox.Show("Password updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();

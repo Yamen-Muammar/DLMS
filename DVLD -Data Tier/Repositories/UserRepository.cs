@@ -179,7 +179,7 @@ namespace DVLD__Data_Tier.Repositories
         // ---------------------------------------------------------
         // 4. UPDATE (Update Existing User)
         // ---------------------------------------------------------
-        public async Task<bool> UpdateUser(string newHashedPassword, bool isActive)
+        public async Task<bool> UpdateUser(int userID,string newHashedPassword)
         {
             int rowsAffected = 0;
 
@@ -187,21 +187,50 @@ namespace DVLD__Data_Tier.Repositories
             {
                 string query = @"UPDATE Users 
                             SET 
-                                HashedPassword = @hashedPassword,
-                                isActive = @isActive
+                            HashedPassword = @hashedPassword,
                             WHERE UserID = @userID;";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     
                     cmd.Parameters.AddWithValue("@hashedPassword", newHashedPassword);
-                    cmd.Parameters.AddWithValue("@isActive", isActive);
-                    cmd.Parameters.AddWithValue("@userID", Global.User.UserID);
+                    
+                    cmd.Parameters.AddWithValue("@userID", userID);
 
                     try
                     {
                         await conn.OpenAsync();
                         rowsAffected =await cmd.ExecuteNonQueryAsync();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
+            return (rowsAffected > 0);
+        }
+        public async Task<bool> UpdateUser(int userID, bool isActive)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"UPDATE Users 
+                            SET  
+                                isActive = @isActive
+                            WHERE UserID = @userID;";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+
+                    cmd.Parameters.AddWithValue("@isActive", isActive);
+                    cmd.Parameters.AddWithValue("@userID", userID);
+
+                    try
+                    {
+                        await conn.OpenAsync();
+                        rowsAffected = await cmd.ExecuteNonQueryAsync();
                     }
                     catch (Exception)
                     {
