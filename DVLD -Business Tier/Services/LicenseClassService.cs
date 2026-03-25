@@ -20,5 +20,16 @@ namespace DVLD__Business_Tier.Services
             List<LicenseClass> list = await _repository.GetAllLicenseClasses();
 			return list;
         }
+
+        public async Task<LicenseClass> GetLicenseClassByLDLAppIDAsync(int ldlAppId)
+        {
+            if (ldlAppId < 1)
+            {
+                throw new ArgumentException("Not Valid L.D.L.Application ID");
+            }
+
+
+            return await _repository.GetLicenseClassByLDLApp_IdAsync(ldlAppId);
+        }
     }
 }
