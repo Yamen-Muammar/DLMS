@@ -22,5 +22,10 @@ namespace DVLD__Core.Models
         public string ImageName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
+        public string FullName()
+        {
+            return FirstName+" "+ MiddelName + " " + ThirdName + " " + LastName;
+        }
+
     }
 }

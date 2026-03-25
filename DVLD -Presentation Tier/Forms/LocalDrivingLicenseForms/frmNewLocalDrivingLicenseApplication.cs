@@ -112,7 +112,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             
             try
             {
-                _licenseClasses = await _licenseClassService.GetAlllicenseClasses();
+                _licenseClasses = await _licenseClassService.GetAllLicenseClasses();
 
                 foreach (LicenseClass licenseClass in _licenseClasses)
                 {

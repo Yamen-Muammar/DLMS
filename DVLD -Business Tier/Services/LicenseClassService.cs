@@ -15,7 +15,7 @@ namespace DVLD__Business_Tier.Services
         {
             _repository = new LicenseClassRepository();
         }
-        public  async Task<List<LicenseClass>> GetAlllicenseClasses()
+        public  async Task<List<LicenseClass>> GetAllLicenseClasses()
         {
             List<LicenseClass> list = await _repository.GetAllLicenseClasses();
 			return list;
