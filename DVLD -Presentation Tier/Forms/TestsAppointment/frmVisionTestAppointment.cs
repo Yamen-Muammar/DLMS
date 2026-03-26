@@ -25,5 +25,10 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
         {
             this.Close();
         }
+
+        private void btnAddAppointment_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

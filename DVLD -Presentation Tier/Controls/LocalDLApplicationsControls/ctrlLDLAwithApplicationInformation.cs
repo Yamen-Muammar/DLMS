@@ -18,15 +18,14 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
         private int _lDLAppID;
         private int _passedTestCount;
         private int _personId;
-
+        public DVLD__Core.Models.Application application;
+        public LicenseClass licenseClass;
 
         private TestService _testService;
         private ApplicationService _appService;
         private PersonService _personService;
         private LicenseClassService _licenseClassService;
-        private ApplicationsTypeService _applicationsTypeService;
-        private LicenseClass _licenseClass;
-        private DVLD__Core.Models.Application _application;
+        private ApplicationsTypeService _applicationsTypeService;           
         private UserService _userService;
 
 
@@ -61,27 +60,27 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
                 return;
             }
 
-            _application = await _getApplicationInfo(this._lDLAppID);
-            if (_application == null)
+            application = await _getApplicationInfo(this._lDLAppID);
+            if (application == null)
             {
                 return;
             }
-            _personId = _application.Person_ID;
+            _personId = application.Person_ID;
 
-            _licenseClass = await _getLicenseClassbyLDLAppID(this._lDLAppID);
-            if (_licenseClass == null)
+            licenseClass = await _getLicenseClassbyLDLAppID(this._lDLAppID);
+            if (licenseClass == null)
             {
                 return;
             }
 
-            _passedTestCount = await _getPassedTestCount(_application.Person_ID);
+            _passedTestCount = await _getPassedTestCount(application.Person_ID);
             if (_passedTestCount == -1)
             {
                 return;
             }
 
-            _fillGroupBoxLDLApplicationDataFields(this._lDLAppID, _licenseClass.ClassName, _passedTestCount);
-            await _fillGroupBoxApplicationDataFields(_application);
+            _fillGroupBoxLDLApplicationDataFields(this._lDLAppID, licenseClass.ClassName, _passedTestCount);
+            await _fillGroupBoxApplicationDataFields(application);
         }
         private void btnPersonInfo_Click(object sender, EventArgs e)
         {

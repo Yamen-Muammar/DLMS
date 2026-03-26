@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnAddAppointment = new System.Windows.Forms.Button();
             this.dgvAppointments = new System.Windows.Forms.DataGridView();
             this.btnClosefrm = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,14 +39,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnSave
+            // btnAddAppointment
             // 
-            this.btnSave.Image = global::DVLD__Presentation_Tier.Properties.Resources.AddAppointment32;
-            this.btnSave.Location = new System.Drawing.Point(762, 718);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 63);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnAddAppointment.Image = global::DVLD__Presentation_Tier.Properties.Resources.AddAppointment32;
+            this.btnAddAppointment.Location = new System.Drawing.Point(762, 718);
+            this.btnAddAppointment.Name = "btnAddAppointment";
+            this.btnAddAppointment.Size = new System.Drawing.Size(75, 63);
+            this.btnAddAppointment.TabIndex = 1;
+            this.btnAddAppointment.UseVisualStyleBackColor = true;
             // 
             // dgvAppointments
             // 
@@ -123,7 +123,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvAppointments);
             this.Controls.Add(this.btnClosefrm);
-            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnAddAppointment);
             this.Controls.Add(this.ctrlLDLAwithApplicationInformation1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -138,25 +138,26 @@
         }
         private void InitializeComponent(int LDLAppID)
         {
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnAddAppointment = new System.Windows.Forms.Button();
             this.dgvAppointments = new System.Windows.Forms.DataGridView();
             this.btnClosefrm = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.ctrlLDLAwithApplicationInformation1 = new DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls.ctrlLDLAwithApplicationInformation(LDLAppID);
+            this.ctrlLDLAwithApplicationInformation1 = new DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls.ctrlLDLAwithApplicationInformation();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnSave
+            // btnAddAppointment
             // 
-            this.btnSave.Image = global::DVLD__Presentation_Tier.Properties.Resources.AddAppointment32;
-            this.btnSave.Location = new System.Drawing.Point(762, 718);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 63);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnAddAppointment.Image = global::DVLD__Presentation_Tier.Properties.Resources.AddAppointment32;
+            this.btnAddAppointment.Location = new System.Drawing.Point(762, 718);
+            this.btnAddAppointment.Name = "btnAddAppointment";
+            this.btnAddAppointment.Size = new System.Drawing.Size(75, 63);
+            this.btnAddAppointment.TabIndex = 1;
+            this.btnAddAppointment.UseVisualStyleBackColor = true;
+            this.btnAddAppointment.Click += new System.EventHandler(this.btnAddAppointment_Click);
             // 
             // dgvAppointments
             // 
@@ -233,12 +234,13 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dgvAppointments);
             this.Controls.Add(this.btnClosefrm);
-            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnAddAppointment);
             this.Controls.Add(this.ctrlLDLAwithApplicationInformation1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmVisionTestAppointment";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmVisionTestAppointment";
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -249,12 +251,12 @@
 
         #endregion
 
-        private Controls.LocalDLApplicationsControls.ctrlLDLAwithApplicationInformation ctrlLDLAwithApplicationInformation1;
+        public Controls.LocalDLApplicationsControls.ctrlLDLAwithApplicationInformation ctrlLDLAwithApplicationInformation1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAddNewAppointment;
         private System.Windows.Forms.DataGridView dgvAppointment;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnAddAppointment;
         private System.Windows.Forms.DataGridView dgvAppointments;
         private System.Windows.Forms.Button btnClosefrm;
         private System.Windows.Forms.Label label2;
