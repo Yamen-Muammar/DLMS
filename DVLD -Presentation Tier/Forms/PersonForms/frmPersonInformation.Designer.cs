@@ -79,6 +79,6 @@
 
         #endregion
 
-        private ctrlPersonInformation ctrlPersonInformation1;
+        public ctrlPersonInformation ctrlPersonInformation1;
     }
 }

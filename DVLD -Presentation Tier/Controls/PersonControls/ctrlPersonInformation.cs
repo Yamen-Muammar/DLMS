@@ -26,6 +26,14 @@ namespace DVLD__Presentation_Tier
             }
         }
 
+        public delegate void ReturnPersonObject(Person person);
+        public event ReturnPersonObject ReturnPersonObject_OnUpdate;
+        private void TriggerReturnPersonEvent(Person person)
+        {
+            ReturnPersonObject_OnUpdate?.Invoke(person);
+        }
+
+
         //for send the id to the AddOrUpdate form.
         private int _personId;
         private int _passedPersonId;
@@ -91,7 +99,9 @@ namespace DVLD__Presentation_Tier
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            TriggerReturnPersonEvent(PersonInfo);
             TriggerCloseEvent();
+
         }
 
         // Helper Methods
@@ -161,7 +171,7 @@ namespace DVLD__Presentation_Tier
         }
 
         //OUTSIDE CALLs TO UPDATE PERSON INFO IN THIS CONTROL AND REFRESH THE UI
-        public async void UpdatePersonInfoANDRefreshUI(Person person)
+        public async Task UpdatePersonInfoANDRefreshUI(Person person)
         {
             if (person == null)
             {

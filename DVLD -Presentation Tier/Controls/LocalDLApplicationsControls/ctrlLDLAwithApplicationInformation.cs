@@ -85,8 +85,10 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
         }
         private void btnPersonInfo_Click(object sender, EventArgs e)
         {
-            frmPersonInformation frmPersonInformation = new frmPersonInformation(_personId);
-            frmPersonInformation.ShowDialog();
+            frmPersonInformation frmPersonInformation1 = new frmPersonInformation(_personId);
+            Person person = new Person();
+            frmPersonInformation1.ctrlPersonInformation1.ReturnPersonObject_OnUpdate += UpdateApplicantName;
+            frmPersonInformation1.ShowDialog();
         }
 
         private async Task<DVLD__Core.Models.Application> _getApplicationInfo(int LDLAppID)
@@ -151,6 +153,11 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
             lblDate.Text = application.ApplicationDate.ToString("d");
             lblLastStatusDate.Text = (application.LastStatusDate == null ) ?application.ApplicationDate.ToString("d") :application.LastStatusDate?.ToString("d");
             lblCreatedBy.Text =(await _userService.GetUserByIdAsync(application.CreatedByUser_ID)).Username.ToString();
+        }
+
+        public void UpdateApplicantName(Person person)
+        {
+            lblApplicant.Text = person.FullName().ToString();
         }
     }
 }
