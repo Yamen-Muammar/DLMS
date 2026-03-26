@@ -56,23 +56,16 @@
         }
         private void InitializeComponent(int LDLAppID)
         {
-            this.ctrlLDLAwithApplicationInformation1 = new DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls.ctrlLDLAwithApplicationInformation();
             this.btnSave = new System.Windows.Forms.Button();
             this.dgvAppointments = new System.Windows.Forms.DataGridView();
             this.btnClosefrm = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ctrlLDLAwithApplicationInformation1 = new DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls.ctrlLDLAwithApplicationInformation(LDLAppID);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ctrlLDLAwithApplicationInformation1
-            // 
-            this.ctrlLDLAwithApplicationInformation1.Location = new System.Drawing.Point(12, 117);
-            this.ctrlLDLAwithApplicationInformation1.Name = "ctrlLDLAwithApplicationInformation1";
-            this.ctrlLDLAwithApplicationInformation1.Size = new System.Drawing.Size(826, 595);
-            this.ctrlLDLAwithApplicationInformation1.TabIndex = 0;
             // 
             // btnSave
             // 
@@ -106,6 +99,7 @@
             this.btnClosefrm.TabIndex = 1;
             this.btnClosefrm.Text = "Close";
             this.btnClosefrm.UseVisualStyleBackColor = true;
+            this.btnClosefrm.Click += new System.EventHandler(this.btnClosefrm_Click);
             // 
             // label2
             // 
@@ -137,6 +131,13 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
+            // 
+            // ctrlLDLAwithApplicationInformation1
+            // 
+            this.ctrlLDLAwithApplicationInformation1.Location = new System.Drawing.Point(12, 117);
+            this.ctrlLDLAwithApplicationInformation1.Name = "ctrlLDLAwithApplicationInformation1";
+            this.ctrlLDLAwithApplicationInformation1.Size = new System.Drawing.Size(826, 595);
+            this.ctrlLDLAwithApplicationInformation1.TabIndex = 0;
             // 
             // frmVisionTestAppointment
             // 

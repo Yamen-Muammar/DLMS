@@ -21,15 +21,9 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
         {
             InitializeComponent(LDLAppId);
         }
-
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnClosefrm_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void btnAddNewAppointment_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
