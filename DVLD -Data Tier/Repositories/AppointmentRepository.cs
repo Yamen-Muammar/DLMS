@@ -104,7 +104,7 @@ namespace DVLD__Data_Tier.Repositories
         public async Task<List<clsAppointmentsView>> GetAllAppointmentsAsync(int LDLApp , int tsetTypeID)
         {
             List<clsAppointmentsView> appsList = new List<clsAppointmentsView>();
-            string query = "SELECT TestAppointmentID,AppointmentDate,LicenseFees,isLocked" +
+            string query = "SELECT TestAppointmentID,AppointmentDate,PaidFees,isLocked" +
                 " FROM AppointmentsView " +
                 "ORDER BY TestAppointmentID DESC";
 
@@ -123,7 +123,7 @@ namespace DVLD__Data_Tier.Repositories
                             {
                                 TestAppointmentID = (int)reader["TestAppointmentID"],
                                 AppointmentDate = (DateTime)reader["AppointmentDate"],
-                                ClassFees = (decimal)reader["LicenseFees"],
+                                PaidFees = (decimal)reader["PaidFees"],
                                 isLocked = (bool)reader["isLocked"]
                             });
                         }

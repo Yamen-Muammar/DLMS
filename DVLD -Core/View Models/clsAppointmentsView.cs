@@ -10,7 +10,7 @@ namespace DVLD__Core.View_Models
     {
         public int TestAppointmentID { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public decimal ClassFees { get; set; }
+        public decimal PaidFees { get; set; }
         public bool isLocked { get; set; }      
     }
 }

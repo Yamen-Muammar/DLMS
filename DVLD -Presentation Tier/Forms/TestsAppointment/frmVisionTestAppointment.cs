@@ -37,7 +37,8 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
 
         private void btnAddAppointment_Click(object sender, EventArgs e)
         {
-
+            frmSechduleTest frmSechduleTest = new frmSechduleTest();
+            frmSechduleTest.ShowDialog();
         }
 
         private async void frmVisionTestAppointment_Load(object sender, EventArgs e)
