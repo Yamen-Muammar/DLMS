@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DVLD__Core.Models;
+using DVLD__Core.View_Models;
 using DVLD__Data_Tier.Repositories;
 
 namespace DVLD__Business_Tier.Services
@@ -56,6 +57,10 @@ namespace DVLD__Business_Tier.Services
             return await _repository.DoesApplicationHasActiveAppointmentAsync(appointment);
         }
 
+        public async Task<List<clsAppointmentsView>> GetAllAppointmentsAsync(int lDLAppID , int testType)
+        {
+            return await _repository.GetAllAppointmentsAsync(lDLAppID, testType);
+        }
 
     }
 }

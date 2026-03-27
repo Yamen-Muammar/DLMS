@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DVLD__Core.Models;
+using DVLD__Core.View_Models;
 
 namespace DVLD__Data_Tier.Repositories
 {
@@ -98,6 +99,42 @@ namespace DVLD__Data_Tier.Repositories
                 }
             }
             return foundedAppointmentID;
+        }
+
+        public async Task<List<clsAppointmentsView>> GetAllAppointmentsAsync(int LDLApp , int tsetTypeID)
+        {
+            List<clsAppointmentsView> appsList = new List<clsAppointmentsView>();
+            string query = "SELECT TestAppointmentID,AppointmentDate,LicenseFees,isLocked" +
+                " FROM AppointmentsView " +
+                "ORDER BY TestAppointmentID DESC";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            appsList.Add(new clsAppointmentsView
+                            {
+                                TestAppointmentID = (int)reader["TestAppointmentID"],
+                                AppointmentDate = (DateTime)reader["AppointmentDate"],
+                                ClassFees = (decimal)reader["LicenseFees"],
+                                isLocked = (bool)reader["isLocked"]
+                            });
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return appsList;
         }
     }
 }
