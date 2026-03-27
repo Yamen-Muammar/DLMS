@@ -16,8 +16,11 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
     {
         private int _LDLApplicationID;
         private int _testTeypID;
-        private AppointmentService _appointmentService;
         private List<clsAppointmentsView> _appointmentsViewsList;
+
+
+        private AppointmentService _appointmentService;
+        
         public frmVisionTestAppointment()
         {
             InitializeComponent();

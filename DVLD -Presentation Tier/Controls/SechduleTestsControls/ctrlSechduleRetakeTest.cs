@@ -15,6 +15,6 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         public ctrlSechduleRetakeTest()
         {
             InitializeComponent();
-        }
+        }   
     }
 }
