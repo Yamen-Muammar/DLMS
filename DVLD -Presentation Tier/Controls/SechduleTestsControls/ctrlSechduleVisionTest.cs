@@ -124,7 +124,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
                 try
                 {
                    bool isUpdatedDone = await _appointmentService.UpdateAppointmentDateTimeAsync(_appointmentID, UpdatedDate);
-                    if (isUpdatedDone)
+                    if (!isUpdatedDone)
                     {
                         MessageBox.Show("Can not Update Appointment Date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }

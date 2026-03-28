@@ -143,15 +143,15 @@ namespace DVLD__Data_Tier.Repositories
         {
             TestAppointment appointment = null;
 
-            string query = @"SELECT [TestAppointmentID]
-                              ,[TestType_ID]
-                              ,[LocalDrivingLicenseApplication_ID]
-                              ,[AppointmentDate]
-                              ,[PaidFees]
-                              ,[CreatedByUser_ID]
-                              ,[isLocked]
-                              ,[RetakeTestApplication_ID]
-                        FROM [dbo].[TestAppointments]
+            string query = @"SELECT TestAppointmentID
+                              ,TestType_ID
+                              ,LocalDrivingLicenseApplication_ID
+                              ,AppointmentDate
+                              ,PaidFees
+                              ,CreatedByUser_ID
+                              ,isLocked
+                              ,RetakeTestApplication_ID
+                        FROM TestAppointments
                         WHERE TestAppointmentID = @taID ; 
                         ";
 
@@ -175,8 +175,7 @@ namespace DVLD__Data_Tier.Repositories
                                 AppointmentDate = (DateTime)reader["AppointmentDate"],
                                 PaidFees = (decimal)reader["PaidFees"],
                                 CreatedByUser_ID = (int)reader["CreatedByUser_ID"],
-                                isLocked = (bool)reader["isLocked"],
-                                RetakeTestApplication_ID =(int) reader["RetakeTestApplication_ID"],
+                                isLocked = Convert.ToBoolean(reader["isLocked"]),                          
                             };
 
                             if (reader["RetakeTestApplication_ID"] == DBNull.Value)

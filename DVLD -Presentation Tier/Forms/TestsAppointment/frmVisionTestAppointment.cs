@@ -92,7 +92,7 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
         private async void editeToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
-            frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.New, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID);
+            frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Edite, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID);
             frmSechduleTest.ShowDialog();
             await _refreshDataInDGV();
         }
