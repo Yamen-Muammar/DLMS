@@ -242,11 +242,18 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         }
         private void _loadDataInCtrl(int trail = 0)
         {
-            lblLDLApp.Text = _lDLAppID.ToString();
-            lblLClassName.Text = _licenseClass.ClassName.ToString();
-            lblTrail.Text = trail.ToString();
-            lblName.Text = _applicantFullName.ToString();
-            lblFees .Text = _testType.TestTypeFees.ToString();
+            try
+            {
+                lblLDLApp.Text = _lDLAppID.ToString();
+                lblLClassName.Text = _licenseClass.ClassName.ToString();
+                lblTrail.Text = trail.ToString();
+                lblName.Text = _applicantFullName.ToString();
+                lblFees.Text = _testType.TestTypeFees.ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         private void _loadDataInCtrl(TestAppointment appointment,int trail = 0)
         {

@@ -34,10 +34,6 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
             _appointmentService = new AppointmentService();
             _testService = new TestService();
         }
-        private void btnClosefrm_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private async void frmVisionTestAppointment_Load_1(object sender, EventArgs e)
         {
@@ -93,19 +89,7 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
              
         }
 
-        private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        private async void editeToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editeToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
             frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.New, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID);
@@ -113,6 +97,14 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
             await _refreshDataInDGV();
         }
 
-       
+        private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
