@@ -19,14 +19,13 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         private const int _testTypeID = 1;
         private int _appointmentID; // to get appointment info for edite.
         private string _applicantFullName;
+        private string _licenseClassName;
 
-        private TestType _testType;
-        private LicenseClass _licenseClass;       
+        private TestType _testType;     
         private TestAppointment _testAppointment; // for Edite mode.
 
         private TestTypeService _testTypeService;
         private ApplicationService _appService;
-        private LicenseClassService _licenseClassService;
         private AppointmentService _appointmentService;
         public enum enMode
         {
@@ -37,16 +36,16 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         {
             InitializeComponent();
         }
-        public ctrlSechduleVisionTest(int? appointmentID,enMode mode,string applicantFullName,int ldlAppID)
+        public ctrlSechduleVisionTest(int? appointmentID,enMode mode,string applicantFullName,int ldlAppID,string licenseClassName)
         {
             InitializeComponent();
             _testTypeService = new TestTypeService();
-            _licenseClassService = new LicenseClassService();
             _appointmentService = new AppointmentService();
             _mode = mode;
             _applicantFullName = applicantFullName;
             _lDLAppID = ldlAppID;      
-            _appointmentID = (int)appointmentID;
+            _appointmentID = appointmentID == null ? -1 : (int)appointmentID;
+            _licenseClassName= licenseClassName;
         }
         private async void ctrlSechduleVisionTest_Load(object sender, EventArgs e)
         {
@@ -55,15 +54,18 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             if (_mode == enMode.New)
             {
                 await _getDataForLoadUI();
-
-                ctrlSechduleRetakeTest1.Enabled = false;
                 _loadDataInCtrl();
                 return;
             }
 
             if (_mode == enMode.Edite)
             {
-                ctrlSechduleRetakeTest1.Enabled=false;
+                if (_appointmentID == -1)
+                {
+                    MessageBox.Show("No Appointment Data Passed","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    return;
+                }
+
                 await _getDataForLoadUI();
 
                 _testAppointment = await _getAppointmentByID(_appointmentID);
@@ -80,7 +82,6 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             {
 
                 await _getDataForLoadUI();
-                ctrlSechduleRetakeTest1.Enabled = true;
                 return;
             }
         }
@@ -166,23 +167,17 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
                 btnSaveTestAppointment.Enabled = false;
                 return;
             }
-
-            _licenseClass = await _getLicenseClassAsync(_lDLAppID);
-            if (_licenseClass == null)
-            {
-                btnSaveTestAppointment.Enabled = false;
-                return;
-            }
         }
         private TestAppointment CreateTestAppointmentObj()
         {
-            TestAppointment testAppointment = new TestAppointment();
+            TestAppointment testAppointment = null;
             if (!_infoValidation())
             {
                 return testAppointment;
             }
             try
             {
+                testAppointment = new TestAppointment();
                 testAppointment.LocalDrivingLicenseApplication_ID = _lDLAppID;
                 testAppointment.RetakeTestApplication_ID = null;
                 testAppointment.isLocked = false;
@@ -233,25 +228,12 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             }
             return testType;
         }
-        private async Task<LicenseClass> _getLicenseClassAsync(int ldlAppID)
-        {
-            LicenseClass licenseClass = null;
-            try
-            {
-                licenseClass = await _licenseClassService.GetLicenseClassByLDLAppIDAsync(ldlAppID);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return licenseClass;
-        }
         private void _loadDataInCtrl(int trail = 0)
         {
             try
             {
                 lblLDLApp.Text = _lDLAppID.ToString();
-                lblLClassName.Text = _licenseClass.ClassName.ToString();
+                lblLClassName.Text = _licenseClassName;
                 lblTrail.Text = trail.ToString();
                 lblName.Text = _applicantFullName.ToString();
                 lblFees.Text = _testType.TestTypeFees.ToString();
@@ -266,7 +248,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             try
             {
                 lblLDLApp.Text = appointment.LocalDrivingLicenseApplication_ID.ToString();
-                lblLClassName.Text = _licenseClass.ClassName.ToString();
+                lblLClassName.Text = _licenseClassName;
                 lblTrail.Text = trail.ToString();
                 lblName.Text = _applicantFullName.ToString();
                 lblFees.Text = _testType.TestTypeFees.ToString();
@@ -276,7 +258,6 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             {
                 MessageBox.Show("Can not Load Appointment Data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
     }
 }

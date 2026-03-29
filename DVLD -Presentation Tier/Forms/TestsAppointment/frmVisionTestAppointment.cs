@@ -42,23 +42,21 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
 
         private async void btnAddAppointment_Click(object sender, EventArgs e)
         {
-            bool isHas =((await _appointmentService.DoesApplicantHasAnActiveAppointmentAsync(_LDLApplicationID,_testTeypID)) > 0);
-            if (isHas)
+            int FoundAppointmentID = await _appointmentService.DoesApplicantHasAnActiveAppointmentAsync(_LDLApplicationID,_testTeypID);
+            if (FoundAppointmentID > 0)
             {
                 MessageBox.Show($"Applicant already has an Active appointment","Not Allowed",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return;
             }
 
-            int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
-
-            if (await _testService.isAppointmentHasFailTestResultAsync(appointmentID))
+            if (await _testService.isAppointmentHasFailTestResultAsync(FoundAppointmentID))
             {
-                frmSechduleTest frmSechduleTest = new frmSechduleTest(null,ctrlSechduleVisionTest.enMode.Retake, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID);
+                frmSechduleTest frmSechduleTest = new frmSechduleTest(null,ctrlSechduleVisionTest.enMode.Retake, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID,this.ctrlLDLAwithApplicationInformation1.licenseClassName);
                 frmSechduleTest.ShowDialog();
             }
             else
             {
-                frmSechduleTest frmSechduleTest = new frmSechduleTest(null,ctrlSechduleVisionTest.enMode.New,this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID);
+                frmSechduleTest frmSechduleTest = new frmSechduleTest(null,ctrlSechduleVisionTest.enMode.New,this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
                 frmSechduleTest.ShowDialog();
             }
             
@@ -92,7 +90,7 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
         private async void editeToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
-            frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Edite, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID);
+            frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Edite, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
             frmSechduleTest.ShowDialog();
             await _refreshDataInDGV();
         }

@@ -19,6 +19,7 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
         private int _passedTestCount;
         private int _personId;
         public string ApplicatFullName { get; set; }
+        public string licenseClassName { get; set; }
 
         public DVLD__Core.Models.Application application;
         public LicenseClass licenseClass;
@@ -74,6 +75,7 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
             {
                 return;
             }
+            licenseClassName = licenseClass.ClassName.ToString();
 
             _passedTestCount = await _getPassedTestCount(application.Person_ID);
             if (_passedTestCount == -1)
@@ -129,7 +131,7 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
             LicenseClass licenseClass = null;
             try
             {
-                licenseClass =await _licenseClassService.GetLicenseClassByLDLAppIDAsync(ldlAppID);
+                licenseClass =await _licenseClassService.GetLicenseClassByLDLAppIDAsync(ldlAppID);          
             }
             catch (Exception ex)
             {

@@ -16,5 +16,10 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         {
             InitializeComponent();
         }
+
+        private void ctrlSechduleVisionTestInfo_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

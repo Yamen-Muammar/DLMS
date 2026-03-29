@@ -162,11 +162,11 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("72 Monospace", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Crimson;
-            this.lblTitle.Location = new System.Drawing.Point(177, 207);
+            this.lblTitle.Location = new System.Drawing.Point(129, 223);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(201, 31);
+            this.lblTitle.Size = new System.Drawing.Size(286, 31);
             this.lblTitle.TabIndex = 17;
-            this.lblTitle.Text = "Vision Test";
+            this.lblTitle.Text = "Vision Test Info";
             // 
             // pictureBox1
             // 
@@ -196,7 +196,7 @@
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(596, 819);
+            this.groupBox1.Size = new System.Drawing.Size(596, 588);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -217,7 +217,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "ctrlSechduleVisionTestInfo";
-            this.Size = new System.Drawing.Size(602, 825);
+            this.Size = new System.Drawing.Size(602, 596);
+            this.Load += new System.EventHandler(this.ctrlSechduleVisionTestInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

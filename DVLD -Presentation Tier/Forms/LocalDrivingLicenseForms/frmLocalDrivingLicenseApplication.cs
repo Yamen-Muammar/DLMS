@@ -29,6 +29,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             _testService = new TestService();
         }
        
+        // button Events
         private async void frmLocalDrivingLicenseApplication_Load(object sender, EventArgs e)
         {
             _loadComboBox();
@@ -56,7 +57,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             int CountOfPassedTest= await _testService.PassedTestCount(nationalNo);
             _visbleComboItemsOnPassedTests(CountOfPassedTest);
         }
-
         private async void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int lDLAppID = _getSelectedLDLApplicationID();
@@ -110,8 +110,95 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void editeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+        private async void sechduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int lDLAppID = _getSelectedLDLApplicationID();
+            frmVisionTestAppointment frmVisionTestAppointment = new frmVisionTestAppointment(lDLAppID);
+            frmVisionTestAppointment.ShowDialog();
+            await _refreshUIDataHoldersAsync(_dataBaseSource);
+        }
+        private void sechduleWrittenTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void sechduleStreetTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
 
         // data logic
+
         private void _storeListDataFromSource(List<clsLocalDrivingLicesnseApplicationView> source)
         {
             _list = new List<clsLocalDrivingLicesnseApplicationView>();
@@ -288,97 +375,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             sechduleWrittenTestToolStripMenuItem.Enabled = WrittenTest;
         }
 
-        private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void editeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-          
-        }
-
-        private async void sechduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int lDLAppID = _getSelectedLDLApplicationID();
-            frmVisionTestAppointment frmVisionTestAppointment = new frmVisionTestAppointment(lDLAppID);
-            frmVisionTestAppointment.ShowDialog();
-            await _refreshUIDataHoldersAsync(_dataBaseSource);
-        }
-
-        private void sechduleWrittenTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void sechduleStreetTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+        
     }
 }
