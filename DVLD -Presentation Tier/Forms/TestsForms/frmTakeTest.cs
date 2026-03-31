@@ -16,5 +16,24 @@ namespace DVLD__Presentation_Tier.Forms.TestsForms
         {
             InitializeComponent();
         }
+        public frmTakeTest(int LDLAppID, string licenseClassName, int tril, string applicantName, DateTime date, decimal fees)
+        {
+            InitializeComponent(LDLAppID, licenseClassName, tril, applicantName, date, fees);
+        }
+
+        private void frmTakeTest_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DVLD__Business_Tier.Services;
 using DVLD__Core.View_Models;
 using DVLD__Presentation_Tier.Controls.SechduleTestsControls;
+using DVLD__Presentation_Tier.Forms.TestsForms;
 
 namespace DVLD__Presentation_Tier.Forms.TestsAppointment
 {
@@ -95,14 +96,35 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
             await _refreshDataInDGV();
         }
 
-        private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DateTime date = _getDateFromDGV();
+            decimal fees = _getFeesFromDGV();
 
+            frmTakeTest frmTakeTest = new frmTakeTest(_LDLApplicationID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, 0, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, date, fees);
+            frmTakeTest.ShowDialog();
+            await _refreshDataInDGV();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private DateTime _getDateFromDGV()
+        {
+            DateTime date = (DateTime)dgvAppointments.CurrentRow.Cells["AppointmentDate"].Value;
+            if (date == null)
+            {
+                MessageBox.Show("Date is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return DateTime.MinValue;
+            }
+            return date;
+        }
+        private decimal _getFeesFromDGV()
+        {
+            decimal fees = (decimal)dgvAppointments.CurrentRow.Cells["PaidFees"].Value;
+            return fees;
         }
     }
 }

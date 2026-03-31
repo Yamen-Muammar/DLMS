@@ -199,7 +199,7 @@
             this.groupBox1.Size = new System.Drawing.Size(596, 588);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Test Info";
             // 
             // lblDate
             // 
@@ -217,7 +217,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "ctrlSechduleVisionTestInfo";
-            this.Size = new System.Drawing.Size(602, 596);
+            this.Size = new System.Drawing.Size(602, 594);
             this.Load += new System.EventHandler(this.ctrlSechduleVisionTestInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
