@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using DVLD__Core.Models;
@@ -13,10 +14,14 @@ namespace DVLD__Business_Tier.Services
     {
         private AppointmentRepository _repository;
         private ApplicationService _applicationService;
+        private ApplicationsTypeService _applicationsTypeService;
+        private PersonService _personService;
         public AppointmentService()
         {
             _repository = new AppointmentRepository();
             _applicationService = new ApplicationService();
+            _personService = new PersonService();
+            _applicationsTypeService = new ApplicationsTypeService();
         }
 
         //add
@@ -37,6 +42,33 @@ namespace DVLD__Business_Tier.Services
 
             return await _repository.AddNewTestAppoitmentAsync(testAppointment);
         }
+
+        public async Task<int> AddRetakeTestAppointmentAsync( TestAppointment testAppointment)
+        {
+            if (!_validateAppointment(testAppointment))
+            {
+                return -1;
+            }
+            
+            DVLD__Core.Models.Application applicationForGetPerson_ID = await _applicationService.GetApplicationOnLDLA_ID(testAppointment.LocalDrivingLicenseApplication_ID);
+            if (applicationForGetPerson_ID == null)
+            {
+                throw new Exception("Error While Getting application Data");
+            }
+
+            // TODO : CHECK IF APPLICANT HAS AN ACTIVE APPOINTMENT FOR RETAKE TEST .
+            //(IF LDLApp has not appoinment locked and has retake test application )
+
+            ApplicationType appType = await _applicationsTypeService.GetApplicationTypeByID(7); // 7 = retake test application type ID in database
+            if (appType == null)
+            {
+                throw new Exception("Error While Getting application Type Data");
+            }
+            
+
+            return await _repository.AddNewRetakeTestAppoitmentAsync(testAppointment, applicationForGetPerson_ID.Person_ID,appType.ApplicationTypeFees);
+        }
+
 
         //get
 

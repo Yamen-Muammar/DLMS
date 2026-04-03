@@ -168,7 +168,6 @@ namespace DVLD__Data_Tier.Repositories
             }
             return foundPerson;
         }
-
         // ---------------------------------------------------------
         // 3. READ ALL (Get List of People)
         // ---------------------------------------------------------

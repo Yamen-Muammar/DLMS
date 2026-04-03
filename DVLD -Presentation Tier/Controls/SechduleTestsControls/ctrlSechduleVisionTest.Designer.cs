@@ -31,6 +31,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.ctrlSechduleRetakeTest1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleRetakeTest();
+            this.OnAddedRetakeApplicationID += this.ctrlSechduleRetakeTest1.UpdateApplicationTypeID;            
             this.btnSaveTestAppointment = new System.Windows.Forms.Button();
             this.lblFees = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
@@ -52,7 +53,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dateTimePicker);
-            this.groupBox1.Controls.Add(this.ctrlSechduleRetakeTest1);
+            this.groupBox1.Controls.Add(this.ctrlSechduleRetakeTest1); 
             this.groupBox1.Controls.Add(this.btnSaveTestAppointment);
             this.groupBox1.Controls.Add(this.lblFees);
             this.groupBox1.Controls.Add(this.lblName);

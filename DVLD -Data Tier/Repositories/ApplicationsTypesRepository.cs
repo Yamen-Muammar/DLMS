@@ -12,6 +12,7 @@ namespace DVLD__Data_Tier.Repositories
 {
     public class ApplicationsTypesRepository
     {
+        private string _connectionString = DataBaseSettings.DataBaseConnectionString;
         public async Task<bool> UpdateApplicationType(ApplicationType applicationType)
         {
             int rowsAffected = 0;
@@ -21,7 +22,7 @@ namespace DVLD__Data_Tier.Repositories
                              ApplicationTypeFees = @Fees
                          WHERE ApplicationTypeID = @ID";
 
-            using (SqlConnection connection = new SqlConnection(DataBaseSettings.DataBaseConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
 
@@ -50,7 +51,7 @@ namespace DVLD__Data_Tier.Repositories
             string query = "SELECT * FROM ApplicationTypes ORDER BY ApplicationTypeID ASC";
 
             // 2. Setup the Connection and Command
-            using (SqlConnection connection = new SqlConnection(DataBaseSettings.DataBaseConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 try
@@ -82,7 +83,7 @@ namespace DVLD__Data_Tier.Repositories
         {
             ApplicationType applicationType = null;
             string query = "SELECT * FROM ApplicationTypes WHERE ApplicationTypeID = @ID";
-            using (SqlConnection connection = new SqlConnection(DataBaseSettings.DataBaseConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@ID", applicationTypeID);

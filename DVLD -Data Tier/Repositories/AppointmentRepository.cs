@@ -70,6 +70,97 @@ namespace DVLD__Data_Tier.Repositories
             }
             return newAppointmentID;
         }
+
+        private async Task<int> _addNewTestAppoitmentTransactionalAsync(TestAppointment appointment , SqlConnection conn ,SqlTransaction transaction)
+        {
+            int newAppointmentID = -1;
+            string query = @"INSERT INTO TestAppointments
+           (
+            TestType_ID
+           ,LocalDrivingLicenseApplication_ID
+           ,AppointmentDate
+           ,PaidFees
+           ,CreatedByUser_ID
+           ,isLocked
+           ,RetakeTestApplication_ID)
+            VALUES
+           (
+           @TestType_ID,
+           @LocalDrivingLicenseApplication_ID,
+           @AppointmentDate,
+           @PaidFees,
+           @CreatedByUser_ID,
+           @isLocked,
+           @RetakeTestApplication_ID);
+           SELECT SCOPE_IDENTITY();";
+            using (SqlCommand command = new SqlCommand(query, conn,transaction))
+            {
+                command.Parameters.AddWithValue("@TestType_ID", appointment.TestType_ID);
+                command.Parameters.AddWithValue("@LocalDrivingLicenseApplication_ID", appointment.LocalDrivingLicenseApplication_ID);
+                command.Parameters.AddWithValue("@AppointmentDate", appointment.AppointmentDate);
+                command.Parameters.AddWithValue("@PaidFees", appointment.PaidFees);
+                command.Parameters.AddWithValue("@CreatedByUser_ID", appointment.CreatedByUser_ID);
+                command.Parameters.AddWithValue("@isLocked", appointment.isLocked);
+                if (appointment.RetakeTestApplication_ID != null)
+                {
+                    command.Parameters.AddWithValue("@RetakeTestApplication_ID", appointment.RetakeTestApplication_ID);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@RetakeTestApplication_ID", DBNull.Value);
+                }
+
+               object applicationReturnedID = await command.ExecuteScalarAsync();
+               int.TryParse(applicationReturnedID.ToString(), out newAppointmentID);
+
+            }
+            return newAppointmentID;
+        }
+
+        public async Task<int> AddNewRetakeTestAppoitmentAsync(TestAppointment appointment, int personID , decimal applicationTypeFees)
+        {
+            const int  RetakeApplicationTypeDB_ID = 7;
+            ApplicationRepository applicationRepo = new ApplicationRepository();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                await conn.OpenAsync();
+
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+
+                        DVLD__Core.Models.Application application = new Application
+                        {
+                            ApplicationDate = appointment.AppointmentDate,
+                            ApplicationStatus = "Completed",
+                            ApplicationType_ID = RetakeApplicationTypeDB_ID,
+                            CreatedByUser_ID = appointment.CreatedByUser_ID,
+                            LastStatusDate = DateTime.Now,
+                            Person_ID = personID,
+                            PaidFees = applicationTypeFees
+                        };
+                        application.ApplicationID = await applicationRepo.InsertApplicationTransactional(conn, transaction, application);
+                        if (application.ApplicationID == -1) { throw new Exception("Error While added Retake Application"); }
+
+                        appointment.RetakeTestApplication_ID = application.ApplicationID;                           
+
+                        appointment.TestAppointmentID = await _addNewTestAppoitmentTransactionalAsync(appointment, conn, transaction);
+                        if (appointment.TestAppointmentID == 0 || appointment.TestAppointmentID == -1) { throw new Exception("Error While added Retake Appointment"); }
+
+
+
+                        transaction.Commit();
+                        return appointment.TestAppointmentID;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
         public async Task<int> DoesApplicationHasActiveAppointmentAsync(int LDLAppID , int testType)
         {
             int foundedAppointmentID = -1;

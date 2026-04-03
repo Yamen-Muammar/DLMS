@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,13 +16,21 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 {
     public partial class ctrlSechduleVisionTest : UserControl
     {
+        public delegate void ReturnAddedRetakeApplicationID(int addedID);
+        public event ReturnAddedRetakeApplicationID OnAddedRetakeApplicationID;
+
+        protected void TriggerEvent(int addedID)
+        {
+            OnAddedRetakeApplicationID?.Invoke(addedID);
+        }
+
         private int _lDLAppID;
         private const int _testTypeID = 1;
-        private int _appointmentID; // to get appointment info for edite.
         private string _applicantFullName;
         private string _licenseClassName;
+        private TestType _testType;
 
-        private TestType _testType;     
+        private int _appointmentID; // to get appointment info for edite.
         private TestAppointment _testAppointment; // for Edite mode.
 
         private TestTypeService _testTypeService;
@@ -39,22 +48,23 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         public ctrlSechduleVisionTest(int? appointmentID,enMode mode,string applicantFullName,int ldlAppID,string licenseClassName)
         {
             InitializeComponent();
+            _mode = mode;
             _testTypeService = new TestTypeService();
             _appointmentService = new AppointmentService();
-            _mode = mode;
             _applicantFullName = applicantFullName;
             _lDLAppID = ldlAppID;      
             _appointmentID = appointmentID == null ? -1 : (int)appointmentID;
             _licenseClassName= licenseClassName;
         }
+
         private async void ctrlSechduleVisionTest_Load(object sender, EventArgs e)
         {
-            UIVisibltyOnMode(_mode);
+            UILoad(_mode);
 
             if (_mode == enMode.New)
             {
-               
-               await _loadDataInCtrl();
+
+                await _loadDataInCtrl();
                 return;
             }
 
@@ -62,12 +72,12 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             {
                 if (_appointmentID == -1)
                 {
-                    MessageBox.Show("No Appointment Data Passed","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("No Appointment Data Passed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 _testAppointment = await _getAppointmentByID(_appointmentID);
-                if ( _testAppointment == null)
+                if (_testAppointment == null)
                 {
                     return;
                 }
@@ -78,7 +88,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 
             if (_mode == enMode.Retake)
             {
-                lblTitle.Text = "Sechdule Appointment for Retake Test";
+
                 await _loadDataInCtrl();
                 return;
             }
@@ -132,21 +142,39 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             if (_mode == enMode.Retake)
             {
                 // TODO : RETAKE LOGIC 
+                try
+                {
+                    TestAppointment testAppointment = CreateTestAppointmentObj();
+                    testAppointment.TestAppointmentID = await _appointmentService.AddRetakeTestAppointmentAsync(testAppointment);
+
+                    if (testAppointment.TestAppointmentID == -1)
+                    {
+                        MessageBox.Show("Can not Create Appointment", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        TriggerEvent((int)testAppointment.RetakeTestApplication_ID);
+                        MessageBox.Show("Retake Appointment Added Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }                 
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 return;
             }
         }
-        private void UIVisibltyOnMode(enMode mode)
+        private void UILoad(enMode mode)
         {
+            dateTimePicker.MinDate = DateTime.Today;
             if (_mode == enMode.New)
             {
-                ctrlSechduleRetakeTest1.Enabled = false;
                 return;
             }
 
             if (_mode == enMode.Edite)
             {
                 lblTitle.Text = "Edite Vision Appointment";
-                ctrlSechduleRetakeTest1.Enabled = false;
                 return;
             }
 
@@ -166,6 +194,12 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
                 btnSaveTestAppointment.Enabled = false;
                 return;
             }
+
+            if (_mode == enMode.Retake)
+            {
+                this.ctrlSechduleRetakeTest1.UpdateTestTypeFees(_testType.TestTypeFees);
+            }
+           
         }
         private TestAppointment CreateTestAppointmentObj()
         {
@@ -199,7 +233,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         {
             if (DateTime.Compare(dateTimePicker.Value,DateTime.Today) <= 0)
             {
-                return false;
+                throw new Exception ("Date must be in Future");
             }
             return true;
         }

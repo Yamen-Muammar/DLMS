@@ -11,7 +11,6 @@ namespace DVLD__Business_Tier.Services
     public class ApplicationsTypeService
     {
         private ApplicationsTypesRepository _repository;
-
         public ApplicationsTypeService()
         {
             _repository = new ApplicationsTypesRepository();

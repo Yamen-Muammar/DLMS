@@ -33,7 +33,7 @@ namespace DVLD__Data_Tier.Repositories
                     try
                     {
                        
-                        newBaseAppID = Convert.ToInt32(await _insertApplication(connection, transaction, newApplication));
+                        newBaseAppID = Convert.ToInt32(await InsertApplicationTransactional(connection, transaction, newApplication));
                         newLocalAppID = Convert.ToInt32(await _insertLDLAppliaction(newBaseAppID, licenseClassID, connection, transaction));
                     
                         transaction.Commit();
@@ -52,7 +52,7 @@ namespace DVLD__Data_Tier.Repositories
 
             return newBaseAppID;
         }
-        private async Task<int> _insertApplication(SqlConnection connection, SqlTransaction transaction, Application newApplication)
+        public async Task<int> InsertApplicationTransactional(SqlConnection connection, SqlTransaction transaction, Application newApplication)
         {
             int newLocalAppID = -1;
             string query = @"INSERT INTO Applications 
@@ -154,7 +154,7 @@ namespace DVLD__Data_Tier.Repositories
             }
             return newApplicationID;
         }
-               
+
         // ==========================================
         // 2. READ (Get By ID)
         // ==========================================
