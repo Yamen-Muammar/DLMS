@@ -38,6 +38,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         private async void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
             string selecedItemStatus = _getSelectedItemStatus();
+            string selectedItemClassName = _getSelectedItemClassName();
             if (selecedItemStatus == "Canceled")
             {
                 showApplicationDetailsToolStripMenuItem.Enabled = false;
@@ -54,7 +55,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
                 showPersonLicenseHistoryToolStripMenuItem.Enabled = true;   
             }
             string nationalNo = _getSelectedItemNationalNo();
-            int CountOfPassedTest= await _testService.PassedTestCount(nationalNo);
+            int CountOfPassedTest= await _testService.PassedTestCount(nationalNo, selectedItemClassName);
             _visbleComboItemsOnPassedTests(CountOfPassedTest);
         }
         private async void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -268,6 +269,10 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             }
         }
 
+        private string _getSelectedItemClassName()
+        {
+            return dgvApplicationsList.CurrentRow.Cells["DrivingClassTitle"].Value.ToString();
+        }
         //Filtering combo Box Logic
 
         private void _loadComboBox()

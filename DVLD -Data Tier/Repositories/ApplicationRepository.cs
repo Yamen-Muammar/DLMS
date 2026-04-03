@@ -360,7 +360,7 @@ namespace DVLD__Data_Tier.Repositories
                                 FullName = reader["FullName"].ToString(),
                                 ApplicationDate = (DateTime)reader["ApplicationDate"],
                                 Status = reader["ApplicationStatus"].ToString(),
-                                PassedTests = await testRepository.GetPassedTestsAsync(reader["NationalNO"].ToString())
+                                PassedTests = await testRepository.GetPassedTestsAsync(reader["NationalNO"].ToString(), reader["ClassName"].ToString())
                             });                            
                         }
                     }

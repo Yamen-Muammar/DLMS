@@ -19,6 +19,7 @@ namespace DVLD__Business_Tier.Services
             _applicationService = new ApplicationService();
         }
 
+        //add
         public async Task<int> AddTestAppointmentAsync(TestAppointment testAppointment)
         {
             if (!_validateAppointment(testAppointment))
@@ -37,13 +38,49 @@ namespace DVLD__Business_Tier.Services
             return await _repository.AddNewTestAppoitmentAsync(testAppointment);
         }
 
+        //get
+
+        public async Task<int> DoesApplicantHasAnActiveAppointmentAsync(int LDLAppID, int testType)
+        {
+            return await _repository.DoesApplicationHasActiveAppointmentAsync(LDLAppID, testType);
+        }
+        public async Task<List<clsAppointmentsView>> GetAllAppointmentsAsync(int lDLAppID, int testType)
+        {
+            return await _repository.GetAllAppointmentsAsync(lDLAppID, testType);
+        }
+        public async Task<TestAppointment> GetAppointmentAsync(int testAppointmentID)
+        {
+            TestAppointment appointment = await _repository.GetAppointmentByIDAsync(testAppointmentID);
+
+            if (appointment == null)
+            {
+                throw new ArgumentNullException("Appointment Not Found");
+            }
+
+            return appointment;
+
+        }
+
+        //update
+        public async Task<bool> UpdateAppointmentDateTimeAsync(int testAppointmentID, DateTime date)
+        {
+            if (!_validateAppointment(new TestAppointment { PaidFees = 1, AppointmentDate = date, TestAppointmentID = testAppointmentID }))
+            {
+                return false;
+            }
+            return await _repository.UpdateAppointmentDateAsync(testAppointmentID, date);
+        }
+
+        //delete 
+
+        //helper functions
         private bool _validateAppointment(TestAppointment appointment)
         {
             if (appointment == null)
             {
                 throw new ArgumentNullException("appointment has no data");
             }
-            if (appointment.TestAppointmentID <= 0)
+            if (appointment.TestAppointmentID == -1)
             {
                 throw new ArgumentException("invalid ID");
             }
@@ -60,35 +97,6 @@ namespace DVLD__Business_Tier.Services
             return true;
         }
 
-        public async Task<int> DoesApplicantHasAnActiveAppointmentAsync(int LDLAppID, int testType)
-        {
-            return await _repository.DoesApplicationHasActiveAppointmentAsync(LDLAppID,testType);
-        }
 
-        public async Task<List<clsAppointmentsView>> GetAllAppointmentsAsync(int lDLAppID , int testType)
-        {
-            return await _repository.GetAllAppointmentsAsync(lDLAppID, testType);
-        }
-
-        public async Task<bool> UpdateAppointmentDateTimeAsync(int testAppointmentID, DateTime date)
-        {
-            if (!_validateAppointment(new TestAppointment { PaidFees = 1 , AppointmentDate = date , TestAppointmentID = testAppointmentID}))
-            {
-                return false;
-            }
-            return await _repository.UpdateAppointmentDateAsync(testAppointmentID, date);
-        }
-
-        public async Task<TestAppointment> GetAppointmentAsync(int testAppointmentID) { 
-            TestAppointment appointment = await _repository.GetAppointmentByIDAsync(testAppointmentID);
-
-            if (appointment == null)
-            {
-                throw new ArgumentNullException("Appointment Not Found");
-            }
-
-            return appointment;
-            
-        }
     }
 }

@@ -50,16 +50,23 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
                 return;
             }
 
-            if (await _testService.isAppointmentHasFailTestResultAsync(FoundAppointmentID))
+            int appointmentID = -1;
+       
+            if (dgvAppointments?.CurrentRow != null)
             {
-                frmSechduleTest frmSechduleTest = new frmSechduleTest(null,ctrlSechduleVisionTest.enMode.Retake, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID,this.ctrlLDLAwithApplicationInformation1.licenseClassName);
-                frmSechduleTest.ShowDialog();
+                 appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
+                if (await _testService.isAppointmentHasFailTestResultAsync(appointmentID))
+                {
+                    frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Retake, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
+                    frmSechduleTest.ShowDialog();
+                }
             }
             else
             {
-                frmSechduleTest frmSechduleTest = new frmSechduleTest(null,ctrlSechduleVisionTest.enMode.New,this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
+                frmSechduleTest frmSechduleTest = new frmSechduleTest(null, ctrlSechduleVisionTest.enMode.New, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
                 frmSechduleTest.ShowDialog();
             }
+            
             
             await _refreshDataInDGV();
         }
@@ -90,6 +97,12 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
 
         private async void editeToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
+            if (_isAppointmentLocked())
+            {
+                MessageBox.Show("Appointment Locked", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
             frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Edite, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
             frmSechduleTest.ShowDialog();
@@ -98,10 +111,16 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
 
         private async void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (_isAppointmentLocked())
+            {
+                MessageBox.Show("Appointment Locked", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             DateTime date = _getDateFromDGV();
             decimal fees = _getFeesFromDGV();
+            int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
 
-            frmTakeTest frmTakeTest = new frmTakeTest(_LDLApplicationID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, 0, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, date, fees);
+            frmTakeTest frmTakeTest = new frmTakeTest(appointmentID,_LDLApplicationID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, 0, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, date, fees);
             frmTakeTest.ShowDialog();
             await _refreshDataInDGV();
         }
@@ -111,6 +130,10 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
             this.Close();
         }
 
+        private bool _isAppointmentLocked()
+        {
+            return (bool)dgvAppointments.CurrentRow.Cells["isLocked"].Value;
+        }
         private DateTime _getDateFromDGV()
         {
             DateTime date = (DateTime)dgvAppointments.CurrentRow.Cells["AppointmentDate"].Value;

@@ -220,5 +220,28 @@ namespace DVLD__Data_Tier.Repositories
             }
             return isUpdated;
         }
+        public async Task<bool> UpdateAppointmentLockStatusAsync(int testAppointmentID)
+        {
+            bool isUpdated = false;
+            string query = @"Update TestAppointments Set isLocked =1  where TestAppointmentID = @ta;";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, conn))
+            {
+                command.Parameters.AddWithValue("@ta", testAppointmentID);
+                try
+                {
+                    await conn.OpenAsync();
+                    isUpdated = await command.ExecuteNonQueryAsync() > 0;
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
+            return isUpdated;
+        }
     }
 }

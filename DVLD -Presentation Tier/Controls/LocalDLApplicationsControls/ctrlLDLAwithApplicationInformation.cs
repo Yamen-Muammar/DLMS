@@ -77,7 +77,7 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
             }
             licenseClassName = licenseClass.ClassName.ToString();
 
-            _passedTestCount = await _getPassedTestCount(application.Person_ID);
+            _passedTestCount = await _getPassedTestCount(application.Person_ID, licenseClass.ClassName);
             if (_passedTestCount == -1)
             {
                 return;
@@ -107,7 +107,7 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
             }
             return app;
         }
-        private async Task<int> _getPassedTestCount(int personID)
+        private async Task<int> _getPassedTestCount(int personID,string className)
         {
             int passedTestCount = -1;
             string personNationalNo = string.Empty;
@@ -117,7 +117,8 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
             {
                 personNationalNo = (await _personService.Find(personID)).NationalNO;
                 if (personNationalNo == string.Empty) { throw new ArgumentNullException("National No is null"); }
-                passedTestCount = await _testService.PassedTestCount(personNationalNo);
+
+                passedTestCount = await _testService.PassedTestCount(personNationalNo, className);
             }
             catch (Exception ex)
             {

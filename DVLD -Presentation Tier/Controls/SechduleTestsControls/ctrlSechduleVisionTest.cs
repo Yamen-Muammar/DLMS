@@ -53,8 +53,8 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 
             if (_mode == enMode.New)
             {
-                await _getDataForLoadUI();
-                _loadDataInCtrl();
+               
+               await _loadDataInCtrl();
                 return;
             }
 
@@ -66,22 +66,20 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
                     return;
                 }
 
-                await _getDataForLoadUI();
-
                 _testAppointment = await _getAppointmentByID(_appointmentID);
                 if ( _testAppointment == null)
                 {
                     return;
                 }
 
-                _loadDataInCtrl(_testAppointment);
+                await _loadDataInCtrl(_testAppointment);
                 return;
             }
 
             if (_mode == enMode.Retake)
             {
-
-                await _getDataForLoadUI();
+                lblTitle.Text = "Sechdule Appointment for Retake Test";
+                await _loadDataInCtrl();
                 return;
             }
         }
@@ -133,6 +131,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 
             if (_mode == enMode.Retake)
             {
+                // TODO : RETAKE LOGIC 
                 return;
             }
         }
@@ -175,11 +174,13 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             {
                 return testAppointment;
             }
+
             try
             {
                 testAppointment = new TestAppointment();
                 testAppointment.LocalDrivingLicenseApplication_ID = _lDLAppID;
                 testAppointment.RetakeTestApplication_ID = null;
+                testAppointment.TestAppointmentID = 0;
                 testAppointment.isLocked = false;
                 testAppointment.CreatedByUser_ID = Global.User.UserID;
                 testAppointment.PaidFees = _testType.TestTypeFees;
@@ -196,7 +197,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 
         private bool _infoValidation()
         {
-            if (DateTime.Compare(dateTimePicker.Value,DateTime.Now) <= 0)
+            if (DateTime.Compare(dateTimePicker.Value,DateTime.Today) <= 0)
             {
                 return false;
             }
@@ -228,10 +229,11 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             }
             return testType;
         }
-        private void _loadDataInCtrl(int trail = 0)
+        private async Task _loadDataInCtrl(int trail = 0)
         {
             try
             {
+                await _getDataForLoadUI();
                 lblLDLApp.Text = _lDLAppID.ToString();
                 lblLClassName.Text = _licenseClassName;
                 lblTrail.Text = trail.ToString();
@@ -243,10 +245,11 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
                 MessageBox.Show("Error While Load Info To UI","Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void _loadDataInCtrl(TestAppointment appointment,int trail = 0)
+        private async Task _loadDataInCtrl(TestAppointment appointment,int trail = 0)
         {
             try
             {
+                await _getDataForLoadUI();
                 lblLDLApp.Text = appointment.LocalDrivingLicenseApplication_ID.ToString();
                 lblLClassName.Text = _licenseClassName;
                 lblTrail.Text = trail.ToString();

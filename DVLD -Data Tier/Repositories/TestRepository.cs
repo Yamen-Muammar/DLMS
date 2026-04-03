@@ -13,7 +13,7 @@ namespace DVLD__Data_Tier.Repositories
     public class TestRepository
     {
         private string _connectionString = DataBaseSettings.DataBaseConnectionString;
-        public async Task<int> GetPassedTestsAsync(string nationalNo)
+        public async Task<int> GetPassedTestsAsync(string nationalNo,string className)
         {
             int passedTestsCount = -1;
 
@@ -27,13 +27,17 @@ namespace DVLD__Data_Tier.Repositories
                             INNER JOIN Applications
                             on LocalDrivingLicenseApplications.Application_ID  = Applications.ApplicationID
                             inner join Persons on Persons.PersonID = Applications.Person_ID
-                            where Tests.TestResult = 1 and Persons.NationalNO = @nationalNo;
+                            inner join LicenseClasses
+                            on LocalDrivingLicenseApplications.LicenseClass_ID = LicenseClasses.LicenseClassID
+
+                            where Tests.TestResult = 1 and Persons.NationalNO = @nationalNo and LicenseClasses.ClassName = @className;
 ";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@nationalNo", nationalNo);
+                cmd.Parameters.AddWithValue("@className", className);
                 try
                 {
                     await conn.OpenAsync();
@@ -51,6 +55,36 @@ namespace DVLD__Data_Tier.Repositories
                 }    
             }
             return passedTestsCount;
+        }
+        // ==========================================
+        // READ (checks By TestAppointment ID)
+        // ==========================================
+        public async Task<bool> isAppointmentTakedTestAsync(int appointmentID)
+        {
+            bool isPass = false;
+            string query = @"select yes = 1 from Tests t
+                             inner join TestAppointments ta on t.TestAppointment_ID = ta.TestAppointmentID
+                             where ta.TestAppointmentID = @appID;";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@appID", appointmentID);
+                try
+                {
+                    await connection.OpenAsync();
+                    object result = await command.ExecuteScalarAsync();
+                     if (result != null && int.TryParse(result.ToString(),out int resultValue))
+                     {
+                        isPass = (resultValue == 1);
+                     }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return isPass;
         }
         public async Task<bool> isAppointmentHasFailTestResultAsync(int appointmentID)
         {
@@ -80,7 +114,45 @@ namespace DVLD__Data_Tier.Repositories
             }
             return isFail;
         }
-
+        // ==========================================
+        // READ (Get All Test For TestAppointment ID)
+        // ==========================================
+        public async Task<List<Test>> GetTestsByAppointmentIDAsync(int appointmentID)
+        {
+            List<Test> tests = new List<Test>();
+            string query = @"SELECT TestID, TestAppointment_ID, TestResult, Notes, CreatedByUser_ID 
+                             FROM Tests 
+                             WHERE TestAppointment_ID = @appointmentID;";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@appointmentID", appointmentID);
+                try
+                {
+                    await conn.OpenAsync();
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            Test test = new Test
+                            (
+                                (int)reader["TestID"],
+                                 (int)reader["TestAppointment_ID"],
+                                 (bool)reader["TestResult"],
+                                reader["Notes"] != DBNull.Value ? (string)reader["Notes"] : string.Empty,
+                                 (int)reader["CreatedByUser_ID"]
+                            );
+                            tests.Add(test);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return tests;
+        }
         // ==========================================
         // CREATE
         // ==========================================
@@ -114,6 +186,7 @@ namespace DVLD__Data_Tier.Repositories
                     {
                         insertedID = generatedID;
                     }
+
                 }
                 catch (Exception)
                 {
@@ -144,13 +217,13 @@ namespace DVLD__Data_Tier.Repositories
                         if (await reader.ReadAsync())
                         {
                             test = new Test
-                            {
-                                TestID = (int)reader["TestID"],
-                                TestAppointment_ID = (int)reader["TestAppointment_ID"],
-                                TestResult = (bool)reader["TestResult"],
-                                CreatedByUser_ID = (int)reader["CreatedByUser_ID"],
-                                Notes = reader["Notes"] != DBNull.Value ? (string)reader["Notes"] : string.Empty
-                            };
+                            (
+                                (int)reader["TestID"],
+                                 (int)reader["TestAppointment_ID"],
+                                 (bool)reader["TestResult"],
+                                reader["Notes"] != DBNull.Value ? (string)reader["Notes"] : string.Empty,
+                                 (int)reader["CreatedByUser_ID"]
+                            );
                         }
                     }
                 }
