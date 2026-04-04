@@ -18,14 +18,13 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
     {
         public delegate void ReturnAddedRetakeApplicationID(int addedID);
         public event ReturnAddedRetakeApplicationID OnAddedRetakeApplicationID;
-
         protected void TriggerEvent(int addedID)
         {
             OnAddedRetakeApplicationID?.Invoke(addedID);
         }
 
         private int _lDLAppID;
-        private const int _testTypeID = 1;
+        private const int _testTypeID = 1; // test type id in database
         private string _applicantFullName;
         private string _licenseClassName;
         private TestType _testType;
@@ -63,7 +62,6 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 
             if (_mode == enMode.New)
             {
-
                 await _loadDataInCtrl();
                 return;
             }
@@ -88,7 +86,6 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 
             if (_mode == enMode.Retake)
             {
-
                 await _loadDataInCtrl();
                 return;
             }
@@ -97,72 +94,93 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         {
             if (_mode == enMode.New)
             {
-                TestAppointment appointment = CreateTestAppointmentObj();
-                try
-                {
-                    appointment.TestAppointmentID = await _appointmentService.AddTestAppointmentAsync(appointment);
-                    if (appointment.TestAppointmentID == -1)
-                    {
-                        MessageBox.Show("Can not Create Appointment","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Appointment Added Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                await _addNewAppointment();
                 return;
             }
 
             if (_mode == enMode.Edite)
             {
-                DateTime UpdatedDate = dateTimePicker.Value;
-                try
-                {
-                   bool isUpdatedDone = await _appointmentService.UpdateAppointmentDateTimeAsync(_appointmentID, UpdatedDate);
-                    if (!isUpdatedDone)
-                    {
-                        MessageBox.Show("Can not Update Appointment Date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Appointment Updated Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                await _EditeAppoinment();
                 return;
             }
 
             if (_mode == enMode.Retake)
-            { 
-                try
-                {
-                    TestAppointment testAppointment = CreateTestAppointmentObj();
-                    testAppointment.TestAppointmentID = await _appointmentService.AddRetakeTestAppointmentAsync(testAppointment);
-
-                    if (testAppointment.TestAppointmentID == -1)
-                    {
-                        MessageBox.Show("Can not Create Appointment", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        TriggerEvent((int)testAppointment.RetakeTestApplication_ID);
-                        MessageBox.Show("Retake Appointment Added Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }                 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                return;
+            {
+                await _addRetakeAppointment();
+               return;
             }
         }
+
+        // new mode functions
+        private async Task _addNewAppointment()
+        {
+            TestAppointment appointment = CreateTestAppointmentObj();
+            try
+            {
+                appointment.TestAppointmentID = await _appointmentService.AddTestAppointmentAsync(appointment);
+                if (appointment.TestAppointmentID == -1)
+                {
+                    MessageBox.Show("Can not Create Appointment", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Appointment Added Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // edite mode functions
+        private async Task _EditeAppoinment()
+        {
+            DateTime UpdatedDate = dateTimePicker.Value;
+            try
+            {
+                bool isUpdatedDone = await _appointmentService.UpdateAppointmentDateTimeAsync(_appointmentID, UpdatedDate);
+                if (!isUpdatedDone)
+                {
+                    MessageBox.Show("Can not Update Appointment Date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Appointment Updated Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // retake mode functions
+        private async Task _addRetakeAppointment()
+        {
+            try
+            {
+                TestAppointment testAppointment = CreateTestAppointmentObj();
+                testAppointment.TestAppointmentID = await _appointmentService.AddRetakeTestAppointmentAsync(testAppointment);
+
+                if (testAppointment.TestAppointmentID == -1)
+                {
+                    MessageBox.Show("Can not Create Appointment", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    TriggerEvent((int)testAppointment.RetakeTestApplication_ID);
+                    MessageBox.Show("Retake Appointment Added Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        // helper functions
         private void UILoad(enMode mode)
         {
             dateTimePicker.MinDate = DateTime.Today;
@@ -185,12 +203,11 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             if (_mode == enMode.Retake)
             {
                 lblTitle.Text = "Retake Vision Test";
-                this.ctrlSechduleRetakeTest1.UpdateTestTypeFees(_testType.TestTypeFees);  
+                this.ctrlSechduleRetakeTest1.UpdateTestTypeFees(_testType.TestTypeFees);
                 ctrlSechduleRetakeTest1.Enabled = true;
                 return;
             }
         }
-
         private async Task _getDataForLoadUI()
         {
             _testType = await _getTestType(_testTypeID);
@@ -227,7 +244,6 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
            
             return testAppointment;
         }
-
         private bool _infoValidation()
         {
             if (DateTime.Compare(dateTimePicker.Value,DateTime.Today) <= 0)
