@@ -140,8 +140,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             }
 
             if (_mode == enMode.Retake)
-            {
-                // TODO : RETAKE LOGIC 
+            { 
                 try
                 {
                     TestAppointment testAppointment = CreateTestAppointmentObj();
@@ -169,11 +168,16 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             dateTimePicker.MinDate = DateTime.Today;
             if (_mode == enMode.New)
             {
+                ctrlSechduleRetakeTest1.Enabled = false;
+                ctrlSechduleRetakeTest1.Visible = false;
                 return;
             }
 
             if (_mode == enMode.Edite)
             {
+
+                ctrlSechduleRetakeTest1.Enabled = false;
+                ctrlSechduleRetakeTest1.Visible = false;
                 lblTitle.Text = "Edite Vision Appointment";
                 return;
             }
@@ -181,6 +185,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             if (_mode == enMode.Retake)
             {
                 lblTitle.Text = "Retake Vision Test";
+                this.ctrlSechduleRetakeTest1.UpdateTestTypeFees(_testType.TestTypeFees);  
                 ctrlSechduleRetakeTest1.Enabled = true;
                 return;
             }
@@ -194,12 +199,6 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
                 btnSaveTestAppointment.Enabled = false;
                 return;
             }
-
-            if (_mode == enMode.Retake)
-            {
-                this.ctrlSechduleRetakeTest1.UpdateTestTypeFees(_testType.TestTypeFees);
-            }
-           
         }
         private TestAppointment CreateTestAppointmentObj()
         {

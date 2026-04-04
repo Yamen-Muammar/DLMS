@@ -49,15 +49,25 @@ namespace DVLD__Business_Tier.Services
             {
                 return -1;
             }
-            
+
+
+            // TODO : CHECK IF APPLICANT HAS AN ACTIVE APPOINTMENT FOR RETAKE TEST .
+            //(IF LDLApp has not locked appoinment and has retake test application )
+
+            int doesHasAppointment = await DoesApplicantHasAnActiveAppointmentAsync(testAppointment.LocalDrivingLicenseApplication_ID, testAppointment.TestType_ID);
+
+            if (doesHasAppointment != -1)
+            {
+                throw new Exception($"Applicant already has an appointment : {doesHasAppointment}");
+            }
+
+
             DVLD__Core.Models.Application applicationForGetPerson_ID = await _applicationService.GetApplicationOnLDLA_ID(testAppointment.LocalDrivingLicenseApplication_ID);
             if (applicationForGetPerson_ID == null)
             {
                 throw new Exception("Error While Getting application Data");
             }
 
-            // TODO : CHECK IF APPLICANT HAS AN ACTIVE APPOINTMENT FOR RETAKE TEST .
-            //(IF LDLApp has not appoinment locked and has retake test application )
 
             ApplicationType appType = await _applicationsTypeService.GetApplicationTypeByID(7); // 7 = retake test application type ID in database
             if (appType == null)
