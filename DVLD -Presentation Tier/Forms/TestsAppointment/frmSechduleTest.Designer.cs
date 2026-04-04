@@ -57,9 +57,9 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
 
         }
 
-        private void InitializeComponent(int? appointmentID,ctrlSechduleVisionTest.enMode mode,int ldlAppId,string applicantName, string licenseClassName)
+        private void InitializeComponent(int? appointmentID,ctrlSechduleVisionTest.enMode mode,int ldlAppId,string applicantName, string licenseClassName,int trail)
         {
-            this.ctrlSechduleVisionTest1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleVisionTest(appointmentID,mode, applicantName, ldlAppId,licenseClassName);
+            this.ctrlSechduleVisionTest1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleVisionTest(appointmentID,mode, applicantName, ldlAppId,licenseClassName,trail);
             this.SuspendLayout();
             // 
             // ctrlSechduleVisionTest1

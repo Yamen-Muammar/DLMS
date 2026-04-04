@@ -17,11 +17,11 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
         {
             InitializeComponent();
         }
-        public frmSechduleTest(int? appointmentID, ctrlSechduleVisionTest.enMode mode,string applicantFullName,int LDLAppID , int _testTypeID,string licenseClassName)
+        public frmSechduleTest(int? appointmentID, ctrlSechduleVisionTest.enMode mode,string applicantFullName,int LDLAppID , int _testTypeID,string licenseClassName, int trail)
         {
             if (_testTypeID == 1)
             {
-                InitializeComponent(appointmentID,mode,LDLAppID,applicantFullName,licenseClassName);
+                InitializeComponent(appointmentID,mode,LDLAppID,applicantFullName,licenseClassName, trail);
             }
             else if (_testTypeID == 2)
             {

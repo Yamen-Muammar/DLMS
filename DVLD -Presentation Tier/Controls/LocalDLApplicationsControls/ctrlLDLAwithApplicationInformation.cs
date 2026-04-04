@@ -160,9 +160,19 @@ namespace DVLD__Presentation_Tier.Controls.LocalDLApplicationsControls
             lblCreatedBy.Text =(await _userService.GetUserByIdAsync(application.CreatedByUser_ID)).Username.ToString();
         }
 
+        // for outside calls 
         public void UpdateApplicantName(Person person)
         {
             lblApplicant.Text = person.FullName().ToString();
+        }
+        public void UpdatePassedTestCount()
+        {
+            if (_passedTestCount == 3)
+            {
+                return;
+            }
+            int newCount = _passedTestCount + 1;
+            lblPassedTestsCount.Text = lblPassedTestsCount.Text = $"{newCount.ToString()}/3"; 
         }
     }
 }

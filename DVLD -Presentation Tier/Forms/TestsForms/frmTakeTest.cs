@@ -15,6 +15,15 @@ namespace DVLD__Presentation_Tier.Forms.TestsForms
 {
     public partial class frmTakeTest : Form
     {
+        public event Action OnTestPass;
+        
+        protected void TriggerOnTestPass()
+        {
+            OnTestPass?.Invoke();
+        }
+        
+
+
         private Test _test;
         private int _testAppointmentID;
         private bool _isPass;
@@ -50,6 +59,11 @@ namespace DVLD__Presentation_Tier.Forms.TestsForms
                 {
                     MessageBox.Show("Test Added Successfully", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lblTestID.Text = _test.TestID.ToString();
+                    if (_test.TestResult)
+                    {
+                        TriggerOnTestPass();
+                    }
+                
                 }
                 else
                 {

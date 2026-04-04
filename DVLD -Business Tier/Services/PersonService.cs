@@ -119,7 +119,7 @@ namespace DVLD__Business_Tier.Services
             }
 
             // Image Handling            
-            bool isPersonNOTUpdateImage = person.ImageName.Length == 40;
+            bool isPersonNOTUpdateImage =await _isPicINFolder(person.ImageName);
             if (!isPersonNOTUpdateImage)
             {
                 person.ImageName = await _setImageProcess(person);
@@ -214,6 +214,23 @@ namespace DVLD__Business_Tier.Services
             return isDeleteImage;
         }
 
+        private async Task<bool> _isPicINFolder(string picName)
+        {
+            string ImageDestinationPath = Path.Combine(@"F:\yamen - 2024\C#\Course\projects\PersonPic", picName);
+            try
+            {
+                if (File.Exists(ImageDestinationPath))
+                {
+                    return true;    
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return false;
+        }
         // Information Validation
         private static bool IsPersonInfoValid(Person person)
         {

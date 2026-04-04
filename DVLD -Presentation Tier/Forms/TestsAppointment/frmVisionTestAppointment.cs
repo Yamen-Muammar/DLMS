@@ -57,7 +57,7 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
                  appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
                 if (await _testService.isAppointmentHasFailTestResultAsync(appointmentID))
                 {
-                    frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Retake, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
+                    frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Retake, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, _appointmentsViewsList.Count);
                     frmSechduleTest.ShowDialog();
                 }
                 else
@@ -67,7 +67,7 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
             }
             else
             {
-                frmSechduleTest frmSechduleTest = new frmSechduleTest(null, ctrlSechduleVisionTest.enMode.New, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
+                frmSechduleTest frmSechduleTest = new frmSechduleTest(null, ctrlSechduleVisionTest.enMode.New, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, _appointmentsViewsList.Count);
                 frmSechduleTest.ShowDialog();
             }
             
@@ -96,7 +96,6 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
         {
              await _loadDataIntoTheList();
             _refreshDGV(_appointmentsViewsList);
-             
         }
 
         private async void editeToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -108,7 +107,7 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
             }
 
             int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
-            frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Edite, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName);
+            frmSechduleTest frmSechduleTest = new frmSechduleTest(appointmentID, ctrlSechduleVisionTest.enMode.Edite, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, _LDLApplicationID, _testTeypID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, _appointmentsViewsList.Count);
             frmSechduleTest.ShowDialog();
             await _refreshDataInDGV();
         }
@@ -124,7 +123,8 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment
             decimal fees = _getFeesFromDGV();
             int appointmentID = (int)dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
 
-            frmTakeTest frmTakeTest = new frmTakeTest(appointmentID,_LDLApplicationID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, 0, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, date, fees);
+            frmTakeTest frmTakeTest = new frmTakeTest(appointmentID,_LDLApplicationID, this.ctrlLDLAwithApplicationInformation1.licenseClassName, _appointmentsViewsList.Count, this.ctrlLDLAwithApplicationInformation1.ApplicatFullName, date, fees);
+            frmTakeTest.OnTestPass += this.ctrlLDLAwithApplicationInformation1.UpdatePassedTestCount;
             frmTakeTest.ShowDialog();
             await _refreshDataInDGV();
         }

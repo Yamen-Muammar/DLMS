@@ -27,6 +27,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         private const int _testTypeID = 1; // test type id in database
         private string _applicantFullName;
         private string _licenseClassName;
+        private int _trailCount;
         private TestType _testType;
 
         private int _appointmentID; // to get appointment info for edite.
@@ -44,21 +45,22 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         {
             InitializeComponent();
         }
-        public ctrlSechduleVisionTest(int? appointmentID,enMode mode,string applicantFullName,int ldlAppID,string licenseClassName)
+        public ctrlSechduleVisionTest(int? appointmentID,enMode mode,string applicantFullName,int ldlAppID,string licenseClassName,int trail)
         {
             InitializeComponent();
             _mode = mode;
             _testTypeService = new TestTypeService();
             _appointmentService = new AppointmentService();
             _applicantFullName = applicantFullName;
-            _lDLAppID = ldlAppID;      
+            _lDLAppID = ldlAppID;    
+            _trailCount = trail;
             _appointmentID = appointmentID == null ? -1 : (int)appointmentID;
             _licenseClassName= licenseClassName;
         }
 
         private async void ctrlSechduleVisionTest_Load(object sender, EventArgs e)
         {
-            UILoad(_mode);
+            UILoad(_mode);  
 
             if (_mode == enMode.New)
             {
@@ -187,6 +189,9 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         private void UILoad(enMode mode)
         {
             dateTimePicker.MinDate = DateTime.Today;
+
+            lblTrail.Text = _trailCount.ToString();
+
             if (_mode == enMode.New)
             {
                 ctrlSechduleRetakeTest1.Enabled = false;
