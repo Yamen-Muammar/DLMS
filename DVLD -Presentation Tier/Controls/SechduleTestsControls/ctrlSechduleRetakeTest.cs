@@ -23,12 +23,16 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         public ctrlSechduleRetakeTest()
         {
             InitializeComponent();
-            _applicationsTypeService = new ApplicationsTypeService();
         }
         private async void ctrlSechduleRetakeTest_Load(object sender, EventArgs e)
         {
-
-            _applicationTypeInfo = await _getApplicationTypeInfo();
+            if (this.DesignMode)
+            {
+                return;
+            }
+            _applicationsTypeService = new ApplicationsTypeService();
+        
+             _applicationTypeInfo = await _getApplicationTypeInfo();
             if (_applicationTypeInfo == null)
             {
                 return;

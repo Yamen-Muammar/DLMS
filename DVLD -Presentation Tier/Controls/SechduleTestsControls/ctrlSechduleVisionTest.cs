@@ -189,9 +189,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         private void UILoad(enMode mode)
         {
             dateTimePicker.MinDate = DateTime.Today;
-
             lblTrail.Text = _trailCount.ToString();
-
             if (_mode == enMode.New)
             {
                 ctrlSechduleRetakeTest1.Enabled = false;
