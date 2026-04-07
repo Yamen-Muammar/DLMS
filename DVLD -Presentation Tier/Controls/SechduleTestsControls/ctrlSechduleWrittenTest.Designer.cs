@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ctrlSechduleWrittenTest));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.lblFees = new System.Windows.Forms.Label();
@@ -42,9 +43,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.ctrlSechduleRetakeTest1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleRetakeTest();
-            this.btnSaveTestAppointment = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnSaveTestAppointment = new System.Windows.Forms.Button();
+            this.ctrlSechduleRetakeTest1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleRetakeTest();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +71,7 @@
             this.groupBox1.Size = new System.Drawing.Size(603, 604);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Vision Test";
+            this.groupBox1.Text = "Written Test";
             // 
             // dateTimePicker
             // 
@@ -204,12 +205,15 @@
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Written Test";
             // 
-            // ctrlSechduleRetakeTest1
+            // pictureBox1
             // 
-            this.ctrlSechduleRetakeTest1.Location = new System.Drawing.Point(3, 613);
-            this.ctrlSechduleRetakeTest1.Name = "ctrlSechduleRetakeTest1";
-            this.ctrlSechduleRetakeTest1.Size = new System.Drawing.Size(603, 118);
-            this.ctrlSechduleRetakeTest1.TabIndex = 4;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(191, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(184, 176);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // btnSaveTestAppointment
             // 
@@ -222,16 +226,14 @@
             this.btnSaveTestAppointment.TabIndex = 3;
             this.btnSaveTestAppointment.Text = "Save";
             this.btnSaveTestAppointment.UseVisualStyleBackColor = true;
+            this.btnSaveTestAppointment.Click += new System.EventHandler(this.btnSaveTestAppointment_Click);
             // 
-            // pictureBox1
+            // ctrlSechduleRetakeTest1
             // 
-            this.pictureBox1.Image = global::DVLD__Presentation_Tier.Properties.Resources.WrittenTest512;
-            this.pictureBox1.Location = new System.Drawing.Point(191, 25);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(184, 176);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.ctrlSechduleRetakeTest1.Location = new System.Drawing.Point(3, 613);
+            this.ctrlSechduleRetakeTest1.Name = "ctrlSechduleRetakeTest1";
+            this.ctrlSechduleRetakeTest1.Size = new System.Drawing.Size(603, 118);
+            this.ctrlSechduleRetakeTest1.TabIndex = 4;
             // 
             // ctrlSechduleWrittenTest
             // 
@@ -242,6 +244,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "ctrlSechduleWrittenTest";
             this.Size = new System.Drawing.Size(616, 805);
+            this.Load += new System.EventHandler(this.ctrlSechduleWrittenTest_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

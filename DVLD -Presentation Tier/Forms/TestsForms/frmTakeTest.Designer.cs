@@ -172,9 +172,9 @@ namespace DVLD__Presentation_Tier.Forms.TestsForms
 
         }
 
-        private void InitializeComponent(int LDLAppID, string licenseClassName, int tril, string applicantName, DateTime date, decimal fees)
+        private void InitializeComponent(int LDLAppID, string licenseClassName, int testTypeID, int tril, string applicantName, DateTime date, decimal fees)
         {
-            this.ctrlSechduleVisionTestInfo1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleVisionTestInfo(LDLAppID, licenseClassName, tril, applicantName, date, fees);
+            this.ctrlSechduleVisionTestInfo1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleVisionTestInfo(LDLAppID, licenseClassName, testTypeID,tril, applicantName, date, fees);
             this.label1 = new System.Windows.Forms.Label();
             this.lblTestID = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();

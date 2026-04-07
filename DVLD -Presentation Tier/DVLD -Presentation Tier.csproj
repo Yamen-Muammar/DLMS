@@ -236,6 +236,12 @@
     <Compile Include="Forms\TestsAppointment\WrittenTestFroms\frmSechduleWrittenTest.Designer.cs">
       <DependentUpon>frmSechduleWrittenTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TestsAppointment\WrittenTestFroms\frmWrittenTestAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TestsAppointment\WrittenTestFroms\frmWrittenTestAppointment.Designer.cs">
+      <DependentUpon>frmWrittenTestAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TestsForms\frmTakeTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -363,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TestsAppointment\WrittenTestFroms\frmSechduleWrittenTest.resx">
       <DependentUpon>frmSechduleWrittenTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TestsAppointment\WrittenTestFroms\frmWrittenTestAppointment.resx">
+      <DependentUpon>frmWrittenTestAppointment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TestsForms\frmTakeTest.resx">
       <DependentUpon>frmTakeTest.cs</DependentUpon>

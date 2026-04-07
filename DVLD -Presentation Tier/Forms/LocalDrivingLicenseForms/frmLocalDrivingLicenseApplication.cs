@@ -11,6 +11,7 @@ using DVLD__Business_Tier.Services;
 using DVLD__Core.Models;
 using DVLD__Core.View_Models;
 using DVLD__Presentation_Tier.Forms.TestsAppointment;
+using DVLD__Presentation_Tier.Forms.TestsAppointment.WrittenTestFroms;
 
 namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 {
@@ -142,16 +143,12 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             frmVisionTestAppointment.ShowDialog();
             await _refreshUIDataHoldersAsync(_dataBaseSource);
         }
-        private void sechduleWrittenTestToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void sechduleWrittenTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            int lDLAppID = _getSelectedLDLApplicationID();
+            frmWrittenTestAppointment frmWrittenTestAppointment = new frmWrittenTestAppointment(lDLAppID);
+            frmWrittenTestAppointment.ShowDialog();
+            await _refreshUIDataHoldersAsync(_dataBaseSource);
         }
         private void sechduleStreetTestToolStripMenuItem_Click(object sender, EventArgs e)
         {

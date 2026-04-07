@@ -40,11 +40,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblDate = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFees
@@ -168,16 +168,6 @@
             this.lblTitle.TabIndex = 17;
             this.lblTitle.Text = "Vision Test Info";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::DVLD__Presentation_Tier.Properties.Resources.Vision512;
-            this.pictureBox1.Location = new System.Drawing.Point(183, 25);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(184, 176);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.pictureBox1);
@@ -211,6 +201,16 @@
             this.lblDate.TabIndex = 7;
             this.lblDate.Text = "???";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DVLD__Presentation_Tier.Properties.Resources.Vision512;
+            this.pictureBox1.Location = new System.Drawing.Point(183, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(184, 176);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
             // ctrlSechduleVisionTestInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -219,9 +219,9 @@
             this.Name = "ctrlSechduleVisionTestInfo";
             this.Size = new System.Drawing.Size(602, 594);
             this.Load += new System.EventHandler(this.ctrlSechduleVisionTestInfo_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -18,12 +18,13 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         private string _applicantFullName;
         private DateTime _date;    
         private decimal _fees;
+        private int _testTypeID;
         public ctrlSechduleVisionTestInfo()
         {
             InitializeComponent();
         }
         public ctrlSechduleVisionTestInfo
-            (int LDLAppID, string licenseClassName, int tril, string applicantName, DateTime date, decimal fees)
+            (int LDLAppID, string licenseClassName, int testTypeID ,int tril, string applicantName, DateTime date, decimal fees)
         {
             InitializeComponent();
             _ldlAppID = LDLAppID;
@@ -32,6 +33,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             _applicantFullName = applicantName;
             _date = date;
             _fees = fees;
+            _testTypeID = testTypeID;
         }
 
         private void ctrlSechduleVisionTestInfo_Load(object sender, EventArgs e)
@@ -40,6 +42,21 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             {
                 return;
             }
+            if (_testTypeID == 1)
+            {
+                
+            }
+            else if (_testTypeID == 2)
+            {
+                pictureBox1.Image = DVLD__Presentation_Tier.Properties.Resources.WrittenTest512;
+                lblTitle.Text = "Written Test Info";
+            }
+            else if ( _testTypeID == 3)
+            {
+                pictureBox1.Image = DVLD__Presentation_Tier.Properties.Resources.Cars48;
+                lblTitle.Text = "Street Test Info";
+            }
+
             _loadDateInForm();
         }
 
@@ -47,6 +64,11 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         {
             if (_ldlAppID <= 0 && _licenseClassName == null && _trail < 0 && _applicantFullName == null && _date == null 
                 && _fees <=  0)
+            {
+                return false;
+            }
+
+            if (_testTypeID == 0 || _testTypeID > 3 || _testTypeID < 1)
             {
                 return false;
             }

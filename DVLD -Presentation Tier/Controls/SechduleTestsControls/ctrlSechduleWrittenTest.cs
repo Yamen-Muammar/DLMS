@@ -57,7 +57,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             _licenseClassName = licenseClassName;
             _loadDataInCtrl();
         }
-        private async void ctrlSechduleVisionTest_Load(object sender, EventArgs e)
+        private async void ctrlSechduleWrittenTest_Load(object sender, EventArgs e)
         {
             UILoad(_mode);
 
@@ -198,16 +198,16 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
 
             if (_mode == enMode.Edite)
             {
-
+                lblTitle.Text = "Edite Written Appointment";
                 ctrlSechduleRetakeTest1.Enabled = false;
                 ctrlSechduleRetakeTest1.Visible = false;
-                lblTitle.Text = "Edite Vision Appointment";
+              
                 return;
             }
 
             if (_mode == enMode.Retake)
             {
-                lblTitle.Text = "Retake Vision Test";
+                lblTitle.Text = "Retake Written Test";
                 ctrlSechduleRetakeTest1.Enabled = true;
                 ctrlSechduleRetakeTest1.Visible = true;
                 return;

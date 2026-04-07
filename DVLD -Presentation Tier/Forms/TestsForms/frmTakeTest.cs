@@ -35,9 +35,9 @@ namespace DVLD__Presentation_Tier.Forms.TestsForms
         {
             InitializeComponent();
         }
-        public frmTakeTest(int appointmentID,int LDLAppID, string licenseClassName, int tril, string applicantName, DateTime date, decimal fees)
+        public frmTakeTest(int appointmentID,int LDLAppID, int testTypeID,string licenseClassName, int tril, string applicantName, DateTime date, decimal fees)
         {
-            InitializeComponent(LDLAppID, licenseClassName, tril, applicantName, date, fees);
+            InitializeComponent(LDLAppID, licenseClassName, testTypeID,tril, applicantName, date, fees);
             _testService = new TestService();
             _testAppointmentID  = appointmentID;
         }
