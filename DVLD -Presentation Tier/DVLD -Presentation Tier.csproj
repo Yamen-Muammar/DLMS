@@ -230,6 +230,18 @@
     <Compile Include="Forms\TestsAppointment\frmVisionTestAppointment.Designer.cs">
       <DependentUpon>frmVisionTestAppointment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TestsAppointment\StreetTestForm\frmSechduleStreetTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TestsAppointment\StreetTestForm\frmSechduleStreetTest.Designer.cs">
+      <DependentUpon>frmSechduleStreetTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TestsAppointment\StreetTestForm\frmStreetTestAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TestsAppointment\StreetTestForm\frmStreetTestAppointment.Designer.cs">
+      <DependentUpon>frmStreetTestAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TestsAppointment\WrittenTestFroms\frmSechduleWrittenTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -328,6 +340,9 @@
     <EmbeddedResource Include="Controls\SechduleTestsControls\ctrlSechduleRetakeTest.resx">
       <DependentUpon>ctrlSechduleRetakeTest.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SechduleTestsControls\ctrlSechduleStreetTest.resx">
+      <DependentUpon>ctrlSechduleStreetTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SechduleTestsControls\ctrlSechduleVisionTest.resx">
       <DependentUpon>ctrlSechduleVisionTest.cs</DependentUpon>
     </EmbeddedResource>
@@ -366,6 +381,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TestsAppointment\frmVisionTestAppointment.resx">
       <DependentUpon>frmVisionTestAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TestsAppointment\StreetTestForm\frmSechduleStreetTest.resx">
+      <DependentUpon>frmSechduleStreetTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TestsAppointment\StreetTestForm\frmStreetTestAppointment.resx">
+      <DependentUpon>frmStreetTestAppointment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TestsAppointment\WrittenTestFroms\frmSechduleWrittenTest.resx">
       <DependentUpon>frmSechduleWrittenTest.cs</DependentUpon>
