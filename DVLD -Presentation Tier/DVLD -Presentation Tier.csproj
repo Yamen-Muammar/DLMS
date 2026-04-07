@@ -322,6 +322,9 @@
     <EmbeddedResource Include="Controls\SechduleTestsControls\ctrlSechduleVisionTestInfo.resx">
       <DependentUpon>ctrlSechduleVisionTestInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SechduleTestsControls\ctrlSechduleWrittenTest.resx">
+      <DependentUpon>ctrlSechduleWrittenTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\UserControls\ctrlUserInfo.resx">
       <DependentUpon>ctrlUserInfo.cs</DependentUpon>
     </EmbeddedResource>
