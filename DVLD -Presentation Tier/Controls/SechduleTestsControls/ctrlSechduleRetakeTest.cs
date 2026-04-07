@@ -26,29 +26,18 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         }
         private async void ctrlSechduleRetakeTest_Load(object sender, EventArgs e)
         {
-            if (this.DesignMode)
-            {
-                return;
-            }
-            _applicationsTypeService = new ApplicationsTypeService();
-        
-             _applicationTypeInfo = await _getApplicationTypeInfo();
-            if (_applicationTypeInfo == null)
-            {
-                return;
-            }
-            _loadDataInCtrl();
         }
-        public void UpdateTestTypeFees(decimal newFees)
+        public  async Task UpdateTestTypeFees(decimal newFees)
         {
+            await _loadDataInCtrl();
             _testTypeFees = newFees;
             lblTotalFees.Text = _calculateTotalFee().ToString("C");
+           
         }
         public void UpdateApplicationTypeID(int newRetakeApplicationID)
         {
             lblRAppID.Text = newRetakeApplicationID.ToString();
         }
-        
 
         private async Task<ApplicationType> _getApplicationTypeInfo()
         {
@@ -62,8 +51,18 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             }
             return null;
         }
-        private void _loadDataInCtrl()
+        private async Task _loadDataInCtrl()
         {
+
+            _applicationsTypeService = new ApplicationsTypeService();
+
+            _applicationTypeInfo = await _getApplicationTypeInfo();
+
+            if (_applicationTypeInfo == null)
+            {
+                return;
+            }
+
             lblRAppFees.Text = _applicationTypeInfo.ApplicationTypeFees.ToString("C");
             lblTotalFees.Text = _calculateTotalFee().ToString("C");
         }       

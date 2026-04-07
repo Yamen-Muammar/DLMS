@@ -45,19 +45,19 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
         {
             InitializeComponent();
         }
-        public ctrlSechduleVisionTest(int? appointmentID,enMode mode,string applicantFullName,int ldlAppID,string licenseClassName,int trail)
+
+        public void _fillUIwithPassedPrameters(int? appointmentID, enMode mode, string applicantFullName, int ldlAppID, string licenseClassName, int trail)
         {
-            InitializeComponent();
             _mode = mode;
             _testTypeService = new TestTypeService();
             _appointmentService = new AppointmentService();
             _applicantFullName = applicantFullName;
-            _lDLAppID = ldlAppID;    
+            _lDLAppID = ldlAppID;
             _trailCount = trail;
             _appointmentID = appointmentID == null ? -1 : (int)appointmentID;
-            _licenseClassName= licenseClassName;
+            _licenseClassName = licenseClassName;
+            _loadDataInCtrl();
         }
-
         private async void ctrlSechduleVisionTest_Load(object sender, EventArgs e)
         {
             UILoad(_mode);  
@@ -89,7 +89,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             if (_mode == enMode.Retake)
             {
                 await _loadDataInCtrl();
-                this.ctrlSechduleRetakeTest1.UpdateTestTypeFees(_testType.TestTypeFees);
+                await this.ctrlSechduleRetakeTest1.UpdateTestTypeFees(_testType.TestTypeFees);
                 return;
             }
         }
@@ -210,6 +210,7 @@ namespace DVLD__Presentation_Tier.Controls.SechduleTestsControls
             {
                 lblTitle.Text = "Retake Vision Test";
                 ctrlSechduleRetakeTest1.Enabled = true;
+                ctrlSechduleRetakeTest1.Visible = true;
                 return;
             }
         }

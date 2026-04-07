@@ -30,8 +30,6 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.ctrlSechduleRetakeTest1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleRetakeTest();
-            this.btnSaveTestAppointment = new System.Windows.Forms.Button();
             this.lblFees = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.lblTrail = new System.Windows.Forms.Label();
@@ -45,6 +43,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnSaveTestAppointment = new System.Windows.Forms.Button();
+            this.ctrlSechduleRetakeTest1 = new DVLD__Presentation_Tier.Controls.SechduleTestsControls.ctrlSechduleRetakeTest();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -52,8 +52,6 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dateTimePicker);
-            this.groupBox1.Controls.Add(this.ctrlSechduleRetakeTest1);
-            this.groupBox1.Controls.Add(this.btnSaveTestAppointment);
             this.groupBox1.Controls.Add(this.lblFees);
             this.groupBox1.Controls.Add(this.lblName);
             this.groupBox1.Controls.Add(this.lblTrail);
@@ -69,7 +67,7 @@
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(603, 860);
+            this.groupBox1.Size = new System.Drawing.Size(603, 604);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Vision Test";
@@ -84,26 +82,6 @@
             this.dateTimePicker.Size = new System.Drawing.Size(200, 28);
             this.dateTimePicker.TabIndex = 4;
             this.dateTimePicker.Value = new System.DateTime(2026, 3, 27, 23, 34, 59, 0);
-            // 
-            // ctrlSechduleRetakeTest1
-            // 
-            this.ctrlSechduleRetakeTest1.Location = new System.Drawing.Point(6, 602);
-            this.ctrlSechduleRetakeTest1.Name = "ctrlSechduleRetakeTest1";
-            this.ctrlSechduleRetakeTest1.Size = new System.Drawing.Size(591, 171);
-            this.ctrlSechduleRetakeTest1.TabIndex = 3;
-            // 
-            // btnSaveTestAppointment
-            // 
-            this.btnSaveTestAppointment.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveTestAppointment.Image = global::DVLD__Presentation_Tier.Properties.Resources.btnSave_Image;
-            this.btnSaveTestAppointment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTestAppointment.Location = new System.Drawing.Point(399, 792);
-            this.btnSaveTestAppointment.Name = "btnSaveTestAppointment";
-            this.btnSaveTestAppointment.Size = new System.Drawing.Size(198, 48);
-            this.btnSaveTestAppointment.TabIndex = 2;
-            this.btnSaveTestAppointment.Text = "Save";
-            this.btnSaveTestAppointment.UseVisualStyleBackColor = true;
-            this.btnSaveTestAppointment.Click += new System.EventHandler(this.btnSaveTestAppointment_Click);
             // 
             // lblFees
             // 
@@ -236,13 +214,35 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // btnSaveTestAppointment
+            // 
+            this.btnSaveTestAppointment.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveTestAppointment.Image = global::DVLD__Presentation_Tier.Properties.Resources.btnSave_Image;
+            this.btnSaveTestAppointment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTestAppointment.Location = new System.Drawing.Point(408, 817);
+            this.btnSaveTestAppointment.Name = "btnSaveTestAppointment";
+            this.btnSaveTestAppointment.Size = new System.Drawing.Size(198, 48);
+            this.btnSaveTestAppointment.TabIndex = 2;
+            this.btnSaveTestAppointment.Text = "Save";
+            this.btnSaveTestAppointment.UseVisualStyleBackColor = true;
+            this.btnSaveTestAppointment.Click += new System.EventHandler(this.btnSaveTestAppointment_Click);
+            // 
+            // ctrlSechduleRetakeTest1
+            // 
+            this.ctrlSechduleRetakeTest1.Location = new System.Drawing.Point(3, 626);
+            this.ctrlSechduleRetakeTest1.Name = "ctrlSechduleRetakeTest1";
+            this.ctrlSechduleRetakeTest1.Size = new System.Drawing.Size(603, 118);
+            this.ctrlSechduleRetakeTest1.TabIndex = 3;
+            // 
             // ctrlSechduleVisionTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ctrlSechduleRetakeTest1);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btnSaveTestAppointment);
             this.Name = "ctrlSechduleVisionTest";
-            this.Size = new System.Drawing.Size(609, 930);
+            this.Size = new System.Drawing.Size(609, 868);
             this.Load += new System.EventHandler(this.ctrlSechduleVisionTest_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -268,7 +268,7 @@
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblTrail;
         private System.Windows.Forms.Label lblLClassName;
-        private ctrlSechduleRetakeTest ctrlSechduleRetakeTest1;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
+        private ctrlSechduleRetakeTest ctrlSechduleRetakeTest1;
     }
 }
