@@ -253,7 +253,7 @@ namespace DVLD__Data_Tier.Repositories
             }
             return LDLApplication;
         }
-        public async Task<int> doesHasAnActiveLocalDrivingLicenseApplication(int personID,int licenseClassID)
+        public async Task<int> doesHasAnNewOrCompletedLocalDrivingLicenseApplication(int personID,int licenseClassID)
         {
             int foundApplicationID = -1;
             string query = "select Applications.ApplicationID from Applications " +

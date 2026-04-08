@@ -177,14 +177,11 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         }
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            int ldlappID = _getSelectedLDLApplicationID();
+            string LCName = _getSelectedItemClassName();
+            string nationalNo = _getSelectedItemNationalNo();
+            frmLicenseInformation frmLicenseInformation = new frmLicenseInformation(ldlappID, nationalNo, LCName);
+            frmLicenseInformation.ShowDialog();
         }
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {

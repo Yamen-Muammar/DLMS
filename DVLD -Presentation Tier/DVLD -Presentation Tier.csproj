@@ -110,6 +110,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\LicenseControls\ctrlDriverLicenseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LicenseControls\ctrlDriverLicenseInfo.Designer.cs">
+      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LocalDLApplicationsControls\ctrlLDLAwithApplicationInformation.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,6 +205,12 @@
     </Compile>
     <Compile Include="Forms\License Forms\frmIssueDrivingLicense.Designer.cs">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\License Forms\frmLicenseInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\License Forms\frmLicenseInformation.Designer.cs">
+      <DependentUpon>frmLicenseInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LocalDrivingLicenseForms\frmApplicationInformation.cs">
       <SubType>Form</SubType>
@@ -334,6 +346,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\LicenseControls\ctrlDriverLicenseInfo.resx">
+      <DependentUpon>ctrlDriverLicenseInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\LocalDLApplicationsControls\ctrlLDLAwithApplicationInformation.resx">
       <DependentUpon>ctrlLDLAwithApplicationInformation.cs</DependentUpon>
     </EmbeddedResource>
@@ -378,6 +393,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\License Forms\frmIssueDrivingLicense.resx">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\License Forms\frmLicenseInformation.resx">
+      <DependentUpon>frmLicenseInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LocalDrivingLicenseForms\frmApplicationInformation.resx">
       <DependentUpon>frmApplicationInformation.cs</DependentUpon>

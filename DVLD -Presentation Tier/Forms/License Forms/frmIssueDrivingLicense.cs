@@ -48,7 +48,7 @@ namespace DVLD__Presentation_Tier.Forms.License_Forms
             {
                 LocalDrivingLicenseApplication_ID = _ldlAppID,
                 IssueDate = DateTime.Now,
-                IssueReasen = "Applicant Passed All The Three Tests",
+                IssueReasen = "First Time",
                 Note = tbNotes.Text,
                 isActive = true,
                 CreateByUser_ID = Global.User.UserID

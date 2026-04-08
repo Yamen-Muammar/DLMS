@@ -24,7 +24,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
         ApplicationsTypeService _applicationsTypeService;
 
-        private const int LDLApplicationType_ID = 2;
+        private const int LDLApplicationType_ID = 2; // id in database for local driving license application type
 
         LicenseClassService _licenseClassService;
 
@@ -32,8 +32,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         public frmNewLocalDrivingLicenseApplication()
         {
             InitializeComponent();
-            _licenseClassService = new LicenseClassService();
-            _applicationsTypeService = new ApplicationsTypeService();
+            //_licenseClassService = new LicenseClassService();
+            //_applicationsTypeService = new ApplicationsTypeService();
         }
         private async Task _getApplicationTypeByID(int LDLApplicationType_ID)
         {  
