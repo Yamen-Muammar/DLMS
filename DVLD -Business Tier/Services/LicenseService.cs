@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,22 +17,85 @@ namespace DVLD__Business_Tier.Services
             _licenseRepo = new LicenseRepository();
         }
 
-        public async Task<int> AddLicenseFirstTimeAsync(License license)
+        // add
+        public async Task<int> AddLicenseAsync(DVLD__Core.Models.License license)
         {
             if (!_isValid(license))
             {
                 return -1;
             }
-            return await _licenseRepo.InsertNewLicenseForFirstTimeAsync(license);
+
+            if (await DoesApplicationHasLicense(license.LocalDrivingLicenseApplication_ID))
+            {
+                throw new Exception("Applicant Already Has A License");
+            }
+
+
+            ApplicationRepository applicationRepo = new ApplicationRepository();
+
+            DVLD__Core.Models.Application applicationData = await applicationRepo.GetApplicationByLDL_ID(license.LocalDrivingLicenseApplication_ID);
+            if (applicationData == null)
+            {
+                throw new Exception("Error: No application found for the given LocalDrivingLicenseApplication_ID");
+            }
+
+            
+            license.ExpirationDate =await _getExpirationDate(license.IssueDate,license.LocalDrivingLicenseApplication_ID);
+
+            return await _insertNewLicense(license, applicationData);
         }
 
-        private bool _isValid(License license)
+        // get 
+        public async Task<DVLD__Core.Models.License > GetLicenseByLDLAppID(int ldlAppid)
+        {
+            return await _licenseRepo.GetLicenseByLocalDrivingLicenseAppIDAsync(ldlAppid);
+        }
+
+        public async Task<bool> DoesApplicationHasLicense(int ldlAppID)
+        {
+            DVLD__Core.Models.License license = await _licenseRepo.GetLicenseByLocalDrivingLicenseAppIDAsync(ldlAppID);
+            return license != null;
+        }
+
+        //helper methods
+        private async Task<int> _insertNewLicense(DVLD__Core.Models.License license , DVLD__Core.Models.Application applicationData)
+        {
+            DriverRepository driverRepository = new DriverRepository();
+            Driver driver = await driverRepository.GetDriverByPersonIDAsync(applicationData.Person_ID);
+            if (driver == null)
+            {
+                return await _licenseRepo.InsertNewLicenseForFirstTimeAsync(applicationData, license);
+            }
+            else
+            {
+                license.Driver_ID = driver.DriverID;
+                return await _licenseRepo.InsertNewLicenseOnlyAsync(applicationData, license);
+            }
+        }
+        private bool _isValid(DVLD__Core.Models.License license)
         {
             if (license == null)
             {
                 throw new ArgumentNullException(nameof(license));
             }
+
+            if (license.LocalDrivingLicenseApplication_ID <= 0)
+            {
+                throw new ArgumentException("Invalid LocalDrivingLicenseApplication_ID.");
+            }
             return true;
+        }
+        private async Task<DateTime> _getExpirationDate(DateTime issueDate,int ldlAppID)
+        {
+            LicenseClassRepository _licenseClassRepo = new LicenseClassRepository();
+            LicenseClass licenseClass = await _licenseClassRepo.GetLicenseClassByLDLApp_IdAsync(ldlAppID);
+            if (licenseClass == null)
+            {
+                throw new Exception("Error: No License Class found for the given LocalDrivingLicenseApplication_ID");
+            }
+            
+            int addYears = licenseClass.DefaultValidityLength;
+            return issueDate.AddYears(addYears);
         }
     }
 }

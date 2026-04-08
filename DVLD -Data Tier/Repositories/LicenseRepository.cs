@@ -13,7 +13,16 @@ namespace DVLD__Data_Tier.Repositories
     public class LicenseRepository
     {
         private readonly string _connectionString = DataBaseSettings.DataBaseConnectionString;
+        DriverRepository _driverRepository;
+        ApplicationRepository _applicationRepository;
+        public LicenseRepository()
+        {
+            _driverRepository = new DriverRepository();
+            _applicationRepository = new ApplicationRepository();
+        }
 
+
+        // Add
         public async Task<int> InsertNewLicenseForFirstTimeAsync(DVLD__Core.Models.Application application, DVLD__Core.Models.License newLicense)
         {
             int insertedLicenseID = -1;
@@ -22,7 +31,6 @@ namespace DVLD__Data_Tier.Repositories
             {
                 await connection.OpenAsync();
 
-                // 1. Begin the Titanium Shield: The SQL Transaction
                 using (SqlTransaction transaction = connection.BeginTransaction())
                 {
                     try
@@ -30,7 +38,7 @@ namespace DVLD__Data_Tier.Repositories
                         // ==========================================
                         // STEP 1: INSERT DRIVER
                         // ==========================================
-                        Driver newDriver = new Driver(application.Person_ID, Global.User.UserID, newLicense.IssueDate);
+                        Driver newDriver = new Driver(application.Person_ID, newLicense.CreateByUser_ID, newLicense.IssueDate);
 
                         newLicense.Driver_ID = await _insertNewDriverForTransactionalAsync(newDriver, transaction, connection);
                         if (newLicense.Driver_ID <= 0)
@@ -69,12 +77,108 @@ namespace DVLD__Data_Tier.Repositories
             return insertedLicenseID;
         }
 
+        public async Task<int> InsertNewLicenseOnlyAsync(DVLD__Core.Models.Application application, DVLD__Core.Models.License newLicense)
+        {
+            int insertedLicenseID = -1;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // ==========================================
+                        // STEP 1: INSERT LICENSE
+                        // ==========================================
+                        insertedLicenseID = await _insertNewLicenseForTransactionalAsync(newLicense, transaction, connection);
+
+                        if (insertedLicenseID <= 0)
+                        {
+                            throw new Exception("Failed to insert new License.");
+                        }
+                        // ==========================================
+                        // STEP 2: UPDATE APPLICATION STATUS TO 'COMPLETED'
+                        // ==========================================
+
+                        if (!await _updateApplicationStatusToCompletedForTransactionalAsync(application.ApplicationID, transaction, connection))
+                        {
+                            throw new Exception("Failed to update Application status to Completed.");
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+
+            return insertedLicenseID;
+        }
+
+
+        // GET
+        public async Task<DVLD__Core.Models.License> GetLicenseByLocalDrivingLicenseAppIDAsync(int localDrivingLicenseAppID)
+        {
+            DVLD__Core.Models.License foundLicense = null;
+
+            string query = @"
+                SELECT LicenseID, Driver_ID, IssueDate, IssueReasen, 
+                Note, isActive, ExpirationDate, CreateByUser_ID, LocalDrivingLicenseApplication_ID 
+                FROM Licenses 
+                WHERE LocalDrivingLicenseApplication_ID = @LDLAppID;";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@LDLAppID", localDrivingLicenseAppID);
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            foundLicense = new DVLD__Core.Models.License
+                            {
+                                LicenseID = (int)reader["LicenseID"],
+                                Driver_ID = (int)reader["Driver_ID"],
+                                IssueDate = (DateTime)reader["IssueDate"],
+                                IssueReasen = (string)reader["IssueReasen"],
+
+                                // Protect against DBNull for the Note column!
+                                Note = reader["Note"] != DBNull.Value ? (string)reader["Note"] : string.Empty,
+
+                                isActive = (bool)reader["isActive"],
+                                ExpirationDate = (DateTime)reader["ExpirationDate"],
+                                CreateByUser_ID = (int)reader["CreateByUser_ID"],
+                                LocalDrivingLicenseApplication_ID = (int)reader["LocalDrivingLicenseApplication_ID"]
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return foundLicense;
+        }
+
+
+
+        // helper methods for transactional operations
         private async Task<int> _insertNewDriverForTransactionalAsync(DVLD__Core.Models.Driver newDriver, SqlTransaction transaction, SqlConnection connection)
         {
-            DriverRepository driverRepository = new DriverRepository();
+            _driverRepository = new DriverRepository();
 
             return
-                 await driverRepository.InsertNewDriverForTransactionalAsync(newDriver, transaction, connection);
+                 await _driverRepository.InsertNewDriverForTransactionalAsync(newDriver, transaction, connection);
         }
 
         private async Task<int> _insertNewLicenseForTransactionalAsync(DVLD__Core.Models.License newLicense, SqlTransaction transaction, SqlConnection connection)
@@ -112,8 +216,7 @@ namespace DVLD__Data_Tier.Repositories
 
         private async Task<bool> _updateApplicationStatusToCompletedForTransactionalAsync(int applicationID, SqlTransaction transaction, SqlConnection connection)
         {
-            ApplicationRepository applicationRepository = new ApplicationRepository();
-            if (await applicationRepository.UpdateApplicationStatusTransactionalAsync(connection, transaction, "Completed", applicationID))
+            if (await _applicationRepository.UpdateApplicationStatusTransactionalAsync(connection, transaction, "Completed", applicationID))
             {
                 return true;
             }

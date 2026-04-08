@@ -44,10 +44,12 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             string selectedItemClassName = _getSelectedItemClassName();
             if (selecedItemStatus == "Canceled")
             {
-                showApplicationDetailsToolStripMenuItem.Enabled = false;
+                showApplicationDetailsToolStripMenuItem.Enabled = true;
                 cancelApplicationToolStripMenuItem.Enabled = false;
                 SetVisibleMenuItems(false,false, false, false, false, false);
                 showPersonLicenseHistoryToolStripMenuItem.Enabled = false;
+                deleteApplicationToolStripMenuItem.Enabled = true;
+                editeApplicationToolStripMenuItem.Enabled = false;
                 return;
             }
 
@@ -55,10 +57,22 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             {
                 showApplicationDetailsToolStripMenuItem.Enabled = true;
                 cancelApplicationToolStripMenuItem.Enabled = true;
-                showPersonLicenseHistoryToolStripMenuItem.Enabled = true;   
+                showPersonLicenseHistoryToolStripMenuItem.Enabled = true;
+                editeApplicationToolStripMenuItem.Enabled = true;
+                deleteApplicationToolStripMenuItem.Enabled = true;
+            }
+
+            if(selecedItemStatus == "Completed")
+            {
+                showApplicationDetailsToolStripMenuItem.Enabled = true;
+                deleteApplicationToolStripMenuItem.Enabled = false;
+                cancelApplicationToolStripMenuItem.Enabled = false;
+                editeApplicationToolStripMenuItem.Enabled = false;
+                SetVisibleMenuItems(false, false, false, false, false, true);
+                showPersonLicenseHistoryToolStripMenuItem.Enabled = true;
+                return;
             }
             string nationalNo = _getSelectedItemNationalNo();
-            // int CountOfPassedTest= await _testService.PassedTestCount(nationalNo, selectedItemClassName);
             int CountOfPassedTest = (int)dgvApplicationsList.CurrentRow.Cells["PassedTests"].Value;
             _visbleComboItemsOnPassedTests(CountOfPassedTest);
         }
@@ -117,14 +131,9 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         }
         private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            int localDrivingLicenseApplicationID = _getSelectedLDLApplicationID();
+            frmApplicationInformation frmApplication = new frmApplicationInformation(localDrivingLicenseApplicationID);
+            frmApplication.ShowDialog();
         }
         private void editeApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
