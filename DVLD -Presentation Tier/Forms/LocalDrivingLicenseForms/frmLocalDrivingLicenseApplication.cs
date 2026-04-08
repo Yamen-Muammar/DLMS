@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DVLD__Business_Tier.Services;
 using DVLD__Core.Models;
 using DVLD__Core.View_Models;
+using DVLD__Presentation_Tier.Forms.License_Forms;
 using DVLD__Presentation_Tier.Forms.TestsAppointment;
 using DVLD__Presentation_Tier.Forms.TestsAppointment.StreetTestForm;
 using DVLD__Presentation_Tier.Forms.TestsAppointment.WrittenTestFroms;
@@ -158,16 +159,12 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             frmStreetTestAppointment.ShowDialog();
             await _refreshUIDataHoldersAsync(_dataBaseSource);
         }
-        private void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            int lDLAppID = _getSelectedLDLApplicationID();
+            frmIssueDrivingLicense frmIssueDriving = new frmIssueDrivingLicense(lDLAppID);
+            frmIssueDriving.ShowDialog();
+            await _refreshUIDataHoldersAsync(_dataBaseSource);
         }
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {

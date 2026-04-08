@@ -66,6 +66,7 @@
     <Compile Include="Services\AppointmentService.cs" />
     <Compile Include="Services\CountryService.cs" />
     <Compile Include="Services\LicenseClassService.cs" />
+    <Compile Include="Services\LicenseService.cs" />
     <Compile Include="Services\PersonService.cs" />
     <Compile Include="Services\TestService.cs" />
     <Compile Include="Services\TestTypeService.cs" />

@@ -29,7 +29,6 @@ namespace DVLD__Core.Models
             } 
         }
         
-
         private bool _isStatusValid(string enteredstatus)
         {
             if (string.IsNullOrEmpty(enteredstatus)) { return false; }
@@ -50,6 +49,11 @@ namespace DVLD__Core.Models
             }
             return false;
 
+        }
+
+        public enum enApplicationsStatus
+        {
+            New = 1 , Canceled = 2 , Completed = 3
         }
     }
 }

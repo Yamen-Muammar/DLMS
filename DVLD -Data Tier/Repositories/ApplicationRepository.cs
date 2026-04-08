@@ -428,6 +428,33 @@ namespace DVLD__Data_Tier.Repositories
             return (rowsAffected > 0);
         }
 
+        public async Task<bool> UpdateApplicationStatusTransactionalAsync(SqlConnection connection , SqlTransaction transaction,string Status , int appID)
+        {
+            int rowsAffected = 0;
+
+            string query = @"UPDATE Applications
+                         SET 
+                             LastStatusDate = @LastStatusDate,
+                             ApplicationStatus = @ApplicationStatus
+                         WHERE ApplicationID = @ApplicationID";
+
+            using (SqlCommand command = new SqlCommand(query, connection, transaction))
+            {
+                command.Parameters.AddWithValue("@ApplicationID", appID);
+                command.Parameters.AddWithValue("@ApplicationStatus", Status);
+                command.Parameters.AddWithValue("@LastStatusDate", DateTime.Now);         
+                try
+                {
+                    rowsAffected = await command.ExecuteNonQueryAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return (rowsAffected > 0);
+        }
+
         // ==========================================
         // 5. DELETE
         // ==========================================
