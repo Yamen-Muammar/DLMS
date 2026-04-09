@@ -119,7 +119,7 @@ namespace DVLD__Business_Tier.Services
             }
 
             // Image Handling            
-            bool isPersonNOTUpdateImage =await _isPicINFolder(person.ImageName);
+            bool isPersonNOTUpdateImage = _isPicINFolder(person.ImageName);
             if (!isPersonNOTUpdateImage)
             {
                 person.ImageName = await _setImageProcess(person);
@@ -214,7 +214,7 @@ namespace DVLD__Business_Tier.Services
             return isDeleteImage;
         }
 
-        private async Task<bool> _isPicINFolder(string picName)
+        private bool _isPicINFolder(string picName)
         {
             string ImageDestinationPath = Path.Combine(@"F:\yamen - 2024\C#\Course\projects\PersonPic", picName);
             try

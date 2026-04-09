@@ -36,11 +36,8 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         // button Events
         private async void frmLocalDrivingLicenseApplication_Load(object sender, EventArgs e)
         {
-            _loadComboBox();
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            _loadComboBox();  
             await _refreshUIDataHoldersAsync(_dataBaseSource);
-                        stopwatch.Stop();
-            MessageBox.Show($"Data refresh took {stopwatch.ElapsedMilliseconds} ms");
         }
         private async void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
