@@ -51,7 +51,6 @@
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Image = global::DVLD__Presentation_Tier.Properties.Resources.DriverMain;
             this.pictureBox1.Location = new System.Drawing.Point(477, 42);
             this.pictureBox1.Name = "pictureBox1";
@@ -110,6 +109,7 @@
             this.MinimizeBox = false;
             this.Name = "frmManageDrivers";
             this.Text = "frmManageDrivers";
+            this.Load += new System.EventHandler(this.frmManageDrivers_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDriversList)).EndInit();
             this.ResumeLayout(false);

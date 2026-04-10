@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DVLD__Core.Models;
+using DVLD__Core.View_Models;
 
 namespace DVLD__Data_Tier.Repositories
 {
@@ -35,6 +36,8 @@ namespace DVLD__Data_Tier.Repositories
             }
             return insertedDriverID;
         }
+
+
 
         /// <summary>
         /// Checks if a person is already a registered Driver and returns their Driver profile.
@@ -110,6 +113,41 @@ namespace DVLD__Data_Tier.Repositories
                 }
             }
             return foundDriver;
+        }
+
+        public async Task<List<clsDriversView>> GetAllDriversAsync() {         
+            List<clsDriversView> driversList = new List<clsDriversView>();
+
+            string query = @"select DriverID ,Person_ID, NationalNO ,FullName,CreationDate,ActiveLicenses from DriversView;";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            clsDriversView driverView = new clsDriversView
+                            {
+                                DriverID = (int)reader["DriverID"],
+                                Person_ID = (int)reader["Person_ID"],
+                                NationalNO = reader["NationalNO"].ToString(),
+                                FullName = reader["FullName"].ToString(),
+                                CreationDate = (DateTime)reader["CreationDate"],
+                                ActiveLicenses = (int)reader["ActiveLicenses"]
+                            };
+                            driversList.Add(driverView);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return driversList;
         }
     }
 }
