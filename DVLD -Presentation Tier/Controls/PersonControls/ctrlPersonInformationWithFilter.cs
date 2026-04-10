@@ -29,7 +29,7 @@ namespace DVLD__Presentation_Tier.Controls
         public ctrlPersonInformationWithFilter()
         {
             InitializeComponent();
-            _personService = new PersonService();
+       
         }
 
         private void ctrlPersonInformationWithFilter_Load(object sender, EventArgs e)
@@ -37,11 +37,11 @@ namespace DVLD__Presentation_Tier.Controls
             _loadComboBox();
         }
         private async void btnSerach_Click(object sender, EventArgs e)
-        {            
-            PersonInfo =await RetrivePersonInfoOnSelectedFilter();
+        {
+            PersonInfo = await RetrivePersonInfoOnSelectedFilter();
 
             if (PersonInfo == null)
-            {                
+            {
                 return;
             }
 
@@ -57,7 +57,7 @@ namespace DVLD__Presentation_Tier.Controls
         }
 
         private void OnRetrundDataEvent(Person person)
-        {           
+        {
             UpdatePersonInfoANDRefreshUI(person);
             OnReturnPersonID_OnFindPerson(person.PersonID);
         }
@@ -71,20 +71,51 @@ namespace DVLD__Presentation_Tier.Controls
 
         private async Task<Person> RetrivePersonInfoOnSelectedFilter()
         {
+            _personService = new PersonService();
             Person person = null;
             try
             {
                 if (cbFilterOn.SelectedItem.ToString() == "Person ID")
                 {
                     int personID = int.Parse(tbFilterInput.Text);
-                    person =await _personService.Find(personID);
+                    person = await _personService.Find(personID);
                 }
 
                 if (cbFilterOn.SelectedItem.ToString() == "National NO")
                 {
                     string nationalNO = tbFilterInput.Text;
-                    person =await _personService.Find(nationalNO.ToUpper());
+                    person = await _personService.Find(nationalNO.ToUpper());
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            return person;
+        }
+
+        private async Task<Person> RetrivePersonInfoOnSelectedFilter(string filter)
+        {
+            _personService = new PersonService();
+            Person person = null;
+            try
+            {
+                if (filter == "Person ID")
+                {
+                    int personID = int.Parse(tbFilterInput.Text);
+                    person = await _personService.Find(personID);
+                }
+                else
+                if (filter == "National NO")
+                {
+                    string nationalNO = tbFilterInput.Text;
+                    person = await _personService.Find(nationalNO.ToUpper());
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Filter not Valid!");
+                    }
             }
             catch (Exception ex)
             {
@@ -96,7 +127,7 @@ namespace DVLD__Presentation_Tier.Controls
 
         private void _loadComboBox()
         {
-            List<string> FilterOptions = new List<string>() { "None","Person ID", "National NO" };
+            List<string> FilterOptions = new List<string>() { "None", "Person ID", "National NO" };
             cbFilterOn.DataSource = FilterOptions;
             cbFilterOn.SelectedIndex = 0;
         }
@@ -106,19 +137,39 @@ namespace DVLD__Presentation_Tier.Controls
             tbFilterInput.Text = string.Empty;
 
             if (cbFilterOn.SelectedItem.ToString() == "None")
-            {                                
+            {
                 tbFilterInput.Enabled = false;
             }
             else
             {
                 tbFilterInput.Enabled = true;
             }
-        }        
+        }
 
         private void _restartFilterArea()
         {
-            cbFilterOn.SelectedIndex = 0;            
+            cbFilterOn.SelectedIndex = 0;
 
+        }
+
+        public async Task FindPersonByNationalNO(string nationalNO)
+        {
+            cbFilterOn.SelectedItem = "National NO";
+            tbFilterInput.Text = nationalNO;
+            cbFilterOn.Enabled = false;
+            tbFilterInput.Enabled = false;
+            btnSerach.Enabled = false;
+            btnAddPerson.Enabled = false;
+
+            PersonInfo = await RetrivePersonInfoOnSelectedFilter("National NO");
+
+            if (PersonInfo == null)
+            {
+                return;
+            }
+
+            OnReturnPersonID_OnFindPerson(PersonInfo.PersonID);
+            UpdatePersonInfoANDRefreshUI(PersonInfo);
         }
     }
 }

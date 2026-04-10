@@ -50,16 +50,13 @@ namespace DVLD__Presentation_Tier
         public ctrlPersonInformation()
         {
             InitializeComponent();
-            _countryService = new CountryService();
-            _personService = new PersonService();
+            
             _mode = enPassedMode.notPassed;
         }
 
         public ctrlPersonInformation(int personId)
         {
             InitializeComponent();
-            _countryService = new CountryService();
-            _personService = new PersonService();
             _passedPersonId = personId;
             _mode = enPassedMode.passed;
         }
@@ -67,6 +64,7 @@ namespace DVLD__Presentation_Tier
         private async void ctrlPersonInformation_Load(object sender, EventArgs e)
         {
             if (_mode == enPassedMode.notPassed)  { return; }
+
             await SetPersonInfo(_passedPersonId);
             if (PersonInfo == null)
             {
@@ -145,6 +143,7 @@ namespace DVLD__Presentation_Tier
         }
         private async Task<string> _getCountryNameOnPersonID()
         {
+            _countryService = new CountryService();
             string countryName = string.Empty;
             try
             {
@@ -173,6 +172,7 @@ namespace DVLD__Presentation_Tier
         //OUTSIDE CALLs TO UPDATE PERSON INFO IN THIS CONTROL AND REFRESH THE UI
         public async Task UpdatePersonInfoANDRefreshUI(Person person)
         {
+            _mode = enPassedMode.passed;
             if (person == null)
             {
                 MessageBox.Show("Error While Handel Person Info , try Again Later", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);

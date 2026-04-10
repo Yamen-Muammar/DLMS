@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DVLD__Core.Models;
+using DVLD__Core.View_Models;
 using DVLD__Data_Tier.Repositories;
 
 namespace DVLD__Business_Tier.Services
@@ -55,6 +56,11 @@ namespace DVLD__Business_Tier.Services
         {
             DVLD__Core.Models.License license = await _licenseRepo.GetLicenseByLocalDrivingLicenseAppIDAsync(ldlAppID);
             return license != null;
+        }
+
+        public async Task<List<clsLicenseHistoryView>> GetAllLocalLicenseForPerson(int personID)
+        {
+            return await _licenseRepo.GetAllLocalLicensesForPersonAsync(personID);
         }
 
         //helper methods

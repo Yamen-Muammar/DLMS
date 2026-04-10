@@ -186,14 +186,9 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         }
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            string nationalNo = _getSelectedItemNationalNo();
+            frmLicenseHistory frmLicense = new frmLicenseHistory(nationalNo);
+            frmLicense.ShowDialog();
         }
 
 

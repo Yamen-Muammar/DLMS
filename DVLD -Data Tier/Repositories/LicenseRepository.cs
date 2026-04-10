@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DVLD__Core;
 using DVLD__Core.Models;
+using DVLD__Core.View_Models;
 
 namespace DVLD__Data_Tier.Repositories
 {
@@ -170,7 +171,48 @@ namespace DVLD__Data_Tier.Repositories
             return foundLicense;
         }
 
+        public async Task<List<clsLicenseHistoryView>> GetAllLocalLicensesForPersonAsync(int personID)
+        {
+            List<clsLicenseHistoryView> licenseHistoryList = new List<clsLicenseHistoryView>();
+            string query = @"
+               select LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID,LocalDrivingLicenseApplications.Application_ID,LicenseClasses.ClassName,Licenses.IssueDate,Licenses.ExpirationDate,Licenses.isActive
+               from Licenses
+               inner join LocalDrivingLicenseApplications on LocalDrivingLicenseApplications.LocalDrivingLicenseApplicationID = Licenses.LocalDrivingLicenseApplication_ID
+               inner join LicenseClasses on LocalDrivingLicenseApplications.LicenseClass_ID = LicenseClasses.LicenseClassID
+               inner join Applications on LocalDrivingLicenseApplications.Application_ID = Applications.ApplicationID
+               WHERE Applications.Person_ID = @personID;";
 
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@personID", personID);
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                             licenseHistoryList.Add(new clsLicenseHistoryView {
+                                 LocalDrivingLicenseApplicationID = (int)reader["LocalDrivingLicenseApplicationID"] ,
+                                 Application_ID = (int)reader["Application_ID"],
+                                 ClassName = (string)reader["ClassName"],
+                                 IssueDate = (DateTime)reader["IssueDate"],
+                                 ExpirationDate = (DateTime)reader["ExpirationDate"],
+                                 isActive = (bool)reader["isActive"]
+                             });
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return licenseHistoryList;
+        }
 
         // helper methods for transactional operations
         private async Task<int> _insertNewDriverForTransactionalAsync(DVLD__Core.Models.Driver newDriver, SqlTransaction transaction, SqlConnection connection)
