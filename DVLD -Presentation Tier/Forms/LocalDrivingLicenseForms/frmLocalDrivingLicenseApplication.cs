@@ -103,7 +103,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
             catch (Exception EX)
             {
                 MessageBox.Show(EX.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
             }
         }      
         private async void btnAddNewLDApplication_Click(object sender, EventArgs e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using DVLD__Core;
@@ -120,6 +121,44 @@ namespace DVLD__Data_Tier.Repositories
             return insertedLicenseID;
         }
 
+        public async Task<int> InsertNewInternationalLicense(DVLD__Core.Models.Application application , InternationalLicense internationalLicense)
+        {
+
+            int InsertedLicenseID = -1;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        application.ApplicationID =await _insertNewInternationalLicenseApplicationAsync(application,transaction,connection);
+                        if (application.ApplicationID <= 0)
+                        {
+                            throw new ArgumentException("Error While Inserting Application");
+                        }
+
+                        internationalLicense.Application_ID = application.ApplicationID;
+
+                        InsertedLicenseID = await _insertNewInternationalLicenseAsync(internationalLicense,transaction,connection);
+                        if (InsertedLicenseID <= 0)
+                        {
+                            throw new ArgumentException("Error While Inserting International License");
+                        }
+
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+
+                }
+            }
+            return InsertedLicenseID;
+        }
 
         // GET
         public async Task<DVLD__Core.Models.License> GetLicenseByLocalDrivingLicenseAppIDAsync(int localDrivingLicenseAppID)
@@ -136,6 +175,98 @@ namespace DVLD__Data_Tier.Repositories
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@LDLAppID", localDrivingLicenseAppID);
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            foundLicense = new DVLD__Core.Models.License
+                            {
+                                LicenseID = (int)reader["LicenseID"],
+                                Driver_ID = (int)reader["Driver_ID"],
+                                IssueDate = (DateTime)reader["IssueDate"],
+                                IssueReasen = (string)reader["IssueReasen"],
+
+                                // Protect against DBNull for the Note column!
+                                Note = reader["Note"] != DBNull.Value ? (string)reader["Note"] : string.Empty,
+
+                                isActive = (bool)reader["isActive"],
+                                ExpirationDate = (DateTime)reader["ExpirationDate"],
+                                CreateByUser_ID = (int)reader["CreateByUser_ID"],
+                                LocalDrivingLicenseApplication_ID = (int)reader["LocalDrivingLicenseApplication_ID"]
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return foundLicense;
+        }
+
+        public async Task<DVLD__Core.Models.InternationalLicense> GetInternationalLicenseByLocalLicenseIDAsync(int localLicenseID)
+        {
+            DVLD__Core.Models.InternationalLicense foundLicense = null;
+
+            string query = @"
+                SELECT InternationalLicenseID, IssueDate, IsActive, ExpirationDate, CreatedBy_ID, Application_ID,LocalLicense_ID 
+                FROM InternationalLicenses 
+                WHERE LocalLicense_ID = @LicID and IsActive = 1 ";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@LicID", localLicenseID);
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            foundLicense = new DVLD__Core.Models.InternationalLicense
+                            {
+                                InternationalLicenseID = (int)reader["InternationalLicenseID"],
+                                LocalLicense_ID = (int)reader["LocalLicense_ID"],
+                                Application_ID = (int)reader["Application_ID"],
+                                IssueDate = (DateTime)reader["IssueDate"],
+                                IsActive = (bool)reader["IsActive"],
+                                ExpirationDate = (DateTime)reader["ExpirationDate"],
+                                CreatedBy_ID = (int)reader["CreatedBy_ID"],
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return foundLicense;
+        }
+
+        public async Task<DVLD__Core.Models.License> GetLicenseByIDAsync(int id)
+        {
+            DVLD__Core.Models.License foundLicense = null;
+
+            string query = @"
+                SELECT LicenseID, Driver_ID, IssueDate, IssueReasen, 
+                Note, isActive, ExpirationDate, CreateByUser_ID, LocalDrivingLicenseApplication_ID 
+                FROM Licenses 
+                WHERE LicenseID  = @licID;";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@licID", id);
 
                 try
                 {
@@ -192,7 +323,7 @@ namespace DVLD__Data_Tier.Repositories
                     await connection.OpenAsync();
                     using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        if (await reader.ReadAsync())
+                        while (await reader.ReadAsync())
                         {
                              licenseHistoryList.Add(new clsLicenseHistoryView {
                                  LocalDrivingLicenseApplicationID = (int)reader["LocalDrivingLicenseApplicationID"] ,
@@ -215,6 +346,8 @@ namespace DVLD__Data_Tier.Repositories
         }
 
         // helper methods for transactional operations
+
+        // local License
         private async Task<int> _insertNewDriverForTransactionalAsync(DVLD__Core.Models.Driver newDriver, SqlTransaction transaction, SqlConnection connection)
         {
             _driverRepository = new DriverRepository();
@@ -263,6 +396,40 @@ namespace DVLD__Data_Tier.Repositories
                 return true;
             }
             return false;
+        }
+
+        // international license
+
+        private async Task<int> _insertNewInternationalLicenseApplicationAsync(DVLD__Core.Models.Application application,SqlTransaction transaction, SqlConnection connection)
+        {
+            return await _applicationRepository.InsertApplicationTransactional(connection,transaction,application);
+        }
+
+        private async Task<int> _insertNewInternationalLicenseAsync(InternationalLicense newLicense, SqlTransaction transaction, SqlConnection connection)
+        {
+            int insertedLicenseID = -1;
+            string insertLicenseQuery = @"
+                            INSERT INTO InternationalLicenses 
+                            (IssueDate, IsActive, ExpirationDate, CreatedBy_ID, Application_ID,LocalLicense_ID)
+                            VALUES 
+                            ( @IssueDate, @isActive, @ExpirationDate, @LicenseCreatedBy, @appID,@LLicID);
+                            SELECT SCOPE_IDENTITY();";
+            using (SqlCommand cmdLicense = new SqlCommand(insertLicenseQuery, connection, transaction))
+            {
+                cmdLicense.Parameters.AddWithValue("@IssueDate", newLicense.IssueDate);
+                cmdLicense.Parameters.AddWithValue("@isActive", newLicense.IsActive);
+                cmdLicense.Parameters.AddWithValue("@ExpirationDate", newLicense.ExpirationDate);
+                cmdLicense.Parameters.AddWithValue("@LicenseCreatedBy", newLicense.CreatedBy_ID);
+                cmdLicense.Parameters.AddWithValue("@appID", newLicense.Application_ID);
+                cmdLicense.Parameters.AddWithValue("@LLicID", newLicense.LocalLicense_ID);
+
+                object licenseResult = await cmdLicense.ExecuteScalarAsync();
+                if (licenseResult != null && int.TryParse(licenseResult.ToString(), out int generatedLicenseID))
+                {
+                    insertedLicenseID = generatedLicenseID;
+                }
+            }
+            return insertedLicenseID;
         }
     }
 }

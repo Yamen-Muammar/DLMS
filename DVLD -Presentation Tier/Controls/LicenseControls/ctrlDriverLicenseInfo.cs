@@ -17,14 +17,14 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
     public partial class ctrlDriverLicenseInfo : UserControl
     {
         private int _LDLApplicationID;
-        private Person _person;
+        public Person PersonInfo;
         private string _licenseClassName;
-        private DVLD__Core.Models.License _license;
+        public DVLD__Core.Models.License LicenseInfo;
         public ctrlDriverLicenseInfo()
         {
             InitializeComponent();
-            _person = new Person();
-            _license = new DVLD__Core.Models.License();
+            PersonInfo = new Person();
+            LicenseInfo = new DVLD__Core.Models.License();
         }
 
         public async Task LoadDate(int LDLApplicationID, string nationalNo, string LicenseClassName)
@@ -32,19 +32,62 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
             _LDLApplicationID = LDLApplicationID;
             _licenseClassName = LicenseClassName;
 
-            _person = await _getPersonDataAsync(nationalNo);
-            if (_person == null)
+            PersonInfo = await _getPersonDataAsync(nationalNo);
+            if (PersonInfo == null)
             {
                 return;
             }
 
-            _license = await _getLicenseDataAsync(LDLApplicationID);
-            if (_license == null)
+            LicenseInfo = await _getLicenseDataAsync(LDLApplicationID);
+            if (LicenseInfo == null)
             { 
                 return;
             }
             _fillDataINCtrl();
         }
+
+        public async Task LoadDate(int licenseID)
+        {
+            try
+            {
+                LicenseService licenseService = new LicenseService();
+                DVLD__Core.Models.License licenseData = await licenseService.GetLicenseByID(licenseID);
+                if (licenseData == null)
+                {
+                    throw new ArgumentNullException("License data Not Found");
+                }
+                LicenseInfo = licenseData;
+                _LDLApplicationID = licenseData.LocalDrivingLicenseApplication_ID;
+
+                ApplicationService applicationService = new ApplicationService();
+                DVLD__Core.Models.Application application = await applicationService.GetApplicationOnLDLA_ID(licenseData.LocalDrivingLicenseApplication_ID);
+                if (application == null)
+                {
+                    return;
+                }
+
+                LicenseClassService licenseClassService = new LicenseClassService();
+                LicenseClass licenseClass = await licenseClassService.GetLicenseClassByLDLAppIDAsync(_LDLApplicationID);
+                if (licenseClass == null)
+                {
+                    return;
+                }
+                _licenseClassName = licenseClass.ClassName;
+
+                PersonInfo = await _getPersonDataAsync(application.Person_ID);
+                if (PersonInfo == null)
+                {
+                    return;
+                }
+                _fillDataINCtrl();
+            }
+            catch (Exception)
+            {
+                throw;
+            }                                       
+            
+        }
+
 
         private async Task<Person> _getPersonDataAsync(string nationalNo)
         {
@@ -52,6 +95,21 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
             try
             {
                 return await personService.Find(nationalNo);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return null;
+        }
+        private async Task<Person> _getPersonDataAsync(int personID)
+        {
+            PersonService personService = new PersonService();
+            try
+            {
+                return await personService.Find(personID);
             }
             catch (Exception ex)
             {
@@ -84,22 +142,22 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
 
         private void _fillPersonData()
         {
-            lblFullName.Text = _person.FullName();
-            lblNationalNoID.Text = _person.NationalNO;
-            lblDateOfBirth.Text = _person.DateOfBirth.ToShortDateString();
-            lblGender.Text = _person.Gender.ToString();
-            pbPersonalImage.Image = _loadImageWithoutLock(_person.ImageName);
+            lblFullName.Text = PersonInfo.FullName();
+            lblNationalNoID.Text = PersonInfo.NationalNO;
+            lblDateOfBirth.Text = PersonInfo.DateOfBirth.ToShortDateString();
+            lblGender.Text = PersonInfo.Gender.ToString();
+            pbPersonalImage.Image = _loadImageWithoutLock(PersonInfo.ImageName);
         }       
         private void _fillLicenseData()
         {
-            lblLicenseID.Text = _license.LicenseID.ToString();
+            lblLicenseID.Text = LicenseInfo.LicenseID.ToString();
             lblClassName.Text = _licenseClassName;
-            lblDriverID.Text = _license.Driver_ID.ToString();
-            lblIsActive.Text = _license.isActive ? "Yes" : "No";
-            lblIssueDate.Text = _license.IssueDate.ToShortDateString();
-            lblExperationDate.Text = _license.ExpirationDate.ToShortDateString();
-            lblNotes.Text = _license.Note.ToString();
-            lblIssueReason.Text = _license.IssueReasen.ToString();
+            lblDriverID.Text = LicenseInfo.Driver_ID.ToString();
+            lblIsActive.Text = LicenseInfo.isActive ? "Yes" : "No";
+            lblIssueDate.Text = LicenseInfo.IssueDate.ToShortDateString();
+            lblExperationDate.Text = LicenseInfo.ExpirationDate.ToShortDateString();
+            lblNotes.Text = LicenseInfo.Note.ToString();
+            lblIssueReason.Text = LicenseInfo.IssueReasen.ToString();
         }
 
         private System.Drawing.Image _loadImageWithoutLock(string imageName)

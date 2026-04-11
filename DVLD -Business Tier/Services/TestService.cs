@@ -20,7 +20,7 @@ namespace DVLD__Business_Tier.Services
             _appointmentRepository = new AppointmentRepository();
         }
 
-        public async Task<TestRepository> GetTestByIDAsync()
+        public async Task<Test> GetTestByIDAsync()
         {
             throw new NotImplementedException();
         }

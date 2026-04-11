@@ -212,6 +212,12 @@
     <Compile Include="Forms\DriversForms\frmManageDrivers.Designer.cs">
       <DependentUpon>frmManageDrivers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmInternationalLicenseApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmInternationalLicenseApplication.Designer.cs">
+      <DependentUpon>frmInternationalLicenseApplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\License Forms\frmIssueDrivingLicense.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -414,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DriversForms\frmManageDrivers.resx">
       <DependentUpon>frmManageDrivers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmInternationalLicenseApplication.resx">
+      <DependentUpon>frmInternationalLicenseApplication.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\License Forms\frmIssueDrivingLicense.resx">
       <DependentUpon>frmIssueDrivingLicense.cs</DependentUpon>

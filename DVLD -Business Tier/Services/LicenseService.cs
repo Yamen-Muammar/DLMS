@@ -46,16 +46,47 @@ namespace DVLD__Business_Tier.Services
             return await _insertNewLicense(license, applicationData);
         }
 
+        public async Task<int> AddInternationalLicenseAsync(DVLD__Core.Models.Application application, InternationalLicense internationalLicense)
+        {
+            if (!_isValid(application,internationalLicense))
+            {
+                return -1;
+            }
+
+
+            if (await DoesApplicationHasInternationalLicense(internationalLicense.LocalLicense_ID))
+            {
+                throw new Exception("Applicant Already Has an International License");
+            }
+
+            return await _licenseRepo.InsertNewInternationalLicense(application,internationalLicense);
+        }
+
         // get 
         public async Task<DVLD__Core.Models.License > GetLicenseByLDLAppID(int ldlAppid)
         {
             return await _licenseRepo.GetLicenseByLocalDrivingLicenseAppIDAsync(ldlAppid);
         }
 
+        public async Task<DVLD__Core.Models.License> GetLicenseByID(int id)
+        {
+            if (id <= 0 )
+            {
+                throw new ArgumentException("Invalid License ID.");
+            }
+            return await _licenseRepo.GetLicenseByIDAsync(id);
+        }
+
         public async Task<bool> DoesApplicationHasLicense(int ldlAppID)
         {
             DVLD__Core.Models.License license = await _licenseRepo.GetLicenseByLocalDrivingLicenseAppIDAsync(ldlAppID);
             return license != null;
+        }
+
+        public async Task<bool> DoesApplicationHasInternationalLicense(int LocalLicenseID)
+        {
+            DVLD__Core.Models.InternationalLicense license = await _licenseRepo.GetInternationalLicenseByLocalLicenseIDAsync(LocalLicenseID);
+            return (license != null) && (DateTime.Compare(DateTime.Now,license.ExpirationDate) < 0);
         }
 
         public async Task<List<clsLicenseHistoryView>> GetAllLocalLicenseForPerson(int personID)
@@ -89,6 +120,36 @@ namespace DVLD__Business_Tier.Services
             {
                 throw new ArgumentException("Invalid LocalDrivingLicenseApplication_ID.");
             }
+            return true;
+        }
+
+        private bool _isValid(DVLD__Core.Models.Application application, DVLD__Core.Models.InternationalLicense license)
+        {
+            if (license == null)
+            {
+                throw new ArgumentNullException(nameof(license));
+            }
+
+            if (application == null)
+            {
+                throw new ArgumentNullException(nameof(application));
+            }
+
+            if (license.LocalLicense_ID <= 0)
+            {
+                throw new ArgumentException("Invalid LocalLicense_ID.");
+            }
+
+            if (application.PaidFees <= 0)
+            {
+                throw new ArgumentException("Invalid Application Paid Fees.");
+            }
+
+            if (application.ApplicationDate.Day != DateTime.Today.Day)
+            {
+                throw new ArgumentException("Invalid Application Date");
+            }
+
             return true;
         }
         private async Task<DateTime> _getExpirationDate(DateTime issueDate,int ldlAppID)

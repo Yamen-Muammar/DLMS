@@ -65,6 +65,7 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\DetainedLicense.cs" />
     <Compile Include="Models\Driver.cs" />
+    <Compile Include="Models\InternationalLicense.cs" />
     <Compile Include="Models\License.cs" />
     <Compile Include="Models\LicenseClass.cs" />
     <Compile Include="Models\LocalDrivingLicenseApplication.cs" />

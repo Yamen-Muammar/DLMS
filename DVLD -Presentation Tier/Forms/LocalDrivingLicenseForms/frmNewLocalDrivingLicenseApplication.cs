@@ -32,11 +32,10 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         public frmNewLocalDrivingLicenseApplication()
         {
             InitializeComponent();
-            //_licenseClassService = new LicenseClassService();
-            //_applicationsTypeService = new ApplicationsTypeService();
         }
         private async Task _getApplicationTypeByID(int LDLApplicationType_ID)
-        {  
+        {
+            _applicationsTypeService = new ApplicationsTypeService();
             try
             {
                 _applicationType = await _applicationsTypeService.GetApplicationTypeByID(LDLApplicationType_ID);
@@ -108,6 +107,7 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
 
         private async Task _loadLicenseClassComboBox()
         {
+            _licenseClassService = new LicenseClassService();
             _licenseClasses = new List<LicenseClass>();
             
             try

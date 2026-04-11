@@ -74,7 +74,8 @@ namespace DVLD__Presentation_Tier
 
         private void internationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmInternationalLicenseApplication frmInternationalLicense = new frmInternationalLicenseApplication();
+            frmInternationalLicense.ShowDialog();
         }        
         private void localDrivingLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
