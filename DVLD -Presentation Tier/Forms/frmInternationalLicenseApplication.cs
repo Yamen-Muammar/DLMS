@@ -110,6 +110,11 @@ namespace DVLD__Presentation_Tier.Forms
         {
             try
             {
+                if (LicenseInfo.isActive == false && (DateTime.Compare(DateTime.Now , LicenseInfo.ExpirationDate) >= 0))
+                {
+                    throw new ArgumentException("Local License is not Active");
+                }
+
                 InternationalLicense internationalLicense = _prepareInternationalLicenseObj();
                 application.ApplicationDate = internationalLicense.IssueDate;
                 internationalLicense.InternationalLicenseID = await _licenseService.AddInternationalLicenseAsync(application, internationalLicense);
