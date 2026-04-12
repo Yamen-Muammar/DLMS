@@ -160,8 +160,57 @@ namespace DVLD__Data_Tier.Repositories
         // ==========================================
         public async Task<DVLD__Core.Models.Application> GetApplicationByID(int appID)
         {
-            throw new NotImplementedException();
+            Application application = null;
+            string query = "SELECT ApplicationID,CreatedByUser_ID,ApplicationType_ID,Person_ID,ApplicationDate,PaidFees,LastStatusDate,ApplicationStatus" +
+                " FROM Applications where ApplicationID = @ApplicationID;";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@ApplicationID", appID);
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            application = new Application
+                            {
+                                ApplicationID = (int)reader["ApplicationID"],
+                                CreatedByUser_ID = (int)reader["CreatedByUser_ID"],
+                                ApplicationType_ID = (int)reader["ApplicationType_ID"],
+                                Person_ID = (int)reader["Person_ID"],
+                                ApplicationDate = (DateTime)reader["ApplicationDate"],
+                                PaidFees = (decimal)reader["PaidFees"],
+                                ApplicationStatus = (string)reader["ApplicationStatus"],
+
+                            };
+                            if (reader["LastStatusDate"] == DBNull.Value)
+                            {
+                                application.LastStatusDate = null;
+                            }
+                            else
+                            {
+                                application.LastStatusDate = (DateTime)reader["LastStatusDate"];
+                            }
+
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return application;
         }
+        
         public async Task<DVLD__Core.Models.Application> GetApplicationByLDL_ID(int localDrivingLicenseApplicationID)
         {
             Application application = null;

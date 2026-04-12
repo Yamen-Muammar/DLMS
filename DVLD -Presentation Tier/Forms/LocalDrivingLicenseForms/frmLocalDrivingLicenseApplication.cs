@@ -366,7 +366,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         { 
             issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = issueDrivingLicense;
             sechduleTestsToolStripMenuItem.Enabled = sechduleTests;
-            // TODO : if he has license you can show this( create it when we make the license service class).
             showLicenseToolStripMenuItem.Enabled = showLicense;
             sechduleStreetTestToolStripMenuItem.Enabled = StreetTest;
             sechduleVisionTestToolStripMenuItem.Enabled = VisionTest;

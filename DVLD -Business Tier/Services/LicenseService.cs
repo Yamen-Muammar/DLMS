@@ -54,10 +54,16 @@ namespace DVLD__Business_Tier.Services
             }
 
 
-            if (await DoesApplicationHasInternationalLicense(internationalLicense.LocalLicense_ID))
+            if (await _doesApplicationHasActiveInternationalLicense(internationalLicense.LocalLicense_ID))
             {
                 throw new Exception("Applicant Already Has an International License");
             }
+
+            if (!await _doesApplicationHasActiveLicense(internationalLicense.LocalLicense_ID))
+            {
+                throw new Exception("Applicant Local License IS Inactive");
+            }
+
 
             return await _licenseRepo.InsertNewInternationalLicense(application,internationalLicense);
         }
@@ -82,19 +88,45 @@ namespace DVLD__Business_Tier.Services
             DVLD__Core.Models.License license = await _licenseRepo.GetLicenseByLocalDrivingLicenseAppIDAsync(ldlAppID);
             return license != null;
         }
+        private async Task<bool>_doesApplicationHasActiveLicense(int licID)
+        {
+            DVLD__Core.Models.License license = await _licenseRepo.GetLicenseByIDAsync(licID);
+            return license != null && !_isLicenseExpier(license.ExpirationDate);
+        }
 
         public async Task<bool> DoesApplicationHasInternationalLicense(int LocalLicenseID)
         {
             DVLD__Core.Models.InternationalLicense license = await _licenseRepo.GetInternationalLicenseByLocalLicenseIDAsync(LocalLicenseID);
-            return (license != null) && (DateTime.Compare(DateTime.Now,license.ExpirationDate) < 0);
+            return (license != null);
         }
 
-        public async Task<List<clsLicenseHistoryView>> GetAllLocalLicenseForPerson(int personID)
+        private async Task<bool> _doesApplicationHasActiveInternationalLicense(int LocalLicenseID)
+        {
+            DVLD__Core.Models.InternationalLicense license = await _licenseRepo.GetInternationalLicenseByLocalLicenseIDAsync(LocalLicenseID);
+            return (license != null) && !_isLicenseExpier(license.ExpirationDate);
+        }
+
+        public async Task<List<clsLicenseHistoryView>> GetAllLocalLicensesForPerson(int personID)
         {
             return await _licenseRepo.GetAllLocalLicensesForPersonAsync(personID);
         }
 
+        public async Task<List<clsInternationalLicenseHistory>> GetAllInternationalLicenseForPerson(int personID)
+        {
+            return await _licenseRepo.GetAllInternationalLicensesForPersonAsync(personID);
+        }
+
+        public async Task<List<clsInternationalLicenseHistory>> GetAllIntarnationalLicense()
+        {
+            return await _licenseRepo.GetAllInternationalLicensesAsync();
+        }
+
         //helper methods
+
+        private bool _isLicenseExpier(DateTime expirationDate)
+        {
+            return (DateTime.Compare(DateTime.Now, expirationDate) >= 0);
+        }
         private async Task<int> _insertNewLicense(DVLD__Core.Models.License license , DVLD__Core.Models.Application applicationData)
         {
             DriverRepository driverRepository = new DriverRepository();
@@ -122,7 +154,6 @@ namespace DVLD__Business_Tier.Services
             }
             return true;
         }
-
         private bool _isValid(DVLD__Core.Models.Application application, DVLD__Core.Models.InternationalLicense license)
         {
             if (license == null)

@@ -44,7 +44,7 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
             _licenseService = new LicenseService();
             try
             {
-                return await _licenseService.GetAllLocalLicenseForPerson(_personID);
+                return await _licenseService.GetAllLocalLicensesForPerson(_personID);
             }
             catch (Exception ex)
             {
@@ -52,7 +52,19 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
                 return new List<clsLicenseHistoryView>();
             }
         }
-
+        private async Task<List<clsInternationalLicenseHistory>> _getIntranationalLicensesData()
+        {
+            _licenseService = new LicenseService();
+            try
+            {
+                return await _licenseService.GetAllInternationalLicenseForPerson(_personID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<clsInternationalLicenseHistory>();
+            }
+        }
         private async void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == tpLocal)
@@ -61,7 +73,7 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
             }
             else
             {
-                // TODO: Implement fetching and displaying international license data when the international tab is selected.
+                dgvInternationalLicenses.DataSource = await _getIntranationalLicensesData();
             }
 
         }

@@ -345,6 +345,101 @@ namespace DVLD__Data_Tier.Repositories
             return licenseHistoryList;
         }
 
+        public async Task<List<clsInternationalLicenseHistory>> GetAllInternationalLicensesForPersonAsync(int personID)
+        {
+            List<clsInternationalLicenseHistory> licenseHistoryList = new List<clsInternationalLicenseHistory>();
+            string query = @"
+                        SELECT
+                         [InternationalLicenseID]
+                        ,[LocalLicense_ID]
+                        ,[ExpirationDate]
+                        ,[Application_ID]
+                        ,[IssueDate]
+  	                    ,[IsActive]
+                        FROM [dbo].[InternationalLicenses]
+                        INNER JOIN Applications ON InternationalLicenses.Application_ID = Applications.ApplicationID
+                        WHERE Applications.Person_ID =  @personID;";
+                                                      
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@personID", personID);
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            licenseHistoryList.Add(new clsInternationalLicenseHistory
+                            {
+                                InternationalLicenseID = (int)reader["InternationalLicenseID"],
+                                Application_ID = (int)reader["Application_ID"],
+                                LocalLicense_ID = (int)reader["LocalLicense_ID"],
+                                IssueDate = (DateTime)reader["IssueDate"],
+                                ExpirationDate = (DateTime)reader["ExpirationDate"],
+                                isActive = (bool)reader["isActive"]
+                            });
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return licenseHistoryList;
+        }
+
+        public async Task<List<clsInternationalLicenseHistory>> GetAllInternationalLicensesAsync()
+        {
+            List<clsInternationalLicenseHistory> licenseHistoryList = new List<clsInternationalLicenseHistory>();
+            string query = @"
+                        SELECT
+                         [InternationalLicenseID]
+                        ,[LocalLicense_ID]
+                        ,[ExpirationDate]
+                        ,[Application_ID]
+                        ,[IssueDate]
+  	                    ,[IsActive]
+                        FROM [dbo].[InternationalLicenses];";
+
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            licenseHistoryList.Add(new clsInternationalLicenseHistory
+                            {
+                                InternationalLicenseID = (int)reader["InternationalLicenseID"],
+                                Application_ID = (int)reader["Application_ID"],
+                                LocalLicense_ID = (int)reader["LocalLicense_ID"],
+                                IssueDate = (DateTime)reader["IssueDate"],
+                                ExpirationDate = (DateTime)reader["ExpirationDate"],
+                                isActive = (bool)reader["isActive"]
+                            });
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return licenseHistoryList;
+        }
+
         // helper methods for transactional operations
 
         // local License

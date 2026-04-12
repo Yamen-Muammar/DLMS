@@ -15,6 +15,8 @@ namespace DVLD__Presentation_Tier.Forms.License_Forms
         private int _LDLApplicationID;
         private string _nationalNo;
         private string _LicenseClassName;
+
+        private int _licenseID;
         public frmLicenseInformation()
         {
             InitializeComponent();
@@ -27,9 +29,23 @@ namespace DVLD__Presentation_Tier.Forms.License_Forms
             _LicenseClassName = LicenseClassName;
         }
 
+        public frmLicenseInformation(int licenseID)
+        {
+            InitializeComponent();
+            _licenseID = licenseID;
+        }
+
         private async void frmLicenseInformation_Load(object sender, EventArgs e)
         {
-            await this.ctrlDriverLicenseInfo1.LoadDate(_LDLApplicationID, _nationalNo,_LicenseClassName);
+            if (_LDLApplicationID != 0)
+            {
+                await this.ctrlDriverLicenseInfo1.LoadDate(_LDLApplicationID, _nationalNo, _LicenseClassName);
+            }
+            else
+            {
+                await this.ctrlDriverLicenseInfo1.LoadDate(_licenseID);
+            }
+            
         }
     }
 }

@@ -95,8 +95,6 @@ namespace DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms
         {
             _personID = PersonID;
         }
-
-        // TODO : FIND THE DIFFERENCE BETWEEN ASYNC VOID AND ASYNC TASK
         private async void _loadDataInForm()
         {
             lblApplicationDate.Text = DateTime.Now.ToString("d");

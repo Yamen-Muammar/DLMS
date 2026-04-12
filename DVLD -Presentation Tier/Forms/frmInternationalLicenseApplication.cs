@@ -165,8 +165,7 @@ namespace DVLD__Presentation_Tier.Forms
         }
         private int _getLicenseID()
         {
-            int id = int.Parse(tbLicenseID.Text);
-            if (id <= 0)
+            if (!int.TryParse(tbLicenseID.Text, out int id) || id <= 0)
             {
                 return -1;
             }

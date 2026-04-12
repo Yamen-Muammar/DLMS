@@ -291,6 +291,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft JhengHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::DVLD__Presentation_Tier.Properties.Resources.International32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;

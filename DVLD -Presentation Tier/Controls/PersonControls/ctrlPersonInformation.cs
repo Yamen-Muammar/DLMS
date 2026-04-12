@@ -159,6 +159,7 @@ namespace DVLD__Presentation_Tier
         }
         private async Task SetPersonInfo(int PersonID)
         {
+            _personService = new PersonService();
             try
             {
                 PersonInfo =await _getPerson(PersonID);                
