@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLD__Business_Tier.Services;
 using DVLD__Core.View_Models;
+using DVLD__Presentation_Tier.Forms.License_Forms;
 
 namespace DVLD__Presentation_Tier.Controls.LicenseControls
 {
@@ -77,6 +78,12 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
             }
 
         }
-      
+
+        private void showLicenseInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int licID =(int) dgvLocalLicense.CurrentRow.Cells["LicenseID"].Value;
+            frmLicenseInformation frmLicenseInformation  = new frmLicenseInformation(licID); 
+            frmLicenseInformation.ShowDialog();
+        }
     }
 }
