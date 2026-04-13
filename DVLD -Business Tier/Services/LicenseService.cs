@@ -26,7 +26,7 @@ namespace DVLD__Business_Tier.Services
                 return -1;
             }
 
-            if (await DoesApplicationHasLicense(license.LocalDrivingLicenseApplication_ID))
+            if (await DoesApplicationHasLicense((int)license.LocalDrivingLicenseApplication_ID))
             {
                 throw new Exception("Applicant Already Has A License");
             }
@@ -34,14 +34,14 @@ namespace DVLD__Business_Tier.Services
 
             ApplicationRepository applicationRepo = new ApplicationRepository();
 
-            DVLD__Core.Models.Application applicationData = await applicationRepo.GetApplicationByLDL_ID(license.LocalDrivingLicenseApplication_ID);
+            DVLD__Core.Models.Application applicationData = await applicationRepo.GetApplicationByLDL_ID((int)license.LocalDrivingLicenseApplication_ID);
             if (applicationData == null)
             {
                 throw new Exception("Error: No application found for the given LocalDrivingLicenseApplication_ID");
             }
 
             
-            license.ExpirationDate =await _getExpirationDate(license.IssueDate,license.LocalDrivingLicenseApplication_ID);
+            license.ExpirationDate =await _getExpirationDate(license.IssueDate,(int)license.LocalDrivingLicenseApplication_ID);
 
             return await _insertNewLicense(license, applicationData);
         }
@@ -68,6 +68,29 @@ namespace DVLD__Business_Tier.Services
             return await _licenseRepo.InsertNewInternationalLicense(application,internationalLicense);
         }
 
+        public async Task<int> RenewLicenseAsync(DVLD__Core.Models.Application application, DVLD__Core.Models.License PreviousLicense , DVLD__Core.Models.License newlicense)
+        {
+            int founderLicenseID = await _licenseRepo.ActiveLicense(newlicense.Driver_ID, (int)newlicense.LicenseClass_ID);
+            if (founderLicenseID != -1)
+            {
+                 throw new Exception($"An active license already exists for this driver\nLicense ID : {founderLicenseID}.");
+            }
+
+
+            DVLD__Core.Models.License existingLicense = await _licenseRepo.GetLicenseByIDAsync(PreviousLicense.LicenseID);
+            if (existingLicense == null)
+            {
+                throw new Exception("License not found.");
+            }
+            if (!_isLicenseExpire(existingLicense.ExpirationDate))
+            {
+                throw new Exception("Cannot renew an active license.");
+            }
+
+
+            return await _licenseRepo.RenewLocalLicense(existingLicense.LicenseID, application, newlicense);
+        }
+
         // get 
         public async Task<DVLD__Core.Models.License > GetLicenseByLDLAppID(int ldlAppid)
         {
@@ -91,7 +114,7 @@ namespace DVLD__Business_Tier.Services
         private async Task<bool>_doesApplicationHasActiveLicense(int licID)
         {
             DVLD__Core.Models.License license = await _licenseRepo.GetLicenseByIDAsync(licID);
-            return license != null && !_isLicenseExpier(license.ExpirationDate);
+            return license != null && !_isLicenseExpire(license.ExpirationDate);
         }
 
         public async Task<bool> DoesApplicationHasInternationalLicense(int LocalLicenseID)
@@ -103,7 +126,7 @@ namespace DVLD__Business_Tier.Services
         private async Task<bool> _doesApplicationHasActiveInternationalLicense(int LocalLicenseID)
         {
             DVLD__Core.Models.InternationalLicense license = await _licenseRepo.GetInternationalLicenseByLocalLicenseIDAsync(LocalLicenseID);
-            return (license != null) && !_isLicenseExpier(license.ExpirationDate);
+            return (license != null) && !_isLicenseExpire(license.ExpirationDate);
         }
 
         public async Task<List<clsLicenseHistoryView>> GetAllLocalLicensesForPerson(int personID)
@@ -123,7 +146,7 @@ namespace DVLD__Business_Tier.Services
 
         //helper methods
 
-        private bool _isLicenseExpier(DateTime expirationDate)
+        private bool _isLicenseExpire(DateTime expirationDate)
         {
             return (DateTime.Compare(DateTime.Now, expirationDate) >= 0);
         }

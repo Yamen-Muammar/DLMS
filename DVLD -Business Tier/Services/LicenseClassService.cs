@@ -31,5 +31,14 @@ namespace DVLD__Business_Tier.Services
 
             return await _repository.GetLicenseClassByLDLApp_IdAsync(ldlAppId);
         }
+
+        public async Task<LicenseClass> GetLicenseClassByIDAsync(int ID)
+        {
+            if (ID < 1)
+            {
+                throw new ArgumentException("Not Valid ID");
+            }
+            return await _repository.GetLicenseClassByIDAsync(ID);
+        }
     }
 }

@@ -95,5 +95,11 @@ namespace DVLD__Presentation_Tier
             frmManageDrivers frmManage = new frmManageDrivers();
             frmManage.ShowDialog();
         }
+
+        private void renewDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmRenewLicenseApplication frm = new frmRenewLicenseApplication();
+            frm.ShowDialog();
+        }
     }
 }

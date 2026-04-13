@@ -16,6 +16,8 @@ namespace DVLD__Core.Models
         public bool isActive { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int CreateByUser_ID { get; set; }
-        public int LocalDrivingLicenseApplication_ID { get; set; }
+        public int? LocalDrivingLicenseApplication_ID { get; set; }
+        public int? Application_ID { get; set; }
+        public int? LicenseClass_ID { get; set; }
     }
 }

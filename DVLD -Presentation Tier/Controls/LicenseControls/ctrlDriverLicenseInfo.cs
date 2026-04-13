@@ -57,17 +57,17 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
                     throw new ArgumentNullException("License data Not Found");
                 }
                 LicenseInfo = licenseData;
-                _LDLApplicationID = licenseData.LocalDrivingLicenseApplication_ID;
+               
 
                 ApplicationService applicationService = new ApplicationService();
-                DVLD__Core.Models.Application application = await applicationService.GetApplicationOnLDLA_ID(licenseData.LocalDrivingLicenseApplication_ID);
+                DVLD__Core.Models.Application application = await applicationService.GetApplicationByID((int)licenseData.Application_ID);
                 if (application == null)
                 {
                     return;
                 }
 
                 LicenseClassService licenseClassService = new LicenseClassService();
-                LicenseClass licenseClass = await licenseClassService.GetLicenseClassByLDLAppIDAsync(_LDLApplicationID);
+                LicenseClass licenseClass = await licenseClassService.GetLicenseClassByIDAsync((int)licenseData.LicenseClass_ID);
                 if (licenseClass == null)
                 {
                     return;
@@ -173,17 +173,6 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
             {
                 return System.Drawing.Image.FromStream(fs);
             }
-
-            //return System.Drawing.Image.FromFile(imagePath);
-
-            //// 1. Read all bytes from the file. 
-            //// This opens the file, reads it, and CLOSES it immediately.
-            //byte[] imageBytes = File.ReadAllBytes(imagePath);
-
-            //// 2. Create a stream from the bytes in memory
-            //MemoryStream ms = new MemoryStream(imageBytes);
-            //// 3. Create the image from that memory stream
-            //return System.Drawing.Image.FromStream(ms);
         }
     }
 }

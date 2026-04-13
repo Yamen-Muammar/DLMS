@@ -92,5 +92,48 @@ namespace DVLD__Data_Tier.Repositories
                 return licenseClass;
             }
         }
+
+        public async Task<LicenseClass> GetLicenseClassByIDAsync(int ID)
+        {
+            LicenseClass licenseClass = null;
+            string query = @"select LicenseClasses.LicenseClassID ,LicenseClasses.ClassName,LicenseClasses.ClassDescription,
+                            LicenseClasses.MinimumAllowedAge,LicenseClasses.DefaultValidityLength,
+                            LicenseClasses.ClassFees
+                            from LicenseClasses 
+                            WHERE  LicenseClasses.LicenseClassID = @ID ";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@ID", ID);
+
+                try
+                {
+                    await conn.OpenAsync();
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            licenseClass = new LicenseClass
+                            {
+                                LicenseClassID = (int)reader["LicenseClassID"],
+                                ClassName = reader["ClassName"].ToString(),
+                                ClassDescription = reader["ClassDescription"].ToString(),
+                                MinimumAllowedAge = (int)reader["MinimumAllowedAge"],
+                                DefaultValidityLength = (int)reader["DefaultValidityLength"],
+                                ClassFees = (decimal)reader["ClassFees"],
+                            };
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                return licenseClass;
+            }
+        }
     }
 }
