@@ -15,6 +15,7 @@ using DVLD__Presentation_Tier.Forms.Test_Types_Forms;
 using DVLD__Presentation_Tier.Forms.LocalDrivingLicenseForms;
 using DVLD__Presentation_Tier.Forms.DriversForms;
 using DVLD__Presentation_Tier.Forms.InternationalLicenseForms;
+using DVLD__Presentation_Tier.Forms.DetainedLicenseForms;
 namespace DVLD__Presentation_Tier
 {
     public partial class MainForm : Form
@@ -106,6 +107,27 @@ namespace DVLD__Presentation_Tier
         {
             frmReplaceLicense frmReplace = new frmReplaceLicense();
             frmReplace.ShowDialog();
+        }
+
+        private void detainLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDetainLicense frmDetain = new frmDetainLicense();
+            frmDetain.ShowDialog();
+        }
+
+        private void relaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void manageDetainedLicensesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void releaseDetainedDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

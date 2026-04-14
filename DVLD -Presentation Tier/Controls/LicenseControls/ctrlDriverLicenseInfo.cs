@@ -20,11 +20,15 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
         public Person PersonInfo;
         private string _licenseClassName;
         public DVLD__Core.Models.License LicenseInfo;
+        private DetainedLicenseService _detainedLicenseService;
+        public bool IsLicenseDetained;
+
         public ctrlDriverLicenseInfo()
         {
             InitializeComponent();
             PersonInfo = new Person();
             LicenseInfo = new DVLD__Core.Models.License();
+
         }
 
         public async Task LoadDate(int LDLApplicationID, string nationalNo, string LicenseClassName)
@@ -79,11 +83,15 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
                 {
                     return;
                 }
+
+                _detainedLicenseService = new DetainedLicenseService();
+                IsLicenseDetained = await _detainedLicenseService.IsLicenseDetained(licenseID);
+
                 _fillDataINCtrl();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }                                       
             
         }
@@ -158,6 +166,7 @@ namespace DVLD__Presentation_Tier.Controls.LicenseControls
             lblExperationDate.Text = LicenseInfo.ExpirationDate.ToShortDateString();
             lblNotes.Text = LicenseInfo.Note.ToString();
             lblIssueReason.Text = LicenseInfo.IssueReasen.ToString();
+            lblIsDetained.Text = (IsLicenseDetained) ? "Yes" : "No"; 
         }
 
         private System.Drawing.Image _loadImageWithoutLock(string imageName)
