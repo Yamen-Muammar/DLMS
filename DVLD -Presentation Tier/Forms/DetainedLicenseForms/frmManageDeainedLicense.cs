@@ -29,12 +29,25 @@ namespace DVLD__Presentation_Tier.Forms.DetainedLicenseForms
             await _refreshDatainDGV();
 
         }
-
-        private async Task _refreshDatainDGV()
+       private async Task _refreshDatainDGV()
         {
             _detainedLicensesList = await _getAllDetainedLicenses();
             _bindDataToDGV(_detainedLicensesList);
 
+        }
+        private void showLicenseDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int licenseID = (int)dgvDetainedLicense.CurrentRow?.Cells["License_ID"].Value;
+            frmLicenseInformation frm = new frmLicenseInformation(licenseID);
+            frm.ShowDialog();
+        }
+        private async void relaseLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int detainedID = (int)dgvDetainedLicense.CurrentRow?.Cells["DetainID"].Value;
+            int licenseID = (int)dgvDetainedLicense.CurrentRow?.Cells["License_ID"].Value;
+            frmReleaseDetainedLicense frm = new frmReleaseDetainedLicense(detainedID,licenseID);
+            frm.ShowDialog();
+            await _refreshDatainDGV();
         }
         private void _bindDataToDGV(List<DetainedLicense> source)
         {
@@ -42,12 +55,10 @@ namespace DVLD__Presentation_Tier.Forms.DetainedLicenseForms
             this.dgvDetainedLicense.DataSource = source;
             this.lblRecordsCount.Text = source.Count.ToString();
         }
-
         private async Task<List<DetainedLicense>> _getAllDetainedLicenses()
         {
             return await _detainedLicenseService.GetAllDetainedLicenses();
         }
-
         private async void btnAddDeateinLicense_Click(object sender, EventArgs e)
         {
             frmDetainLicense frmDetainLicense = new frmDetainLicense();
@@ -56,7 +67,6 @@ namespace DVLD__Presentation_Tier.Forms.DetainedLicenseForms
         }
 
         // filter data
-
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             if (_detainedLicensesList == null)
@@ -79,8 +89,7 @@ namespace DVLD__Presentation_Tier.Forms.DetainedLicenseForms
                 _bindDataToDGV(filteredList);
             }
         }   
-
-        private void _loadComboBox()
+       private void _loadComboBox()
         {
             List<string> filterOptions = new List<string>()
             {
@@ -88,12 +97,11 @@ namespace DVLD__Presentation_Tier.Forms.DetainedLicenseForms
             };
             cbFilterOn.DataSource = filterOptions;
         }
+        
 
-        private void showLicenseDataToolStripMenuItem_Click(object sender, EventArgs e)
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            int licenseID = (int)dgvDetainedLicense.CurrentRow?.Cells["License_ID"].Value;
-            frmLicenseInformation frm = new frmLicenseInformation(licenseID);
-            frm.ShowDialog();   
+            relaseLicenseToolStripMenuItem.Enabled = !(bool)dgvDetainedLicense.CurrentRow?.Cells["isReleased"].Value;
         }
     }
 }

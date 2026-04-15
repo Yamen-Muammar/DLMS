@@ -117,7 +117,8 @@ namespace DVLD__Presentation_Tier
 
         private void relaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmReleaseDetainedLicense frmRelease = new frmReleaseDetainedLicense();
+            frmRelease.ShowDialog();
         }
 
         private void manageDetainedLicensesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,7 +129,8 @@ namespace DVLD__Presentation_Tier
 
         private void releaseDetainedDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmReleaseDetainedLicense frmRelease = new frmReleaseDetainedLicense();
+            frmRelease.ShowDialog();
         }
     }
 }

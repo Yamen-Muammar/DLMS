@@ -22,7 +22,7 @@ namespace DVLD__Data_Tier.Repositories
             bool isLicenseDetained = false;
             string query = @"
                                 select 1 as Founded from DetainedLicenses
-                                where DetainedLicenses.license_ID = @licenseID;";
+                               WHERE DetainedLicenses.license_ID = @licenseID AND DetainedLicenses.isReleased = 0 and ReleaseApplication_ID is NULL;";
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
@@ -156,5 +156,146 @@ namespace DVLD__Data_Tier.Repositories
             }
             return detainedLicenses;
         }
+        public async Task<int> RelaseDetainedLicense(DetainedLicense detainedLicense, DVLD__Core.Models.Application application)
+        {
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                SqlTransaction transaction = connection.BeginTransaction();
+                   
+                    try
+                    {
+                        // INSERT APPLICATION
+                        detainedLicense.ReleaseApplication_ID = await _insertDetainedApplication(application, connection, transaction);
+
+                        detainedLicense.ReleaseDate = application.ApplicationDate;
+                        
+                        await _updateDetainedLicenseReleaseInfo(detainedLicense, connection, transaction);
+                        
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                
+            }
+
+            return (int) detainedLicense.ReleaseApplication_ID;
+        }
+
+        public async Task<DetainedLicense> GetDetainedInformationByIDAsync(int detainedLicenseID)
+        {
+            DetainedLicense detainedLicense = null;
+            string query = @"
+                SELECT DetainID, license_ID, DetainDate, FineFees, CreatedByUser_ID, isReleased, ReleaseDate, ReleaseByUser_ID, ReleaseApplication_ID
+                FROM DetainedLicenses
+                ORDER BY DetainDate DESC;";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            detainedLicense = new DetainedLicense
+                            {
+                                DetainID = reader.GetInt32(reader.GetOrdinal("DetainID")),
+                                License_ID = reader.GetInt32(reader.GetOrdinal("license_ID")),
+                                DetainDate = reader.GetDateTime(reader.GetOrdinal("DetainDate")),
+                                FineFees = reader.GetDecimal(reader.GetOrdinal("FineFees")),
+                                CreatedByUser_ID = reader.GetInt32(reader.GetOrdinal("CreatedByUser_ID")),
+                                isReleased = reader.GetBoolean(reader.GetOrdinal("isReleased")),
+                                ReleaseDate = reader.IsDBNull(reader.GetOrdinal("ReleaseDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
+                                ReleaseByUser_ID = reader.IsDBNull(reader.GetOrdinal("ReleaseByUser_ID")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReleaseByUser_ID")),
+                                ReleaseApplication_ID = reader.IsDBNull(reader.GetOrdinal("ReleaseApplication_ID")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReleaseApplication_ID"))
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return detainedLicense;
+        }
+
+        public async Task<DetainedLicense> GetDetainedInformationByLicenseIDAsync(int LicenseID)
+        {
+            DetainedLicense detainedLicense = null;
+            string query = @"
+                SELECT DetainID, license_ID, DetainDate, FineFees, CreatedByUser_ID, isReleased, ReleaseDate, ReleaseByUser_ID, ReleaseApplication_ID
+                FROM DetainedLicenses
+                WHERE license_ID = @licID and isReleased = 0
+                ORDER BY DetainDate DESC;";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@licID", LicenseID);
+                try
+                {
+                    await connection.OpenAsync();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            detainedLicense = new DetainedLicense
+                            {
+                                DetainID = reader.GetInt32(reader.GetOrdinal("DetainID")),
+                                License_ID = reader.GetInt32(reader.GetOrdinal("license_ID")),
+                                DetainDate = reader.GetDateTime(reader.GetOrdinal("DetainDate")),
+                                FineFees = reader.GetDecimal(reader.GetOrdinal("FineFees")),
+                                CreatedByUser_ID = reader.GetInt32(reader.GetOrdinal("CreatedByUser_ID")),
+                                isReleased = reader.GetBoolean(reader.GetOrdinal("isReleased")),
+                                ReleaseDate = reader.IsDBNull(reader.GetOrdinal("ReleaseDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
+                                ReleaseByUser_ID = reader.IsDBNull(reader.GetOrdinal("ReleaseByUser_ID")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReleaseByUser_ID")),
+                                ReleaseApplication_ID = reader.IsDBNull(reader.GetOrdinal("ReleaseApplication_ID")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReleaseApplication_ID"))
+                            };
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return detainedLicense;
+        }
+
+        // helper methods
+        private async Task<int> _insertDetainedApplication(DVLD__Core.Models.Application application, SqlConnection conn, SqlTransaction transaction)
+        {
+            ApplicationRepository applicationRepository = new ApplicationRepository();
+            return await applicationRepository.InsertApplicationTransactional(conn, transaction, application);
+        }
+
+        private async Task<bool> _updateDetainedLicenseReleaseInfo(DetainedLicense detainedLicense, SqlConnection conn, SqlTransaction transaction)
+        {
+            string query = @"
+                UPDATE DetainedLicenses
+                SET isReleased = 1,
+                    ReleaseDate = @releaseDate,
+                    ReleaseByUser_ID = @ReleaseByUserID,
+                    ReleaseApplication_ID = @ReleaseApplicationID
+                WHERE DetainID = @DetainID;";
+            using (SqlCommand command = new SqlCommand(query, conn, transaction))
+            {
+                command.Parameters.AddWithValue("@ReleaseByUserID",(int) detainedLicense.ReleaseByUser_ID);
+                command.Parameters.AddWithValue("@releaseDate", detainedLicense.ReleaseDate);
+                command.Parameters.AddWithValue("@ReleaseApplicationID", (int)detainedLicense.ReleaseApplication_ID);
+                command.Parameters.AddWithValue("@DetainID", detainedLicense.DetainID);
+                int rowsAffected = await command.ExecuteNonQueryAsync();
+                return rowsAffected > 0;
+            }
+        }
     }
 }
+
+

@@ -49,5 +49,38 @@ namespace DVLD__Business_Tier.Services
         {
             return await _repo.GetAllDetainedLicensesAsync();
         }
+
+        public async Task<int> ReleaseDetainedLicenseAsync(DVLD__Core.Models.Application newApplication,DetainedLicense detainedLicense)
+        {
+            if (detainedLicense.DetainID <= 0 || newApplication.Person_ID <= 0)
+            {
+                throw new ArgumentException("Invalid Passed Data");
+            }
+
+            if (!await _repo.IsLicenseDetained(detainedLicense.License_ID))
+            {
+                throw new Exception("License is not Detained");
+            }
+
+            return await _repo.RelaseDetainedLicense(detainedLicense,newApplication);
+        }
+        public async Task<DetainedLicense> GetDetainedLicenseByLicenseIDAsync(int licenseID)
+        {
+            if (licenseID <= 0)
+            {
+                throw new ArgumentException("Invalid License ID");
+            }
+            return await _repo.GetDetainedInformationByLicenseIDAsync(licenseID);
+        }
+
+        public async Task<DetainedLicense> GetDetaineByIDAsync(int detaineID)
+        {
+            if (detaineID <= 0)
+            {
+                throw new ArgumentException("Invalid Detained License ID");
+            }
+
+            return await _repo.GetDetainedInformationByIDAsync(detaineID);
+        }
     }
 }

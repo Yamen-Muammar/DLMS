@@ -35,13 +35,13 @@
             this.lblRecordsCount = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dgvDetainedLicense = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showLicenseDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.relaseLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnAddDeateinLicense = new System.Windows.Forms.Button();
-            this.showLicenseDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetainedLicense)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -110,6 +110,38 @@
             this.dgvDetainedLicense.Size = new System.Drawing.Size(1257, 476);
             this.dgvDetainedLicense.TabIndex = 19;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showLicenseDataToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.relaseLicenseToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(288, 107);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // showLicenseDataToolStripMenuItem
+            // 
+            this.showLicenseDataToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.DriverLicense48;
+            this.showLicenseDataToolStripMenuItem.Name = "showLicenseDataToolStripMenuItem";
+            this.showLicenseDataToolStripMenuItem.Size = new System.Drawing.Size(287, 32);
+            this.showLicenseDataToolStripMenuItem.Text = "Show License Data";
+            this.showLicenseDataToolStripMenuItem.Click += new System.EventHandler(this.showLicenseDataToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(284, 6);
+            // 
+            // relaseLicenseToolStripMenuItem
+            // 
+            this.relaseLicenseToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.ReleaseDetainedLicense32;
+            this.relaseLicenseToolStripMenuItem.Name = "relaseLicenseToolStripMenuItem";
+            this.relaseLicenseToolStripMenuItem.Size = new System.Drawing.Size(287, 32);
+            this.relaseLicenseToolStripMenuItem.Text = "Release Detained License";
+            this.relaseLicenseToolStripMenuItem.Click += new System.EventHandler(this.relaseLicenseToolStripMenuItem_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -120,28 +152,6 @@
             this.label1.Size = new System.Drawing.Size(337, 31);
             this.label1.TabIndex = 18;
             this.label1.Text = "Manage Detained Licenses";
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showLicenseDataToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.relaseLicenseToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(279, 107);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(275, 6);
-            // 
-            // relaseLicenseToolStripMenuItem
-            // 
-            this.relaseLicenseToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.ReleaseDetainedLicense32;
-            this.relaseLicenseToolStripMenuItem.Name = "relaseLicenseToolStripMenuItem";
-            this.relaseLicenseToolStripMenuItem.Size = new System.Drawing.Size(278, 32);
-            this.relaseLicenseToolStripMenuItem.Text = "Relase Detained License";
             // 
             // pictureBox1
             // 
@@ -162,14 +172,6 @@
             this.btnAddDeateinLicense.TabIndex = 20;
             this.btnAddDeateinLicense.UseVisualStyleBackColor = true;
             this.btnAddDeateinLicense.Click += new System.EventHandler(this.btnAddDeateinLicense_Click);
-            // 
-            // showLicenseDataToolStripMenuItem
-            // 
-            this.showLicenseDataToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.DriverLicense48;
-            this.showLicenseDataToolStripMenuItem.Name = "showLicenseDataToolStripMenuItem";
-            this.showLicenseDataToolStripMenuItem.Size = new System.Drawing.Size(278, 32);
-            this.showLicenseDataToolStripMenuItem.Text = "Show License Data";
-            this.showLicenseDataToolStripMenuItem.Click += new System.EventHandler(this.showLicenseDataToolStripMenuItem_Click);
             // 
             // frmManageDeainedLicense
             // 
