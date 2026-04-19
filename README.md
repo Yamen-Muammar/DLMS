@@ -1,5 +1,5 @@
-# Driving Vehicle License Department System (DVLD)
-A comprehensive desktop application designed to streamline the processes of the Driving & Vehicle License Department. This system manages the full lifecycle of driving licenses, from initial application and testing to issuance, renewal, and replacement.
+# Driving & Vehicle Licenses Department System (DVLD)
+A comprehensive desktop application designed to streamline the processes of the Driving & Vehicle Licenses Department. This system manages the full lifecycle of driving licenses, from initial application and testing to issuance, renewal, and replacement.
   
 🛠 Tech Stack  
 
