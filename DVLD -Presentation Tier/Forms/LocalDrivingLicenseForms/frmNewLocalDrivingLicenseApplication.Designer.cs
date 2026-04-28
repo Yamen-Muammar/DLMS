@@ -56,9 +56,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Crimson;
-            this.label1.Location = new System.Drawing.Point(265, 50);
+            this.label1.Location = new System.Drawing.Point(177, 32);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(458, 31);
+            this.label1.Size = new System.Drawing.Size(311, 22);
             this.label1.TabIndex = 1;
             this.label1.Text = "New Local Driving Licese Application";
             // 
@@ -66,9 +67,10 @@
             // 
             this.btnNext.Image = global::DVLD__Presentation_Tier.Properties.Resources.Next32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNext.Location = new System.Drawing.Point(796, 505);
+            this.btnNext.Location = new System.Drawing.Point(531, 328);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(175, 43);
+            this.btnNext.Size = new System.Drawing.Size(117, 28);
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -78,29 +80,32 @@
             // 
             this.tabControl1.Controls.Add(this.tbPersonalInfo);
             this.tabControl1.Controls.Add(this.tbApplicationInfo);
-            this.tabControl1.Location = new System.Drawing.Point(12, 101);
+            this.tabControl1.Location = new System.Drawing.Point(8, 66);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1002, 589);
+            this.tabControl1.Size = new System.Drawing.Size(668, 383);
             this.tabControl1.TabIndex = 4;
             // 
             // tbPersonalInfo
             // 
             this.tbPersonalInfo.Controls.Add(this.ctrlPersonInformationWithFilter1);
             this.tbPersonalInfo.Controls.Add(this.btnNext);
-            this.tbPersonalInfo.Location = new System.Drawing.Point(4, 29);
+            this.tbPersonalInfo.Location = new System.Drawing.Point(4, 22);
+            this.tbPersonalInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbPersonalInfo.Name = "tbPersonalInfo";
-            this.tbPersonalInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tbPersonalInfo.Size = new System.Drawing.Size(994, 556);
+            this.tbPersonalInfo.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbPersonalInfo.Size = new System.Drawing.Size(660, 357);
             this.tbPersonalInfo.TabIndex = 0;
             this.tbPersonalInfo.Text = "Personal Info";
             this.tbPersonalInfo.UseVisualStyleBackColor = true;
             // 
             // ctrlPersonInformationWithFilter1
             // 
-            this.ctrlPersonInformationWithFilter1.Location = new System.Drawing.Point(13, 6);
+            this.ctrlPersonInformationWithFilter1.Location = new System.Drawing.Point(9, 4);
+            this.ctrlPersonInformationWithFilter1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.ctrlPersonInformationWithFilter1.Name = "ctrlPersonInformationWithFilter1";
-            this.ctrlPersonInformationWithFilter1.Size = new System.Drawing.Size(975, 493);
+            this.ctrlPersonInformationWithFilter1.Size = new System.Drawing.Size(650, 320);
             this.ctrlPersonInformationWithFilter1.TabIndex = 0;
             this.ctrlPersonInformationWithFilter1.ReturnPersonID_OnFindPerson += new DVLD__Presentation_Tier.Controls.ctrlPersonInformationWithFilter.ReturnPersonIDEvent(this.ctrlPersonInformationWithFilter1_ReturnPersonID_OnFindPerson);
             // 
@@ -116,10 +121,11 @@
             this.tbApplicationInfo.Controls.Add(this.l3);
             this.tbApplicationInfo.Controls.Add(this.l2);
             this.tbApplicationInfo.Controls.Add(this.l1);
-            this.tbApplicationInfo.Location = new System.Drawing.Point(4, 29);
+            this.tbApplicationInfo.Location = new System.Drawing.Point(4, 22);
+            this.tbApplicationInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbApplicationInfo.Name = "tbApplicationInfo";
-            this.tbApplicationInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tbApplicationInfo.Size = new System.Drawing.Size(994, 556);
+            this.tbApplicationInfo.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbApplicationInfo.Size = new System.Drawing.Size(660, 357);
             this.tbApplicationInfo.TabIndex = 1;
             this.tbApplicationInfo.Text = "Application Info";
             this.tbApplicationInfo.UseVisualStyleBackColor = true;
@@ -127,9 +133,10 @@
             // cbLicenseClasses
             // 
             this.cbLicenseClasses.FormattingEnabled = true;
-            this.cbLicenseClasses.Location = new System.Drawing.Point(299, 176);
+            this.cbLicenseClasses.Location = new System.Drawing.Point(199, 114);
+            this.cbLicenseClasses.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbLicenseClasses.Name = "cbLicenseClasses";
-            this.cbLicenseClasses.Size = new System.Drawing.Size(364, 28);
+            this.cbLicenseClasses.Size = new System.Drawing.Size(244, 21);
             this.cbLicenseClasses.TabIndex = 10;
             // 
             // lblCreatedName
@@ -137,9 +144,10 @@
             this.lblCreatedName.AutoSize = true;
             this.lblCreatedName.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCreatedName.ForeColor = System.Drawing.Color.Red;
-            this.lblCreatedName.Location = new System.Drawing.Point(299, 270);
+            this.lblCreatedName.Location = new System.Drawing.Point(199, 176);
+            this.lblCreatedName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCreatedName.Name = "lblCreatedName";
-            this.lblCreatedName.Size = new System.Drawing.Size(54, 23);
+            this.lblCreatedName.Size = new System.Drawing.Size(40, 17);
             this.lblCreatedName.TabIndex = 5;
             this.lblCreatedName.Text = "????";
             // 
@@ -148,9 +156,10 @@
             this.lblApplicationFees.AutoSize = true;
             this.lblApplicationFees.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblApplicationFees.ForeColor = System.Drawing.Color.Red;
-            this.lblApplicationFees.Location = new System.Drawing.Point(299, 226);
+            this.lblApplicationFees.Location = new System.Drawing.Point(199, 147);
+            this.lblApplicationFees.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblApplicationFees.Name = "lblApplicationFees";
-            this.lblApplicationFees.Size = new System.Drawing.Size(54, 23);
+            this.lblApplicationFees.Size = new System.Drawing.Size(40, 17);
             this.lblApplicationFees.TabIndex = 5;
             this.lblApplicationFees.Text = "????";
             // 
@@ -159,9 +168,10 @@
             this.lblApplicationDate.AutoSize = true;
             this.lblApplicationDate.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblApplicationDate.ForeColor = System.Drawing.Color.Red;
-            this.lblApplicationDate.Location = new System.Drawing.Point(299, 128);
+            this.lblApplicationDate.Location = new System.Drawing.Point(199, 83);
+            this.lblApplicationDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblApplicationDate.Name = "lblApplicationDate";
-            this.lblApplicationDate.Size = new System.Drawing.Size(54, 23);
+            this.lblApplicationDate.Size = new System.Drawing.Size(40, 17);
             this.lblApplicationDate.TabIndex = 5;
             this.lblApplicationDate.Text = "????";
             // 
@@ -170,9 +180,10 @@
             this.lblApplicationID.AutoSize = true;
             this.lblApplicationID.Font = new System.Drawing.Font("Simplified Arabic Fixed", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblApplicationID.ForeColor = System.Drawing.Color.Red;
-            this.lblApplicationID.Location = new System.Drawing.Point(299, 81);
+            this.lblApplicationID.Location = new System.Drawing.Point(199, 53);
+            this.lblApplicationID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblApplicationID.Name = "lblApplicationID";
-            this.lblApplicationID.Size = new System.Drawing.Size(54, 23);
+            this.lblApplicationID.Size = new System.Drawing.Size(40, 17);
             this.lblApplicationID.TabIndex = 5;
             this.lblApplicationID.Text = "????";
             // 
@@ -180,9 +191,10 @@
             // 
             this.l4.AutoSize = true;
             this.l4.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l4.Location = new System.Drawing.Point(92, 263);
+            this.l4.Location = new System.Drawing.Point(61, 171);
+            this.l4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.l4.Name = "l4";
-            this.l4.Size = new System.Drawing.Size(127, 28);
+            this.l4.Size = new System.Drawing.Size(95, 19);
             this.l4.TabIndex = 6;
             this.l4.Text = "Created By :";
             // 
@@ -190,9 +202,10 @@
             // 
             this.lblLicenseClass.AutoSize = true;
             this.lblLicenseClass.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLicenseClass.Location = new System.Drawing.Point(73, 172);
+            this.lblLicenseClass.Location = new System.Drawing.Point(49, 112);
+            this.lblLicenseClass.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLicenseClass.Name = "lblLicenseClass";
-            this.lblLicenseClass.Size = new System.Drawing.Size(146, 28);
+            this.lblLicenseClass.Size = new System.Drawing.Size(110, 19);
             this.lblLicenseClass.TabIndex = 7;
             this.lblLicenseClass.Text = "License Class :";
             // 
@@ -200,9 +213,10 @@
             // 
             this.l3.AutoSize = true;
             this.l3.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l3.Location = new System.Drawing.Point(36, 219);
+            this.l3.Location = new System.Drawing.Point(24, 142);
+            this.l3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.l3.Name = "l3";
-            this.l3.Size = new System.Drawing.Size(183, 28);
+            this.l3.Size = new System.Drawing.Size(133, 19);
             this.l3.TabIndex = 7;
             this.l3.Text = "Application Fees :";
             // 
@@ -210,9 +224,10 @@
             // 
             this.l2.AutoSize = true;
             this.l2.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l2.Location = new System.Drawing.Point(33, 121);
+            this.l2.Location = new System.Drawing.Point(22, 79);
+            this.l2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.l2.Name = "l2";
-            this.l2.Size = new System.Drawing.Size(186, 28);
+            this.l2.Size = new System.Drawing.Size(135, 19);
             this.l2.TabIndex = 8;
             this.l2.Text = "Application Date :";
             // 
@@ -220,9 +235,10 @@
             // 
             this.l1.AutoSize = true;
             this.l1.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l1.Location = new System.Drawing.Point(22, 76);
+            this.l1.Location = new System.Drawing.Point(15, 49);
+            this.l1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.l1.Name = "l1";
-            this.l1.Size = new System.Drawing.Size(197, 28);
+            this.l1.Size = new System.Drawing.Size(145, 19);
             this.l1.TabIndex = 9;
             this.l1.Text = "D.L.Application ID :";
             // 
@@ -230,9 +246,10 @@
             // 
             this.btnCancel.Image = global::DVLD__Presentation_Tier.Properties.Resources.btnClose_Image;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(703, 701);
+            this.btnCancel.Location = new System.Drawing.Point(380, 457);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(139, 45);
+            this.btnCancel.Size = new System.Drawing.Size(128, 37);
             this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -243,9 +260,10 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::DVLD__Presentation_Tier.Properties.Resources.Save32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(848, 701);
+            this.btnSave.Location = new System.Drawing.Point(512, 456);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(139, 45);
+            this.btnSave.Size = new System.Drawing.Size(146, 38);
             this.btnSave.TabIndex = 7;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -253,19 +271,21 @@
             // 
             // frmNewLocalDrivingLicenseApplication
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1016, 758);
+            this.ClientSize = new System.Drawing.Size(677, 505);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmNewLocalDrivingLicenseApplication";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmNewLocalDrivingLicenseApplication";
             this.Load += new System.EventHandler(this.frmNewLocalDrivingLicenseApplication_Load);
             this.tabControl1.ResumeLayout(false);
