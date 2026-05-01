@@ -46,10 +46,9 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label1.Location = new System.Drawing.Point(184, 43);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(276, 66);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 32);
+            this.label1.Size = new System.Drawing.Size(156, 48);
             this.label1.TabIndex = 0;
             this.label1.Text = "Welcom";
             // 
@@ -71,14 +70,13 @@
             this.guna2GradientPanel1.FillColor = System.Drawing.Color.AliceBlue;
             this.guna2GradientPanel1.FillColor2 = System.Drawing.Color.AliceBlue;
             this.guna2GradientPanel1.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-            this.guna2GradientPanel1.Location = new System.Drawing.Point(220, 60);
-            this.guna2GradientPanel1.Margin = new System.Windows.Forms.Padding(2);
+            this.guna2GradientPanel1.Location = new System.Drawing.Point(330, 92);
             this.guna2GradientPanel1.Name = "guna2GradientPanel1";
             this.guna2GradientPanel1.ShadowDecoration.BorderRadius = 40;
-            this.guna2GradientPanel1.ShadowDecoration.Color = System.Drawing.Color.DarkGray;
             this.guna2GradientPanel1.ShadowDecoration.Depth = 5;
+            this.guna2GradientPanel1.ShadowDecoration.Enabled = true;
             this.guna2GradientPanel1.ShadowDecoration.Shadow = new System.Windows.Forms.Padding(10);
-            this.guna2GradientPanel1.Size = new System.Drawing.Size(468, 434);
+            this.guna2GradientPanel1.Size = new System.Drawing.Size(702, 668);
             this.guna2GradientPanel1.TabIndex = 7;
             // 
             // guna2ProgressIndicator1
@@ -87,10 +85,11 @@
             this.guna2ProgressIndicator1.BackColor = System.Drawing.Color.Transparent;
             this.guna2ProgressIndicator1.CircleSize = 0.7F;
             this.guna2ProgressIndicator1.Enabled = false;
-            this.guna2ProgressIndicator1.Location = new System.Drawing.Point(190, 353);
+            this.guna2ProgressIndicator1.Location = new System.Drawing.Point(285, 543);
+            this.guna2ProgressIndicator1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.guna2ProgressIndicator1.Name = "guna2ProgressIndicator1";
             this.guna2ProgressIndicator1.ProgressColor = System.Drawing.Color.SteelBlue;
-            this.guna2ProgressIndicator1.Size = new System.Drawing.Size(74, 68);
+            this.guna2ProgressIndicator1.Size = new System.Drawing.Size(111, 105);
             this.guna2ProgressIndicator1.TabIndex = 11;
             this.guna2ProgressIndicator1.UseTransparentBackground = true;
             this.guna2ProgressIndicator1.Visible = false;
@@ -108,11 +107,10 @@
             this.btnShowPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnShowPassword.ForeColor = System.Drawing.Color.White;
             this.btnShowPassword.Image = global::DVLD__Presentation_Tier.Properties.Resources.Vision;
-            this.btnShowPassword.Location = new System.Drawing.Point(335, 212);
-            this.btnShowPassword.Margin = new System.Windows.Forms.Padding(2);
+            this.btnShowPassword.Location = new System.Drawing.Point(502, 326);
             this.btnShowPassword.Name = "btnShowPassword";
             this.btnShowPassword.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.btnShowPassword.Size = new System.Drawing.Size(47, 47);
+            this.btnShowPassword.Size = new System.Drawing.Size(70, 72);
             this.btnShowPassword.TabIndex = 5;
             this.btnShowPassword.Click += new System.EventHandler(this.btnShowPassword_Click);
             // 
@@ -133,12 +131,13 @@
             this.tbPassword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tbPassword.IconRight = global::DVLD__Presentation_Tier.Properties.Resources.Password;
             this.tbPassword.IconRightSize = new System.Drawing.Size(25, 25);
-            this.tbPassword.Location = new System.Drawing.Point(77, 212);
+            this.tbPassword.Location = new System.Drawing.Point(116, 326);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PlaceholderForeColor = System.Drawing.Color.SteelBlue;
             this.tbPassword.PlaceholderText = "Password";
             this.tbPassword.SelectedText = "";
-            this.tbPassword.Size = new System.Drawing.Size(253, 47);
+            this.tbPassword.Size = new System.Drawing.Size(380, 72);
             this.tbPassword.TabIndex = 2;
             // 
             // tbUsername
@@ -158,17 +157,17 @@
             this.tbUsername.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tbUsername.IconRight = global::DVLD__Presentation_Tier.Properties.Resources.Person32;
             this.tbUsername.IconRightSize = new System.Drawing.Size(25, 25);
-            this.tbUsername.Location = new System.Drawing.Point(77, 135);
+            this.tbUsername.Location = new System.Drawing.Point(116, 208);
+            this.tbUsername.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.PlaceholderForeColor = System.Drawing.Color.SteelBlue;
             this.tbUsername.PlaceholderText = "Username";
             this.tbUsername.SelectedText = "";
-            this.tbUsername.Size = new System.Drawing.Size(305, 46);
+            this.tbUsername.Size = new System.Drawing.Size(458, 71);
             this.tbUsername.TabIndex = 1;
             // 
             // btnLogin
             // 
-            this.btnLogin.Animated = true;
             this.btnLogin.BorderColor = System.Drawing.Color.SteelBlue;
             this.btnLogin.BorderRadius = 10;
             this.btnLogin.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -178,17 +177,16 @@
             this.btnLogin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnLogin.FillColor = System.Drawing.Color.SteelBlue;
             this.btnLogin.FillColor2 = System.Drawing.Color.SteelBlue;
-            this.btnLogin.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogin.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.btnLogin.ForeColor = System.Drawing.Color.White;
             this.btnLogin.HoverState.BorderColor = System.Drawing.Color.SteelBlue;
             this.btnLogin.Image = global::DVLD__Presentation_Tier.Properties.Resources.Next32;
             this.btnLogin.ImageAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.btnLogin.ImageOffset = new System.Drawing.Point(10, 0);
             this.btnLogin.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnLogin.Location = new System.Drawing.Point(114, 365);
-            this.btnLogin.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLogin.Location = new System.Drawing.Point(171, 562);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(239, 47);
+            this.btnLogin.Size = new System.Drawing.Size(358, 72);
             this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "Login";
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
@@ -200,10 +198,9 @@
             this.cbRemaindme.CheckedState.BorderRadius = 2;
             this.cbRemaindme.CheckedState.BorderThickness = 0;
             this.cbRemaindme.CheckedState.FillColor = System.Drawing.Color.SteelBlue;
-            this.cbRemaindme.Location = new System.Drawing.Point(77, 282);
-            this.cbRemaindme.Margin = new System.Windows.Forms.Padding(2);
+            this.cbRemaindme.Location = new System.Drawing.Point(116, 434);
             this.cbRemaindme.Name = "cbRemaindme";
-            this.cbRemaindme.Size = new System.Drawing.Size(21, 19);
+            this.cbRemaindme.Size = new System.Drawing.Size(32, 29);
             this.cbRemaindme.TabIndex = 3;
             this.cbRemaindme.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
             this.cbRemaindme.UncheckedState.BorderRadius = 10;
@@ -216,22 +213,20 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label2.Location = new System.Drawing.Point(102, 282);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(153, 434);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 17);
+            this.label2.Size = new System.Drawing.Size(126, 28);
             this.label2.TabIndex = 0;
             this.label2.Text = "Remaind Me";
             // 
             // frmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::DVLD__Presentation_Tier.Properties.Resources.Gemini_Generated_Image_i55v35i55v35i55v;
-            this.ClientSize = new System.Drawing.Size(907, 551);
+            this.ClientSize = new System.Drawing.Size(1360, 848);
             this.Controls.Add(this.guna2GradientPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";

@@ -11,6 +11,7 @@ using DVLD__Presentation_Tier.Forms;
 using DVLD__Business_Tier.Services;
 using DVLD__Core.Models;
 using DVLD__Core.View_Models;
+using DVLD__Presentation_Tier.Forms.PersonForms;
 namespace DVLD__Presentation_Tier
 {
     public partial class crtlPeopleListWithFilter : UserControl
@@ -24,7 +25,10 @@ namespace DVLD__Presentation_Tier
         }
         private async void crtlPeopleListWithFilter_Load(object sender, EventArgs e)
         {
-            _personService = new PersonService();
+            if (this.DesignMode)
+            {
+                return;
+            }
             await _RefreshData();
             _loadFilterComboBoxItems();
         }
@@ -49,7 +53,11 @@ namespace DVLD__Presentation_Tier
         private async void editeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int PersonId = (int)dgvPeopleList.CurrentRow.Cells[0].Value;
-            frmAddOrUpdatePersonInfo frmAddOrUpdatePersonInfo = new frmAddOrUpdatePersonInfo(PersonId);
+            if (PersonId == 0)
+            {
+                return;
+            }
+            frmAddOrUpdatePersonInfo frmAddOrUpdatePersonInfo = new frmAddOrUpdatePersonInfo(PersonId);// PASS THE ID 
             frmAddOrUpdatePersonInfo.ShowDialog();
             await _RefreshData();
         }
@@ -129,7 +137,10 @@ namespace DVLD__Presentation_Tier
         private void tbFilterInput_TextChanged(object sender, EventArgs e)
         {
             string filterValue = tbFilterInput.Text;
-
+            if (filterValue.Length < 1)
+            {
+                return;
+            }
             List<clsPersonView> filteredPeopleList = new List<clsPersonView>();                     
 
             if (string.IsNullOrEmpty(filterValue) || cbFilterOn.SelectedItem.ToString() == "None")
@@ -169,6 +180,7 @@ namespace DVLD__Presentation_Tier
         {
             try
             {
+                _personService = new PersonService();
                 people = await _personService.GetAll();
             }
             catch (Exception ex)

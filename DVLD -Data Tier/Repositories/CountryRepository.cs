@@ -11,7 +11,12 @@ namespace DVLD__Data_Tier.Repositories
 {
     public class CountryRepository
     {
-        private static string connectionString = DataBaseSettings.DataBaseConnectionString;
+        private static string connectionString;
+
+        public CountryRepository()
+        {
+            connectionString = DataBaseSettings.DataBaseConnectionString;
+        }
         public async Task<Country> GetCountryByID(int CountryId)
         {
             Country foundCountry = null;

@@ -15,7 +15,7 @@ using System.Diagnostics;
 namespace DVLD__Presentation_Tier
 {
     public partial class ctrlAddOrUpdatePerson : UserControl
-    {        
+    {
         public event Action OnClose_Clicked;
         protected virtual void CloseEvent()
         {
@@ -48,37 +48,32 @@ namespace DVLD__Presentation_Tier
         public ctrlAddOrUpdatePerson()
         {
             InitializeComponent();
-            _countryService = new CountryService();
-            _personService = new PersonService();
-
             FormPersonId = -1;
-
             Mode = enMode.eAdd;
-            PersonInfo = new Person();
-            PersonInfo.PersonID = -1; 
         }
 
         public ctrlAddOrUpdatePerson(int id)
         {
             InitializeComponent();
-            _countryService = new CountryService();
-            _personService = new PersonService();   
-
             FormPersonId = id;
-
-            Mode = (FormPersonId == -1) ? enMode.eAdd :enMode.eUpdate;            
+            Mode = (FormPersonId == -1) ? enMode.eAdd : enMode.eUpdate;
         }
 
         private async void ctrlAddOrUpdatePerson_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode)
+            {
+                return;
+            }
+
             if (Mode == enMode.eUpdate)
             {
                 lblTitle.Text = "Update Person";
                 try
                 {
-                    PersonInfo =await _getPerson(FormPersonId);
-                    if (PersonInfo == null) 
-                    { 
+                    PersonInfo = await _getPerson(FormPersonId);
+                    if (PersonInfo == null)
+                    {
                         MessageBox.Show("Person Not Found", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
@@ -87,9 +82,16 @@ namespace DVLD__Presentation_Tier
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                  
-                }        
+                    return;
+                }
+
             }
+            else
+            {
+                PersonInfo = new Person();
+                PersonInfo.PersonID = -1;
+            }
+
 
             // UI Load Logic.
             dateTimePicker.MaxDate = DateTime.Now.AddYears(-18);
@@ -98,14 +100,15 @@ namespace DVLD__Presentation_Tier
 
         // Button Event Handlers
         private async void btnSave_Click(object sender, EventArgs e)
-        {            
+        {
+            _personService = new PersonService();
             if (!await _loadDataInPersonInfoObject())
             {
                 MessageBox.Show("Please fill all the required fields and set an image", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            
+
             if (Mode == enMode.eAdd)
             {
                 try
@@ -118,10 +121,10 @@ namespace DVLD__Presentation_Tier
                     else
                     {
                         Mode = enMode.eUpdate;
-                        MessageBox.Show("Person information Saved successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
-                        PersonInfo =await _getPerson(InsertedPersonId);
+                        MessageBox.Show("Person information Saved successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        PersonInfo = await _getPerson(InsertedPersonId);
                         if (PersonInfo == null)
-                        { 
+                        {
                             MessageBox.Show("Person Not Found after Insert", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }
@@ -141,7 +144,7 @@ namespace DVLD__Presentation_Tier
             {
                 try
                 {
-                    if(await _personService.Update(PersonInfo))
+                    if (await _personService.Update(PersonInfo))
                     {
                         MessageBox.Show("Person information updated successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -150,10 +153,10 @@ namespace DVLD__Presentation_Tier
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
                 return;
             }
-                       
+
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -163,20 +166,19 @@ namespace DVLD__Presentation_Tier
         }
         private void btnSetImage_Click(object sender, EventArgs e)
         {
-            
             string imagePath = _getImagePath();
-           
-            if (imagePath!=string.Empty)
+
+            if (imagePath != string.Empty)
             {
                 _imagePath = imagePath;
                 pbPersonImage.Image = _loadImageWithoutLock(imagePath);
-            }            
+            }
         }       
         private void btnRemove_Click(object sender, EventArgs e)
-        {            
+        {
             _clearPictureBox();
             rbGenderMale_CheckedChanged(sender, e);
-            _imagePath= string.Empty;
+            _imagePath = string.Empty;
         }        
         private void rbGenderMale_CheckedChanged(object sender, EventArgs e)
         {
@@ -201,7 +203,7 @@ namespace DVLD__Presentation_Tier
                 tbSecondName.Text = PersonInfo.MiddelName;
                 tbThirdName.Text = PersonInfo.ThirdName;
                 tbLastName.Text = PersonInfo.LastName;
-                tbNationalNo.Text = PersonInfo.NationalNO;               
+                tbNationalNo.Text = PersonInfo.NationalNO;
                 tbEmail.Text = PersonInfo.Email;
                 tbPhone.Text = PersonInfo.Phone;
                 tbAddress.Text = PersonInfo.Address;
@@ -214,7 +216,7 @@ namespace DVLD__Presentation_Tier
                 {
                     rbGenderFemale.Checked = true;
                 }
-                
+
                 // combo box Data load Sepirated in Private Function.
 
                 if (!string.IsNullOrEmpty(PersonInfo.ImageName))
@@ -223,11 +225,11 @@ namespace DVLD__Presentation_Tier
                     pbPersonImage.Image = _loadImageWithoutLock(imagePath);
                     _imagePath = PersonInfo.ImageName;
                 }
-                
+
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("** Error in LoadDataInForm : " + ex +" **" );                
+                Debug.WriteLine("** Error in LoadDataInForm : " + ex + " **");
             }
         }
         private async Task<bool> _loadDataInPersonInfoObject()
@@ -236,7 +238,7 @@ namespace DVLD__Presentation_Tier
             {
                 return false;
             }
-            
+
             PersonInfo.FirstName = tbFirstName.Text;
             PersonInfo.MiddelName = tbSecondName.Text;
             PersonInfo.ThirdName = tbThirdName.Text;
@@ -255,18 +257,18 @@ namespace DVLD__Presentation_Tier
                 return false;
             }
 
-            PersonInfo.Country_ID = countryID;     
+            PersonInfo.Country_ID = countryID;
             PersonInfo.ImageName = _imagePath;
             return true;
 
-        }        
+        }
         private async void _loadCountriesCB()
         {
-            List<Country> countriesList =await _loadCountriesList();
-            
+            List<Country> countriesList = await _loadCountriesList();
+
             foreach (Country country in countriesList)
             {
-                cbCountry.Items.Add(country.CountryName);                
+                cbCountry.Items.Add(country.CountryName);
             }
 
             if (PersonInfo.PersonID == -1)
@@ -279,7 +281,7 @@ namespace DVLD__Presentation_Tier
                 cbCountry.SelectedIndex = cbCountry.FindString(countryName);
             }
 
-            
+
         }
         private async Task<int> _getCountryIDOnName(string selectedCountryName)
         {
@@ -294,6 +296,7 @@ namespace DVLD__Presentation_Tier
             }
             return -1;
         }
+
         private async Task<string> _getCountryNameOnPersonID()
         {
             string countryName = string.Empty;
@@ -311,6 +314,7 @@ namespace DVLD__Presentation_Tier
         }
         private async Task<List<Country>> _loadCountriesList()
         {
+            _countryService = new CountryService();
             List<Country> countriesList = new List<Country>();
             try
             {
@@ -326,6 +330,7 @@ namespace DVLD__Presentation_Tier
 
         private async Task<Person> _getPerson(int personId)
         {
+            _personService = new PersonService();
             Person personInfo = null;
             personInfo = await _personService.Find(personId);
             return personInfo;
@@ -386,9 +391,9 @@ namespace DVLD__Presentation_Tier
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-               
+
             }
-            
+
         }
         private async Task<bool> _validateUIPersonInfo()
         {
@@ -408,7 +413,7 @@ namespace DVLD__Presentation_Tier
 
             try
             {
-                if (Mode == enMode.eAdd &&await _personService.IsPersonExist(tbNationalNo.Text))
+                if (Mode == enMode.eAdd && await _personService.IsPersonExist(tbNationalNo.Text))
                 {
                     return false;
                 }

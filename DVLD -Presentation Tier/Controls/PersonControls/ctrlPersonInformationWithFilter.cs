@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DVLD__Business_Tier.Services;
 using DVLD__Core.Models;
 using DVLD__Presentation_Tier.Forms;
+using DVLD__Presentation_Tier.Forms.PersonForms;
 
 namespace DVLD__Presentation_Tier.Controls
 {

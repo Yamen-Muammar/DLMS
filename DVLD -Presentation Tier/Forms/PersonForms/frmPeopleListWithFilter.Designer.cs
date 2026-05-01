@@ -38,7 +38,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Simplified Arabic", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.ForeColor = System.Drawing.Color.SteelBlue;
             this.label1.Location = new System.Drawing.Point(490, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(293, 66);
@@ -51,7 +51,7 @@
             this.crtlPeopleListWithFilter1.AutoSize = true;
             this.crtlPeopleListWithFilter1.Location = new System.Drawing.Point(-3, 76);
             this.crtlPeopleListWithFilter1.Name = "crtlPeopleListWithFilter1";
-            this.crtlPeopleListWithFilter1.Size = new System.Drawing.Size(1324, 682);
+            this.crtlPeopleListWithFilter1.Size = new System.Drawing.Size(1545, 934);
             this.crtlPeopleListWithFilter1.TabIndex = 0;
             this.crtlPeopleListWithFilter1.OnCloseButtonClicked += new System.Action(this.crtlPeopleListWithFilter1_OnCloseButtonClicked);
             // 

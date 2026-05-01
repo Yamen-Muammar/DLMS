@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DVLD__Presentation_Tier.Forms
+namespace DVLD__Presentation_Tier.Forms.PersonForms
 {
     public partial class frmAddOrUpdatePersonInfo : Form
     {
@@ -16,11 +16,10 @@ namespace DVLD__Presentation_Tier.Forms
         {
             InitializeComponent();
         }
-        public frmAddOrUpdatePersonInfo(int id)
+        public frmAddOrUpdatePersonInfo(int id )
         {
             InitializeComponent(id);
         }
-
         private void ctrlAddOrUpdatePerson1_OnClose_Clicked()
         {
             this.Close();
