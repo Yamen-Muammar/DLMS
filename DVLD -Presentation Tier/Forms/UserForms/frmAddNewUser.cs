@@ -54,7 +54,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             }
           
 
-            User user = _loadInfoInUserObject();
+            User user = await _loadInfoInUserObject();
 
             if (user == null)
             {
@@ -124,11 +124,11 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             return true;
         }
 
-        private User _loadInfoInUserObject()
+        private async Task<User> _loadInfoInUserObject()
         {
-  
+
             string username = tbUsername.Text;
-            string HashedPassword  = _passwordHasher.HashPassword(tbPassword.Text);
+            string HashedPassword = await Task.Run(() => _passwordHasher.HashPassword(tbPassword.Text));
             bool isActive = cbIsActive.Checked;
             int personID = _personID;            
 

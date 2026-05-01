@@ -52,7 +52,7 @@ namespace DVLD__Presentation_Tier
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-            frmChangePassword frmChangePassword = new frmChangePassword();
+            frmChangePassword frmChangePassword = new frmChangePassword(Global.User.UserID);
             frmChangePassword.ShowDialog();
         }        
 

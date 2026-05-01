@@ -187,7 +187,7 @@ namespace DVLD__Data_Tier.Repositories
             {
                 string query = @"UPDATE Users 
                             SET 
-                            HashedPassword = @hashedPassword,
+                            HashedPassword = @hashedPassword
                             WHERE UserID = @userID;";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))

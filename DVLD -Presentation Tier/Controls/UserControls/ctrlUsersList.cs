@@ -22,11 +22,15 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
         public ctrlUsersList()
         {
             InitializeComponent();       
-            _userService = new UserService();
+            
         }
 
         private async void ctrlUsersList_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode)
+            {
+                return;
+            }
             await _RefreshData();
         }
         private async Task _RefreshData()
@@ -39,6 +43,7 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
         }
         private async Task<List<clsUserView>> _getAllUsers()
         {
+            _userService = new UserService();
             List<clsUserView> list = new List<clsUserView>();
             try
             {

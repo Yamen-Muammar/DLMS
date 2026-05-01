@@ -34,24 +34,25 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            if (!_isInputsValid())
-            {
-                return;
-            }
-
-            string CurrentPassword = tbCurrentPassword.Text;    
-            bool isCurrentPasswordVerified = _clsPasswordHasher.VerifyPassword(CurrentPassword, Global.User.HashedPassword);
-
-            if (!isCurrentPasswordVerified)
-            {
-                MessageBox.Show("Current password is incorrect. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string hashedNewPassword = _clsPasswordHasher.HashPassword(tbNewPassword.Text);
-
+            btnSave.Enabled = false;
             try
             {
+                if (!_isInputsValid())
+                {
+                    return;
+                }
+
+                string CurrentPassword = tbCurrentPassword.Text;
+                bool isCurrentPasswordVerified =await Task.Run(()=> _clsPasswordHasher.VerifyPassword(CurrentPassword, Global.User.HashedPassword));
+
+                if (!isCurrentPasswordVerified)
+                {
+                    MessageBox.Show("Current password is incorrect. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string hashedNewPassword = await Task.Run(() => _clsPasswordHasher.HashPassword(tbNewPassword.Text));
+
                 if (await _userService.UpdateUserPassword(_passedUserID,hashedNewPassword))
                 {
                     MessageBox.Show("Password updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -60,7 +61,11 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnSave.Enabled = true;
             }
         }
 
@@ -81,13 +86,11 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
         {
             if (string.IsNullOrEmpty(tbCurrentPassword.Text) || string.IsNullOrEmpty(tbNewPassword.Text) || string.IsNullOrEmpty(tbConfirmationNewPassword.Text))
             {
-                MessageBox.Show("Fill ALL Fields Please!","Alert",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                return false;
+                throw new ArgumentException("Fill ALL Fields Please!");
             }
             if (tbConfirmationNewPassword.Text!=tbNewPassword.Text )
             {
-                MessageBox.Show("New Password and Current Password must be Same", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                throw new ArgumentException("New Password and Current Password must be Same");
             }
             return true;
         }

@@ -54,7 +54,7 @@
         }
         private void InitializeComponent(int id)
         {
-            this.ctrlAddOrUpdatePerson1 = new DVLD__Presentation_Tier.ctrlAddOrUpdatePerson();
+            this.ctrlAddOrUpdatePerson1 = new DVLD__Presentation_Tier.ctrlAddOrUpdatePerson(id);
             this.SuspendLayout();
             // 
             // ctrlAddOrUpdatePerson1
