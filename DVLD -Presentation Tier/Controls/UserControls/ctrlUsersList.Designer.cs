@@ -212,7 +212,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvUsersList.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvUsersList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            this.dgvUsersList.Location = new System.Drawing.Point(9, 227);
+            this.dgvUsersList.Location = new System.Drawing.Point(9, 253);
             this.dgvUsersList.Name = "dgvUsersList";
             this.dgvUsersList.ReadOnly = true;
             this.dgvUsersList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -227,7 +227,7 @@
             this.dgvUsersList.RowHeadersVisible = false;
             this.dgvUsersList.RowHeadersWidth = 62;
             this.dgvUsersList.RowTemplate.Height = 44;
-            this.dgvUsersList.Size = new System.Drawing.Size(1533, 686);
+            this.dgvUsersList.Size = new System.Drawing.Size(1533, 660);
             this.dgvUsersList.TabIndex = 10;
             this.dgvUsersList.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvUsersList.ThemeStyle.AlternatingRowsStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

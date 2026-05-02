@@ -81,7 +81,6 @@
             // 
             // guna2ProgressIndicator1
             // 
-            this.guna2ProgressIndicator1.AutoStart = true;
             this.guna2ProgressIndicator1.BackColor = System.Drawing.Color.Transparent;
             this.guna2ProgressIndicator1.CircleSize = 0.7F;
             this.guna2ProgressIndicator1.Enabled = false;

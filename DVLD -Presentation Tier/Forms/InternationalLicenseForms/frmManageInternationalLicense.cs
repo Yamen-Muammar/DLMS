@@ -125,6 +125,7 @@ namespace DVLD__Presentation_Tier.Forms.InternationalLicenseForms
         {
             dgvInternationalLicenseList.DataSource = null;
             dgvInternationalLicenseList.DataSource = internationalLicenseList;
+            lblRecordsCount.Text = internationalLicenseList.Count.ToString();
         }
 
         private async Task _refreshDataGridView()

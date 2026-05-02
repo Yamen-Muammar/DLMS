@@ -42,11 +42,7 @@ namespace DVLD__Presentation_Tier.Forms
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
-            btnLogin.Visible = false;
             _startLoading(true);
-            btnLogin.Enabled = false;
-            
-            
             bool isLoginSuccessful = false;
 
             try
@@ -68,8 +64,6 @@ namespace DVLD__Presentation_Tier.Forms
             finally
             {
                 _startLoading(false);
-                btnLogin.Visible = true;
-                btnLogin.Enabled = true;
             }
             
 
@@ -111,6 +105,7 @@ namespace DVLD__Presentation_Tier.Forms
            
             guna2ProgressIndicator1.Visible = enable;
             guna2ProgressIndicator1.Enabled = enable;
+
             if (enable)
             {
                 guna2ProgressIndicator1.Start();
@@ -119,6 +114,9 @@ namespace DVLD__Presentation_Tier.Forms
             {
                 guna2ProgressIndicator1.Stop();
             }
+
+            btnLogin.Visible = !enable;
+            btnLogin.Enabled = !enable;
         }
     }
 }
