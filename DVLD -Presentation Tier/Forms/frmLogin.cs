@@ -42,9 +42,10 @@ namespace DVLD__Presentation_Tier.Forms
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+            btnLogin.Visible = false;
             _startLoading(true);
             btnLogin.Enabled = false;
-            btnLogin.Visible = false;
+            
             
             bool isLoginSuccessful = false;
 
