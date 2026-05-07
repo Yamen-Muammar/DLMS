@@ -12,6 +12,7 @@ using DVLD__Business_Tier.Services;
 using DVLD__Core.Models;
 using DVLD__Core.View_Models;
 using DVLD__Presentation_Tier.Forms.PersonForms;
+using DVLD__Core;
 namespace DVLD__Presentation_Tier
 {
     public partial class crtlPeopleListWithFilter : UserControl
@@ -186,8 +187,15 @@ namespace DVLD__Presentation_Tier
         // Helper Methods
         private async Task _RefreshData()
         {
+           
             try
             {
+                if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.PeopleList))
+                {
+                    MessageBox.Show("Access declined", "Permissions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 _personService = new PersonService();
                 people = await _personService.GetAll();
             }

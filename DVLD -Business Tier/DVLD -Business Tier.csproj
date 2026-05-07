@@ -70,6 +70,7 @@
     <Compile Include="Services\LicenseClassService.cs" />
     <Compile Include="Services\LicenseService.cs" />
     <Compile Include="Services\PersonService.cs" />
+    <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\TestService.cs" />
     <Compile Include="Services\TestTypeService.cs" />
     <Compile Include="Services\UserService.cs" />

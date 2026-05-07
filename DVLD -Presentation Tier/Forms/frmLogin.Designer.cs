@@ -37,6 +37,7 @@
             this.btnLogin = new Guna.UI2.WinForms.Guna2GradientButton();
             this.cbRemaindme = new Guna.UI2.WinForms.Guna2CustomCheckBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.guna2GradientPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,11 +85,11 @@
             this.guna2ProgressIndicator1.BackColor = System.Drawing.Color.Transparent;
             this.guna2ProgressIndicator1.CircleSize = 0.7F;
             this.guna2ProgressIndicator1.Enabled = false;
-            this.guna2ProgressIndicator1.Location = new System.Drawing.Point(285, 543);
+            this.guna2ProgressIndicator1.Location = new System.Drawing.Point(188, 562);
             this.guna2ProgressIndicator1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.guna2ProgressIndicator1.Name = "guna2ProgressIndicator1";
-            this.guna2ProgressIndicator1.ProgressColor = System.Drawing.Color.SteelBlue;
-            this.guna2ProgressIndicator1.Size = new System.Drawing.Size(111, 105);
+            this.guna2ProgressIndicator1.ProgressColor = System.Drawing.Color.White;
+            this.guna2ProgressIndicator1.Size = new System.Drawing.Size(67, 72);
             this.guna2ProgressIndicator1.TabIndex = 11;
             this.guna2ProgressIndicator1.UseTransparentBackground = true;
             this.guna2ProgressIndicator1.Visible = false;
@@ -218,14 +219,38 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Remaind Me";
             // 
+            // guna2CircleButton1
+            // 
+            this.guna2CircleButton1.Animated = true;
+            this.guna2CircleButton1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2CircleButton1.FillColor = System.Drawing.Color.Red;
+            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
+            this.guna2CircleButton1.Image = global::DVLD__Presentation_Tier.Properties.Resources.btnClose_Image;
+            this.guna2CircleButton1.ImageOffset = new System.Drawing.Point(1, 0);
+            this.guna2CircleButton1.ImageSize = new System.Drawing.Size(55, 50);
+            this.guna2CircleButton1.Location = new System.Drawing.Point(1239, 74);
+            this.guna2CircleButton1.Name = "guna2CircleButton1";
+            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CircleButton1.Size = new System.Drawing.Size(50, 48);
+            this.guna2CircleButton1.TabIndex = 8;
+            this.guna2CircleButton1.UseTransparentBackground = true;
+            this.guna2CircleButton1.Click += new System.EventHandler(this.guna2CircleButton1_Click);
+            // 
             // frmLogin
             // 
+            this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::DVLD__Presentation_Tier.Properties.Resources.Gemini_Generated_Image_i55v35i55v35i55v;
             this.ClientSize = new System.Drawing.Size(1360, 848);
+            this.Controls.Add(this.guna2CircleButton1);
             this.Controls.Add(this.guna2GradientPanel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmLogin";
@@ -249,5 +274,6 @@
         private Guna.UI2.WinForms.Guna2CircleButton btnShowPassword;
         private Guna.UI2.WinForms.Guna2TextBox tbPassword;
         private Guna.UI2.WinForms.Guna2ProgressIndicator guna2ProgressIndicator1;
+        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
     }
 }

@@ -13,5 +13,6 @@ namespace DVLD__Core.Models
         public string Username { get; set; }
         public string HashedPassword { get; set; }
         public bool isActive { get; set; }
+        public Role Role { get; set; }
     }
 }

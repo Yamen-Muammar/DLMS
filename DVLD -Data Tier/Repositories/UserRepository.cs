@@ -64,7 +64,7 @@ namespace DVLD__Data_Tier.Repositories
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM Users WHERE UserID = @userID";
+                string query = "SELECT UserID,Person_ID,Username,HashedPassword,isActive,RoleID,RoleName,RoleCode FROM Users INNER JOIN Roles ON Users.Role_ID = Roles.RoleID WHERE UserID = @userID";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -84,6 +84,12 @@ namespace DVLD__Data_Tier.Repositories
                                     HashedPassword = reader["HashedPassword"].ToString(),
                                     Person_ID = (int)reader["Person_ID"],
                                     isActive = (bool)reader["isActive"],
+                                    Role = new Role
+                                    {
+                                        RoleId = (int)reader["RoleID"],
+                                        RoleName = reader["RoleName"].ToString(),
+                                        RoleCode = Convert.ToDecimal(reader["RoleCode"])
+                                    }
                                 };
                             }
                         }
@@ -102,7 +108,7 @@ namespace DVLD__Data_Tier.Repositories
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT UserID,Person_ID,Username,HashedPassword,isActive FROM Users WHERE Username = @username";
+                string query = "SELECT UserID,Person_ID,Username,HashedPassword,isActive,RoleID,RoleName,RoleCode FROM Users INNER JOIN Roles ON Users.Role_ID = Roles.RoleID WHERE Username = @username";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -123,6 +129,12 @@ namespace DVLD__Data_Tier.Repositories
                                     Username = reader["Username"].ToString(),
                                     HashedPassword = reader["HashedPassword"].ToString(),
                                     isActive = (bool)reader["isActive"],
+                                    Role = new Role
+                                    {
+                                        RoleId = (int)reader["RoleID"],
+                                        RoleName = reader["RoleName"].ToString(),
+                                        RoleCode = Convert.ToDecimal(reader["RoleCode"])
+                                    }
                                 };
                             }
                         }

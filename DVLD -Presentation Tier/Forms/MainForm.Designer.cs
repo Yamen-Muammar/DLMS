@@ -41,7 +41,6 @@
             this.replacementForLostOrDamagedLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.releaseDetainedDrivingLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.retakeTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageApplicationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.localDrivingLicenseApplicationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.internationalDrivingLicenseApplicationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +61,10 @@
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editeOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.guna2NotificationPaint1 = new Guna.UI2.WinForms.Guna2NotificationPaint(this.components);
+            this.mgAccessDenied = new Guna.UI2.WinForms.Guna2MessageDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +80,8 @@
             this.peopleToolStripMenuItem,
             this.driversToolStripMenuItem,
             this.userToolStripMenuItem,
-            this.accountSettingsToolStripMenuItem});
+            this.accountSettingsToolStripMenuItem,
+            this.editeOperationsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(150, 2, 0, 2);
@@ -113,8 +116,7 @@
             this.toolStripSeparator5,
             this.replacementForLostOrDamagedLicenseToolStripMenuItem,
             this.toolStripSeparator6,
-            this.releaseDetainedDrivingLicenseToolStripMenuItem,
-            this.retakeTestToolStripMenuItem});
+            this.releaseDetainedDrivingLicenseToolStripMenuItem});
             this.drivingLicensesServiceToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.LicenseView32;
             this.drivingLicensesServiceToolStripMenuItem.Name = "drivingLicensesServiceToolStripMenuItem";
             this.drivingLicensesServiceToolStripMenuItem.Size = new System.Drawing.Size(431, 60);
@@ -179,13 +181,6 @@
             this.releaseDetainedDrivingLicenseToolStripMenuItem.Size = new System.Drawing.Size(607, 60);
             this.releaseDetainedDrivingLicenseToolStripMenuItem.Text = "Release Detained Driving License";
             this.releaseDetainedDrivingLicenseToolStripMenuItem.Click += new System.EventHandler(this.releaseDetainedDrivingLicenseToolStripMenuItem_Click);
-            // 
-            // retakeTestToolStripMenuItem
-            // 
-            this.retakeTestToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.RetakeTest32;
-            this.retakeTestToolStripMenuItem.Name = "retakeTestToolStripMenuItem";
-            this.retakeTestToolStripMenuItem.Size = new System.Drawing.Size(607, 60);
-            this.retakeTestToolStripMenuItem.Text = "Retake Test";
             // 
             // manageApplicationsToolStripMenuItem
             // 
@@ -348,10 +343,32 @@
             this.signOutToolStripMenuItem.Text = "Sign Out";
             this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
+            // editeOperationsToolStripMenuItem
+            // 
+            this.editeOperationsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.editeOperationsToolStripMenuItem.Image = global::DVLD__Presentation_Tier.Properties.Resources.edit32;
+            this.editeOperationsToolStripMenuItem.Name = "editeOperationsToolStripMenuItem";
+            this.editeOperationsToolStripMenuItem.Size = new System.Drawing.Size(267, 150);
+            this.editeOperationsToolStripMenuItem.Text = "Edite Permissions";
+            this.editeOperationsToolStripMenuItem.Click += new System.EventHandler(this.editeOperationsToolStripMenuItem_Click);
+            // 
             // guna2Elipse1
             // 
             this.guna2Elipse1.BorderRadius = 40;
             this.guna2Elipse1.TargetControl = this.menuStrip1;
+            // 
+            // guna2NotificationPaint1
+            // 
+            this.guna2NotificationPaint1.Text = "2";
+            // 
+            // mgAccessDenied
+            // 
+            this.mgAccessDenied.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
+            this.mgAccessDenied.Caption = null;
+            this.mgAccessDenied.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
+            this.mgAccessDenied.Parent = this;
+            this.mgAccessDenied.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
+            this.mgAccessDenied.Text = "Access Denied";
             // 
             // MainForm
             // 
@@ -371,6 +388,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -402,7 +420,6 @@
         private System.Windows.Forms.ToolStripMenuItem replacementForLostOrDamagedLicenseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem releaseDetainedDrivingLicenseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem retakeTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem localLicenseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem internationalLicenseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem localDrivingLicenseApplicationsToolStripMenuItem;
@@ -412,5 +429,8 @@
         private System.Windows.Forms.ToolStripMenuItem relaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageDetainedLicensesToolStripMenuItem;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
+        private System.Windows.Forms.ToolStripMenuItem editeOperationsToolStripMenuItem;
+        private Guna.UI2.WinForms.Guna2NotificationPaint guna2NotificationPaint1;
+        private Guna.UI2.WinForms.Guna2MessageDialog mgAccessDenied;
     }
 }

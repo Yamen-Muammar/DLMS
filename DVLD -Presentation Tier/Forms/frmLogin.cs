@@ -108,15 +108,22 @@ namespace DVLD__Presentation_Tier.Forms
 
             if (enable)
             {
+                btnLogin.Text = string.Empty;                
                 guna2ProgressIndicator1.Start();
+
             }
             else
             {
+                btnLogin.Text = "Login";
                 guna2ProgressIndicator1.Stop();
             }
 
-            btnLogin.Visible = !enable;
-            btnLogin.Enabled = !enable;
+            
+        }
+
+        private void guna2CircleButton1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

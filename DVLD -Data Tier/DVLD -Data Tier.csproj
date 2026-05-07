@@ -71,6 +71,7 @@
     <Compile Include="Repositories\LicenseClassRepository.cs" />
     <Compile Include="Repositories\LicenseRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
     <Compile Include="Repositories\TestTypesRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

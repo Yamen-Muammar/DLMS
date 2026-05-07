@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\ApplicationType.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Models\LicenseClass.cs" />
     <Compile Include="Models\LocalDrivingLicenseApplication.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\TestAppointment.cs" />
     <Compile Include="Models\TestType.cs" />

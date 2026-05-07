@@ -16,10 +16,11 @@ namespace DVLD__Business_Tier.Services
     {
         private UserRepository _userRepository;
         private clsPasswordHasher _clsPasswordHasher;
+    
         public UserService()
         {
             _userRepository = new UserRepository();
-            _clsPasswordHasher = new clsPasswordHasher();
+            _clsPasswordHasher = new clsPasswordHasher(); 
         }
         //Login Helper Methodes
         public async Task<bool> Login(string username, string password, bool isRemaindMeActive)
