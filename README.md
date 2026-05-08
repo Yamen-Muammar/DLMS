@@ -140,3 +140,4 @@ The `DVLD -Core` project holds shared types (enums, constants, utility classes) 
 ## License
 
 This project is open source. Feel free to fork, study, or build on it.
+(this ReadMe Created by AI)
