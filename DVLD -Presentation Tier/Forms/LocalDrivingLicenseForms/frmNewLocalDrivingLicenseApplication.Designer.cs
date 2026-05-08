@@ -55,7 +55,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Crimson;
+            this.label1.ForeColor = System.Drawing.Color.SteelBlue;
             this.label1.Location = new System.Drawing.Point(177, 32);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
@@ -68,7 +68,7 @@
             this.btnNext.Image = global::DVLD__Presentation_Tier.Properties.Resources.Next32;
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNext.Location = new System.Drawing.Point(531, 328);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(2);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(117, 28);
             this.btnNext.TabIndex = 2;
@@ -81,7 +81,7 @@
             this.tabControl1.Controls.Add(this.tbPersonalInfo);
             this.tabControl1.Controls.Add(this.tbApplicationInfo);
             this.tabControl1.Location = new System.Drawing.Point(8, 66);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(668, 383);
@@ -92,9 +92,9 @@
             this.tbPersonalInfo.Controls.Add(this.ctrlPersonInformationWithFilter1);
             this.tbPersonalInfo.Controls.Add(this.btnNext);
             this.tbPersonalInfo.Location = new System.Drawing.Point(4, 22);
-            this.tbPersonalInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbPersonalInfo.Margin = new System.Windows.Forms.Padding(2);
             this.tbPersonalInfo.Name = "tbPersonalInfo";
-            this.tbPersonalInfo.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbPersonalInfo.Padding = new System.Windows.Forms.Padding(2);
             this.tbPersonalInfo.Size = new System.Drawing.Size(660, 357);
             this.tbPersonalInfo.TabIndex = 0;
             this.tbPersonalInfo.Text = "Personal Info";
@@ -103,7 +103,7 @@
             // ctrlPersonInformationWithFilter1
             // 
             this.ctrlPersonInformationWithFilter1.Location = new System.Drawing.Point(9, 4);
-            this.ctrlPersonInformationWithFilter1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.ctrlPersonInformationWithFilter1.Margin = new System.Windows.Forms.Padding(1);
             this.ctrlPersonInformationWithFilter1.Name = "ctrlPersonInformationWithFilter1";
             this.ctrlPersonInformationWithFilter1.Size = new System.Drawing.Size(650, 320);
             this.ctrlPersonInformationWithFilter1.TabIndex = 0;
@@ -122,9 +122,9 @@
             this.tbApplicationInfo.Controls.Add(this.l2);
             this.tbApplicationInfo.Controls.Add(this.l1);
             this.tbApplicationInfo.Location = new System.Drawing.Point(4, 22);
-            this.tbApplicationInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbApplicationInfo.Margin = new System.Windows.Forms.Padding(2);
             this.tbApplicationInfo.Name = "tbApplicationInfo";
-            this.tbApplicationInfo.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbApplicationInfo.Padding = new System.Windows.Forms.Padding(2);
             this.tbApplicationInfo.Size = new System.Drawing.Size(660, 357);
             this.tbApplicationInfo.TabIndex = 1;
             this.tbApplicationInfo.Text = "Application Info";
@@ -134,7 +134,7 @@
             // 
             this.cbLicenseClasses.FormattingEnabled = true;
             this.cbLicenseClasses.Location = new System.Drawing.Point(199, 114);
-            this.cbLicenseClasses.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbLicenseClasses.Margin = new System.Windows.Forms.Padding(2);
             this.cbLicenseClasses.Name = "cbLicenseClasses";
             this.cbLicenseClasses.Size = new System.Drawing.Size(244, 21);
             this.cbLicenseClasses.TabIndex = 10;
@@ -247,7 +247,7 @@
             this.btnCancel.Image = global::DVLD__Presentation_Tier.Properties.Resources.btnClose_Image;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancel.Location = new System.Drawing.Point(380, 457);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(128, 37);
             this.btnCancel.TabIndex = 8;
@@ -261,7 +261,7 @@
             this.btnSave.Image = global::DVLD__Presentation_Tier.Properties.Resources.Save32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(512, 456);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(146, 38);
             this.btnSave.TabIndex = 7;
@@ -281,7 +281,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmNewLocalDrivingLicenseApplication";

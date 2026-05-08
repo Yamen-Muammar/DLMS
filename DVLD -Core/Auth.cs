@@ -68,6 +68,10 @@ namespace DVLD__Core
 
         private static bool _checkPermission(decimal userRoleCode,decimal OperationCode)
         {
+            if (userRoleCode == (long)enOperations.FullPermission)
+            {
+                return true;
+            }
             if ((Convert.ToInt64(OperationCode) & Convert.ToInt64(userRoleCode)) == Convert.ToInt64(OperationCode))
             {
                 return true;

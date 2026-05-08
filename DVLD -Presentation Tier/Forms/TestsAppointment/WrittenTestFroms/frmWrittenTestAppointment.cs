@@ -151,6 +151,9 @@ namespace DVLD__Presentation_Tier.Forms.TestsAppointment.WrittenTestFroms
             return fees;
         }
 
-        
+        private void btnClose_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
