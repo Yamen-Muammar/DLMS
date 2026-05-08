@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.guna2NotificationPaint1 = new Guna.UI2.WinForms.Guna2NotificationPaint(this.components);
+            this.mgAccessDenied = new Guna.UI2.WinForms.Guna2MessageDialog();
             this.applicationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drivingLicensesServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newDrivingLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,9 +65,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editeOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
-            this.guna2NotificationPaint1 = new Guna.UI2.WinForms.Guna2NotificationPaint(this.components);
-            this.mgAccessDenied = new Guna.UI2.WinForms.Guna2MessageDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,6 +90,24 @@
             this.menuStrip1.Stretch = false;
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // guna2Elipse1
+            // 
+            this.guna2Elipse1.BorderRadius = 40;
+            this.guna2Elipse1.TargetControl = this.menuStrip1;
+            // 
+            // guna2NotificationPaint1
+            // 
+            this.guna2NotificationPaint1.Text = "2";
+            // 
+            // mgAccessDenied
+            // 
+            this.mgAccessDenied.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
+            this.mgAccessDenied.Caption = null;
+            this.mgAccessDenied.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
+            this.mgAccessDenied.Parent = this;
+            this.mgAccessDenied.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
+            this.mgAccessDenied.Text = "Access Denied";
             // 
             // applicationsToolStripMenuItem
             // 
@@ -352,30 +370,12 @@
             this.editeOperationsToolStripMenuItem.Text = "Edite Permissions";
             this.editeOperationsToolStripMenuItem.Click += new System.EventHandler(this.editeOperationsToolStripMenuItem_Click);
             // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 40;
-            this.guna2Elipse1.TargetControl = this.menuStrip1;
-            // 
-            // guna2NotificationPaint1
-            // 
-            this.guna2NotificationPaint1.Text = "2";
-            // 
-            // mgAccessDenied
-            // 
-            this.mgAccessDenied.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
-            this.mgAccessDenied.Caption = null;
-            this.mgAccessDenied.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
-            this.mgAccessDenied.Parent = this;
-            this.mgAccessDenied.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
-            this.mgAccessDenied.Text = "Access Denied";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1043, 667);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
@@ -383,7 +383,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";

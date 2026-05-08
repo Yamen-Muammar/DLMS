@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Core.View_Models;
 using DVLD__Data_Tier.Repositories;
@@ -12,6 +13,8 @@ namespace DVLD__Business_Tier.Services
     public class PersonService
     {
         private PersonRepository _personRepo;
+
+        private string _imagesFilePath = AppSettings.PersonImagesPath;
         public PersonService()
         {
             _personRepo = new PersonRepository();
@@ -119,8 +122,8 @@ namespace DVLD__Business_Tier.Services
             }
 
             // Image Handling            
-            bool isPersonNOTUpdateImage = _isPicINFolder(person.ImageName);
-            if (!isPersonNOTUpdateImage)
+            bool isPicNotUpdated = _isPicINFolder(person.ImageName);
+            if (!isPicNotUpdated)
             {
                 person.ImageName = await _setImageProcess(person);
                 if (string.IsNullOrEmpty(person.ImageName))
@@ -149,12 +152,12 @@ namespace DVLD__Business_Tier.Services
             string fileExtension = Path.GetExtension(person.ImageName);
             string NewImageName = Guid.NewGuid().ToString() + fileExtension;
 
-            string NewImageDestinationPath = Path.Combine(@"F:\yamen - 2024\C#\Course\projects\PersonPic", NewImageName);
+            string NewImagePath = Path.Combine(_imagesFilePath, NewImageName);
             try
             {
                 if (await _deleteImage(person.PersonID))
                 {
-                    File.Copy(person.ImageName, NewImageDestinationPath, true);
+                    File.Copy(person.ImageName, NewImagePath, true);
                     return NewImageName;
                 }
             }
@@ -184,7 +187,7 @@ namespace DVLD__Business_Tier.Services
                 return false;
             }
 
-            string DeleteDestinationPath = Path.Combine(@"F:\yamen - 2024\C#\Course\projects\PersonPic", oldImageName);
+            string DeleteDestinationPath = Path.Combine(_imagesFilePath, oldImageName);
 
             for (int attempts = 0; attempts < 3; attempts++)
             {
@@ -216,7 +219,7 @@ namespace DVLD__Business_Tier.Services
 
         private bool _isPicINFolder(string picName)
         {
-            string ImageDestinationPath = Path.Combine(@"F:\yamen - 2024\C#\Course\projects\PersonPic", picName);
+            string ImageDestinationPath = _imagesFilePath + picName;
             try
             {
                 if (File.Exists(ImageDestinationPath))

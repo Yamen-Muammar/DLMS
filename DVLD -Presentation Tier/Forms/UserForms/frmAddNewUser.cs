@@ -85,6 +85,7 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
                 MessageBox.Show("Set A Person First", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            _loadRoleComboBox();
             tabControl1.SelectedTab = LoginInfo;
         }
 
@@ -121,6 +122,13 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
                 MessageBox.Show("Password and Confirm Password must be the same", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
+
+            
+            if (!Enum.GetNames(typeof(Role.enRoles)).Contains(cbRoles.SelectedItem.ToString()))
+            {
+                MessageBox.Show("Role NOT Valid", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
             return true;
         }
 
@@ -133,12 +141,17 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
             int personID = _personID;            
 
 
-            return new User { Username=username,HashedPassword=HashedPassword,isActive=isActive,Person_ID =personID };
+            return new User { Username=username,HashedPassword=HashedPassword,isActive=isActive,Person_ID =personID, Role = new Role { RoleId = (int)Enum.Parse(typeof(Role.enRoles), cbRoles.SelectedItem.ToString())}};
         }
 
         private void ctrlPersonInformationWithFilter1_ReturnPersonID_OnFindPerson(int PersonID)
         {
             _personID = PersonID;
+        }
+
+        private void _loadRoleComboBox()
+        {
+            cbRoles.DataSource = Enum.GetNames(typeof(Role.enRoles));
         }
     }
 }

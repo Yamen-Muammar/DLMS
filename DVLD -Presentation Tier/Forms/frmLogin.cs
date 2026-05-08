@@ -24,6 +24,7 @@ namespace DVLD__Presentation_Tier.Forms
         //Event Handeling 
         private void frmLogin_Load(object sender, EventArgs e)
         {
+            tbPassword.UseSystemPasswordChar = true;
             _loadSavedDataInfoAtFrom();
         }
 

@@ -133,6 +133,16 @@ namespace DVLD__Presentation_Tier.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap backGround {
+            get {
+                object obj = ResourceManager.GetObject("backGround", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnClose_Image {
             get {
                 object obj = ResourceManager.GetObject("btnClose.Image", resourceCulture);

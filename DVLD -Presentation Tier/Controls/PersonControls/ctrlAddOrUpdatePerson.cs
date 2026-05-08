@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using Ookii.Dialogs.WinForms;
-using DVLD__Core.Models;
 using DVLD__Business_Tier.Services;
-using System.Diagnostics;
+using DVLD__Core;
+using DVLD__Core.Models;
+using Ookii.Dialogs.WinForms;
 namespace DVLD__Presentation_Tier
 {
     public partial class ctrlAddOrUpdatePerson : UserControl
     {
         public event Action OnClose_Clicked;
+
+        private string _imagesFilePath = AppSettings.PersonImagesPath;
         protected virtual void CloseEvent()
         {
             Action handler = OnClose_Clicked;
@@ -221,7 +224,7 @@ namespace DVLD__Presentation_Tier
 
                 if (!string.IsNullOrEmpty(PersonInfo.ImageName))
                 {
-                    string imagePath = Path.Combine(@"F:\yamen - 2024\C#\Course\projects\PersonPic", PersonInfo.ImageName);
+                    string imagePath = Path.Combine(_imagesFilePath, PersonInfo.ImageName);
                     pbPersonImage.Image = _loadImageWithoutLock(imagePath);
                     _imagePath = PersonInfo.ImageName;
                 }

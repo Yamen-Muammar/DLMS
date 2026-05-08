@@ -25,9 +25,9 @@ namespace DVLD__Data_Tier.Repositories
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string query = @"INSERT INTO Users 
-                            (Username, HashedPassword,isActive, Person_ID)
+                            (Username, HashedPassword,isActive, Person_ID,Role_ID)
                             VALUES 
-                            (@username, @hashedPassword,@isActive, @personID);
+                            (@username, @hashedPassword,@isActive, @personID,@role_ID);
                             SELECT SCOPE_IDENTITY();";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -35,7 +35,8 @@ namespace DVLD__Data_Tier.Repositories
                     cmd.Parameters.AddWithValue("@username", user.Username);
                     cmd.Parameters.AddWithValue("@hashedPassword", user.HashedPassword);
                     cmd.Parameters.AddWithValue("@isActive", user.isActive);
-                    cmd.Parameters.AddWithValue("@personID", user.Person_ID);                    
+                    cmd.Parameters.AddWithValue("@personID", user.Person_ID);
+                    cmd.Parameters.AddWithValue("@role_ID", user.Role.RoleId);
                     try
                     {
                         await conn.OpenAsync();

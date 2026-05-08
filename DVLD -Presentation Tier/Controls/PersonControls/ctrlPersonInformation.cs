@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLD__Business_Tier.Services;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Presentation_Tier.Forms;
 using DVLD__Presentation_Tier.Forms.PersonForms;
@@ -17,6 +18,7 @@ namespace DVLD__Presentation_Tier
 {
     public partial class ctrlPersonInformation : UserControl
     {
+        private string _imagesFilePath = AppSettings.PersonImagesPath;
         public event Action OnClose_Clicked;
         protected virtual void TriggerCloseEvent()
         {
@@ -122,7 +124,7 @@ namespace DVLD__Presentation_Tier
 
             if (PersonInfo.ImageName != "")
             {
-                string imagePath = Path.Combine(@"F:\yamen - 2024\C#\Course\projects\PersonPic", PersonInfo.ImageName);
+                string imagePath = Path.Combine(_imagesFilePath, PersonInfo.ImageName);
                 if (File.Exists(imagePath))
                 {
                     pbImage.Image = _loadImageWithoutLock(imagePath);
