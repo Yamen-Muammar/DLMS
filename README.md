@@ -1,60 +1,142 @@
-# Driving & Vehicle Licenses Department System (DVLD)
-A comprehensive desktop application designed to streamline the processes of the Driving & Vehicle Licenses Department. This system manages the full lifecycle of driving licenses, from initial application and testing to issuance, renewal, and replacement.
-  
-🛠 Tech Stack  
+# DVLD — Driving & Vehicle Licenses Department System
 
+A full-featured desktop application that simulates the operations of a government licensing authority. Built in C# with a strict 3-tier architecture, it handles everything from first-time applicants to license detention, test scheduling, and user access control.
 
-• Language: C#
+---
 
+## What This Is
 
-• Framework: .NET WinForms
+DVLD covers the full lifecycle of a driving license: application, examination, issuance, renewal, replacement, and detention. It also manages the people registry and system users under a role-based access model. The goal was to replicate how a real licensing department operates — end to end — in a single desktop system.
 
-• Database: Microsoft SQL Server
+---
 
-• Data Access: ADO.NET
+## Tech Stack
 
-• Architecture: 3-Tier Architecture (Presentation, Business, and Data Access Layers)
+| Layer | Technology |
+|---|---|
+| Language | C# (.NET) |
+| UI Framework | Windows Forms (WinForms) |
+| Database | Microsoft SQL Server |
+| Data Access | ADO.NET |
+| Architecture | 3-Tier (Presentation / Business / Data) |
 
-🚀 Key Features
+---
 
+## Project Structure
 
-1. Application Management
-   
-• New Local Driving Licenses: Full workflow for first-time applicants.
+```
+DVLD/
+├── DVLD -Core/                  # Shared models and enums used across layers
+├── DVLD -Data Tier/             # ADO.NET data access — all DB calls live here
+├── DVLD -Business Tier/         # Business logic, validation, workflow rules
+└── DVLD -Presentation Tier/     # WinForms UI — forms, controls, dialogs
+```
 
-• International Licenses: Issuance of international permits based on valid local licenses.
+Each layer only talks to the one directly below it. The UI never touches the database.
 
-• Renewals & Replacements: Handle license expirations and replacements for lost or damaged cards.
+---
 
-• Detain & Release: Manage the detention and release of licenses with associated fine tracking.
+## Features
 
-2. People & User Management
-   
-• Global People Registry: Centralized management of personal details (National ID, contact info, etc.) linked across the system.
+### License Applications
 
-• Role-Based Access: Secure user management with specific permissions for different administrative levels.
+- **New Local License** — full first-time applicant workflow: person lookup, category selection, fee calculation, and test scheduling
+- **International License** — issued against an existing valid local license, no tests required
+- **License Renewal** — handles expired licenses; validates eligibility before reissuing
+- **Replace Lost License** — issues a duplicate after verifying identity and logging the reason
+- **Replace Damaged License** — replaces a physically damaged card; the old card is marked void
 
-• Account Controls: Enable/disable user access and manage login credentials.
+### Detention & Release
 
-3. Examination & Testing
-   
-• Three-Stage Testing: Integration of Vision, Written, and Practical Street tests.
+- Detain an active license (e.g. court order or infraction), locking it from renewal or use
+- Release a detained license after verifying fine payment and clearing status
 
-• Test Appointments: Schedule and manage re-takes for failed attempts.
+### Examination System
 
-• Result Tracking: Historical logging of all test attempts and outcomes.
+Three-stage test process — all three must pass before a license is issued:
 
-4. License Classes
-   
-• Support for multiple license categories (e.g., Small Motorcycles, Regular Driving, Commercial, Heavy Vehicles) with distinct requirements for age and fees.
+1. **Vision Test** — basic visual acuity check
+2. **Written Test** — theory and traffic rules
+3. **Practical / Street Test** — on-road driving assessment
 
+Failed tests can be rescheduled. Every attempt — pass or fail — is logged with date and examiner info.
 
-🏗 System Architecture
+### License Classes
 
-The project follows a strict 3-Tier Architecture to ensure scalability and maintainability:
+The system supports multiple license categories, each with its own age requirement and fee structure:
 
-• Presentation Layer: Handles the UI/UX using Windows Forms.
+| Class | Description |
+|---|---|
+| Class 1 | Small Motorcycles |
+| Class 2 | Heavy Motorcycles |
+| Class 3 | Regular Private Vehicles |
+| Class 4 | Agricultural Vehicles |
+| Class 5 | Taxis & Small Commercial |
+| Class 6 | Medium Commercial |
+| Class 7 | Heavy Trucks & Buses |
 
-• Business Layer: Implements core business logic, validation rules, and application workflows.
+### People Registry
 
-• Data Access Layer: Manages all direct interactions with the SQL Server database via ADO.NET.
+A centralized registry stores personal records (National ID, name, date of birth, contact info, address, photo) that are reused across the system. One person record links to all their licenses, applications, and test history.
+
+### User & Access Management
+
+- Create and manage system users tied to people records
+- Assign roles with specific permissions
+- Enable or disable accounts
+- Controlled password management
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Windows OS
+- Visual Studio 2022 or later
+- SQL Server (Express works fine)
+- .NET Framework 4.x or .NET 6+
+
+### Setup
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/Yamen-Muammar/DVLD.git
+   ```
+
+2. Open `DVLD.sln` in Visual Studio.
+
+3. Restore the database:
+   - Open SQL Server Management Studio
+   - Restore the `.bak` file included in the project (or run the provided SQL script)
+   - Update the connection string in the Data Tier project to point to your SQL Server instance
+
+4. Set `DVLD -Presentation Tier` as the startup project.
+
+5. Build and run.
+
+**Default login:** `y1` / `1`
+
+---
+
+## Architecture Notes
+
+The 3-tier split is strict by design:
+
+- **Presentation Tier** handles only UI concerns — no SQL, no business rules
+- **Business Tier** validates inputs, enforces rules (e.g. "can't renew a detained license"), and coordinates workflows
+- **Data Tier** handles all database reads and writes via ADO.NET stored procedures and parameterized queries
+
+The `DVLD -Core` project holds shared types (enums, constants, utility classes) that both the Business and Data tiers reference, avoiding circular dependencies.
+
+---
+
+## Screenshots
+
+> *(Add screenshots of the main dashboard, license application form, and test scheduling screen here)*
+
+---
+
+## License
+
+This project is open source. Feel free to fork, study, or build on it.
