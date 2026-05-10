@@ -228,7 +228,7 @@ namespace DVLD__Business_Tier.Services
                     GC.WaitForPendingFinalizers();
 
 
-                    System.Threading.Thread.Sleep(750);
+                    await Task.Run(() => System.Threading.Thread.Sleep(750));
                 }
                 catch (Exception ex)
                 {
