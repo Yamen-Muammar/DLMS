@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Core.View_Models;
 using DVLD__Data_Tier.Repositories;
@@ -32,6 +33,7 @@ namespace DVLD__Business_Tier.Services
         }     
         public async Task<bool> SaveApplication(Application application)
         {
+                     
             int newId = -1;
 
             if (!_ValidApplication(application))
@@ -109,10 +111,16 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<LocalDrivingLicenseApplication> GetLocalDrivingLicenseApplicationByIDAsync(int ldlAppID)
         {
+         
             return await _appRepo.GetLocalDrivingLicenseApplicationByIDAsync(ldlAppID);
         }
         public async Task<bool> SaveLocalDrivingLicenseApplication(Application application,int licenseClassID)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.AddLocalDrivingApplication))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
+
             int newId = -1;
 
             if (!await _ValidApplication(application, licenseClassID))
@@ -159,8 +167,12 @@ namespace DVLD__Business_Tier.Services
             return true;
         }     
         public async  Task<List<clsLocalDrivingLicesnseApplicationView>> GetAllLDLApplications()
-        {       
-              return await _appRepo.GetAll_L_D_L_Applications();          
+        {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.SeeApplicationsList))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
+            return await _appRepo.GetAll_L_D_L_Applications();          
         }
         private async Task<bool> _ValidApplication(Application application, int licenseClassID)
         {
@@ -179,6 +191,10 @@ namespace DVLD__Business_Tier.Services
         }
         public async Task<bool> DeleteLDLApplicationAsync(int lDLappID) 
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.DeleteApplicationInformation))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (lDLappID < 0)
             {
                 throw new ArgumentException("Value Error");               

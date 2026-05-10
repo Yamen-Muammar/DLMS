@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Data_Tier.Repositories;
 

@@ -34,11 +34,13 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.ctrlPersonInformationWithFilter1 = new DVLD__Presentation_Tier.Controls.ctrlPersonInformationWithFilter();
             this.LoginInfo = new System.Windows.Forms.TabPage();
+            this.cbRoles = new Guna.UI2.WinForms.Guna2ComboBox();
             this.cbIsActive = new System.Windows.Forms.CheckBox();
             this.tbConfirmPassword = new System.Windows.Forms.TextBox();
             this.tbPassword = new System.Windows.Forms.TextBox();
             this.tbUsername = new System.Windows.Forms.TextBox();
             this.lbNewID = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,8 +49,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.lblTitle = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cbRoles = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.mgAccessDenied = new Guna.UI2.WinForms.Guna2MessageDialog();
             this.tabControl1.SuspendLayout();
             this.PersonInfo.SuspendLayout();
             this.LoginInfo.SuspendLayout();
@@ -71,7 +72,7 @@
             this.PersonInfo.Controls.Add(this.ctrlPersonInformationWithFilter1);
             this.PersonInfo.Location = new System.Drawing.Point(4, 29);
             this.PersonInfo.Name = "PersonInfo";
-            this.PersonInfo.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.PersonInfo.Padding = new System.Windows.Forms.Padding(3);
             this.PersonInfo.Size = new System.Drawing.Size(955, 556);
             this.PersonInfo.TabIndex = 0;
             this.PersonInfo.Text = "Person Info";
@@ -93,7 +94,7 @@
             // ctrlPersonInformationWithFilter1
             // 
             this.ctrlPersonInformationWithFilter1.Location = new System.Drawing.Point(6, 6);
-            this.ctrlPersonInformationWithFilter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ctrlPersonInformationWithFilter1.Margin = new System.Windows.Forms.Padding(2);
             this.ctrlPersonInformationWithFilter1.Name = "ctrlPersonInformationWithFilter1";
             this.ctrlPersonInformationWithFilter1.Size = new System.Drawing.Size(944, 449);
             this.ctrlPersonInformationWithFilter1.TabIndex = 0;
@@ -114,11 +115,28 @@
             this.LoginInfo.Controls.Add(this.label1);
             this.LoginInfo.Location = new System.Drawing.Point(4, 29);
             this.LoginInfo.Name = "LoginInfo";
-            this.LoginInfo.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.LoginInfo.Padding = new System.Windows.Forms.Padding(3);
             this.LoginInfo.Size = new System.Drawing.Size(955, 556);
             this.LoginInfo.TabIndex = 1;
             this.LoginInfo.Text = "Login Info";
             this.LoginInfo.UseVisualStyleBackColor = true;
+            // 
+            // cbRoles
+            // 
+            this.cbRoles.BackColor = System.Drawing.Color.Transparent;
+            this.cbRoles.BorderRadius = 10;
+            this.cbRoles.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRoles.FillColor = System.Drawing.Color.SteelBlue;
+            this.cbRoles.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbRoles.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbRoles.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cbRoles.ForeColor = System.Drawing.Color.White;
+            this.cbRoles.ItemHeight = 30;
+            this.cbRoles.Location = new System.Drawing.Point(278, 315);
+            this.cbRoles.Name = "cbRoles";
+            this.cbRoles.Size = new System.Drawing.Size(246, 36);
+            this.cbRoles.TabIndex = 5;
             // 
             // cbIsActive
             // 
@@ -164,6 +182,16 @@
             this.lbNewID.Size = new System.Drawing.Size(54, 23);
             this.lbNewID.TabIndex = 0;
             this.lbNewID.Text = "????";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(204, 324);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 28);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Role :";
             // 
             // label4
             // 
@@ -245,32 +273,14 @@
             this.lblTitle.TabIndex = 17;
             this.lblTitle.Text = "Add New User";
             // 
-            // label5
+            // mgAccessDenied
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(204, 324);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 28);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Role :";
-            // 
-            // cbRoles
-            // 
-            this.cbRoles.BackColor = System.Drawing.Color.Transparent;
-            this.cbRoles.BorderRadius = 10;
-            this.cbRoles.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRoles.FillColor = System.Drawing.Color.SteelBlue;
-            this.cbRoles.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.cbRoles.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.cbRoles.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cbRoles.ForeColor = System.Drawing.Color.White;
-            this.cbRoles.ItemHeight = 30;
-            this.cbRoles.Location = new System.Drawing.Point(278, 315);
-            this.cbRoles.Name = "cbRoles";
-            this.cbRoles.Size = new System.Drawing.Size(246, 36);
-            this.cbRoles.TabIndex = 5;
+            this.mgAccessDenied.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
+            this.mgAccessDenied.Caption = null;
+            this.mgAccessDenied.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
+            this.mgAccessDenied.Parent = null;
+            this.mgAccessDenied.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
+            this.mgAccessDenied.Text = "Access Denied";
             // 
             // frmAddNewUser
             // 
@@ -315,5 +325,6 @@
         private System.Windows.Forms.Label lblTitle;
         private Guna.UI2.WinForms.Guna2ComboBox cbRoles;
         private System.Windows.Forms.Label label5;
+        private Guna.UI2.WinForms.Guna2MessageDialog mgAccessDenied;
     }
 }

@@ -10,7 +10,7 @@ namespace DVLD__Core
     public static class AppSettings
     {
         public static string PersonImagesPath
-       => ConfigurationManager.AppSettings["PersonImagesPath"];
+                                                => ConfigurationManager.AppSettings["PersonImagesPath"];
 
         public static string RememberMeFilePath
             => ConfigurationManager.AppSettings["RememberMeFilePath"];

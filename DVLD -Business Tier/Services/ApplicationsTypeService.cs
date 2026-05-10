@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Data_Tier.Repositories;
 
@@ -17,6 +18,10 @@ namespace DVLD__Business_Tier.Services
         }
         public async Task<bool> UpdateApplicationType(ApplicationType applicationType)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.UpdateApplicationTypes))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (!_validateApplicationType(applicationType))
             {
                 return false;
@@ -30,6 +35,10 @@ namespace DVLD__Business_Tier.Services
         }
         public async Task<List<ApplicationType>> GetAllApplicationTypes()
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.ManageApplicationTypes))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             List<ApplicationType> applicationTypes = null;
             
             applicationTypes = await _repository.GetAllApplicationTypes();

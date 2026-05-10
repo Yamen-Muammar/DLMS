@@ -43,6 +43,7 @@ namespace DVLD__Presentation_Tier.Forms
                 }
 
                 Auth.DataBaseRoles[selectedRole] = totalPermissions;
+                Global.User.Role.RoleCode = totalPermissions;
                 MessageBox.Show("Role permissions updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)

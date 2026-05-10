@@ -23,6 +23,7 @@ namespace DVLD__Business_Tier.Services
             _userRepository = new UserRepository();
             _clsPasswordHasher = new clsPasswordHasher(); 
         }
+
         //Login Helper Methodes
         public async Task<bool> Login(string username, string password, bool isRemaindMeActive)
         {
@@ -63,7 +64,6 @@ namespace DVLD__Business_Tier.Services
 
             return true; // Placeholder for successful login
         }
-
         private bool SaveRemaindMeInfo(string username, string password)
         {
             string seperator = "|||";
@@ -83,7 +83,6 @@ namespace DVLD__Business_Tier.Services
 
             return true;
         }
-
         private bool RemoveDataInRemaindMeFile()
         {
             string filePath = _remaindMeFilePath;
@@ -98,7 +97,6 @@ namespace DVLD__Business_Tier.Services
             }
             return true;
         }
-
         public  List<string> GetRemaindMeInfo()
         {
             List<string> list = new List<string>();
@@ -124,7 +122,6 @@ namespace DVLD__Business_Tier.Services
             }
             return list;
         }
-
         private List<string> _decodeLine(string line, string seperator)
         {
             List<string> list = new List<string>();
@@ -148,20 +145,22 @@ namespace DVLD__Business_Tier.Services
 
         public  async Task<List<clsUserView>> GetAllUsers()
         {
+            if (!Auth.IsAuth(Global.User.Role,Auth.enOperations.UsersList))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             List<clsUserView> usersList = new List<clsUserView>();
             
             usersList = await _userRepository.GetAllUser();
            
             return usersList;
         }
-
         public  async Task<User> GetUserByIdAsync(int userId)
         {
             User user = null;
             user = await _userRepository.GetUserByID(userId);
             return user;
         }
-
         public  async Task<bool> isUserExists(int personId) 
         {
             bool isFound = false;
@@ -171,7 +170,11 @@ namespace DVLD__Business_Tier.Services
 
         //Delete 
         public  async Task<bool> DeleteUser(int userId)
-        {         
+        {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.DeleteUser))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             bool isDeleted = false;
             
             
@@ -200,9 +203,12 @@ namespace DVLD__Business_Tier.Services
         }
 
         // Add 
-
         public  async Task<int> AddNewUser(User user)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.AddUser))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             int insertedUser = -1;
             
             if(await _userRepository.IsUserExistOnPersonID(user.Person_ID))
@@ -222,6 +228,11 @@ namespace DVLD__Business_Tier.Services
         //Update 
         public  async Task<bool> UpdateUserPassword(int userID, string newHashedPassword)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.UpdateUserInformation))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
+
             if (newHashedPassword == string.Empty)
             {
                 throw new Exception("New Password Cannot be Empty");
@@ -242,7 +253,10 @@ namespace DVLD__Business_Tier.Services
         }
         public async Task<bool> UpdateUserStatus(int userID, bool isActive)
         {
-           
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.UpdateUserInformation))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (userID < 1)
             {
                 throw new ArgumentException("ID Not Valid");

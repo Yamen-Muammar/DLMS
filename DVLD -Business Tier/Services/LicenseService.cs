@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Core.View_Models;
 using DVLD__Data_Tier.Repositories;
@@ -21,6 +22,10 @@ namespace DVLD__Business_Tier.Services
         // add
         public async Task<int> AddLicenseAsync(DVLD__Core.Models.License license)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.IssueLicense))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (!_isValid(license))
             {
                 return -1;
@@ -48,6 +53,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<int> AddInternationalLicenseAsync(DVLD__Core.Models.Application application, InternationalLicense internationalLicense)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.AddInternationalLicense))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (!_isValid(application,internationalLicense))
             {
                 return -1;
@@ -70,6 +79,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<int> RenewLicenseAsync(DVLD__Core.Models.Application application, DVLD__Core.Models.License PreviousLicense , DVLD__Core.Models.License newlicense)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.RenewLicenseApplication))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             int founderLicenseID = await _licenseRepo.ActiveLicense(newlicense.Driver_ID, (int)newlicense.LicenseClass_ID);
             if (founderLicenseID != -1)
             {
@@ -93,7 +106,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<int> ReplaceLicenseAsync(DVLD__Core.Models.Application application, DVLD__Core.Models.License PreviousLicense, DVLD__Core.Models.License newlicense)
         {
-           
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.ReplaceLicenseApplication))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             DVLD__Core.Models.License existingLicense = await _licenseRepo.GetLicenseByIDAsync(PreviousLicense.LicenseID);
             if (existingLicense == null)
             {

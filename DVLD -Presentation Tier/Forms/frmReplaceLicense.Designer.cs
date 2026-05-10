@@ -54,6 +54,7 @@
             this.rbtnLost = new System.Windows.Forms.RadioButton();
             this.rbtnDamage = new System.Windows.Forms.RadioButton();
             this.ctrlDriverLicenseInfo1 = new DVLD__Presentation_Tier.Controls.LicenseControls.ctrlDriverLicenseInfo();
+            this.mgAccessDenied = new Guna.UI2.WinForms.Guna2MessageDialog();
             this.gbFinder.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gbReplacementType.SuspendLayout();
@@ -64,11 +65,9 @@
             this.gbFinder.Controls.Add(this.btnFindLicense);
             this.gbFinder.Controls.Add(this.tbLicenseID);
             this.gbFinder.Controls.Add(this.label2);
-            this.gbFinder.Location = new System.Drawing.Point(8, 71);
-            this.gbFinder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbFinder.Location = new System.Drawing.Point(12, 109);
             this.gbFinder.Name = "gbFinder";
-            this.gbFinder.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.gbFinder.Size = new System.Drawing.Size(423, 72);
+            this.gbFinder.Size = new System.Drawing.Size(634, 111);
             this.gbFinder.TabIndex = 12;
             this.gbFinder.TabStop = false;
             this.gbFinder.Text = "License Finder";
@@ -76,10 +75,9 @@
             // btnFindLicense
             // 
             this.btnFindLicense.Image = global::DVLD__Presentation_Tier.Properties.Resources.LicenseView32;
-            this.btnFindLicense.Location = new System.Drawing.Point(353, 16);
-            this.btnFindLicense.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnFindLicense.Location = new System.Drawing.Point(530, 25);
             this.btnFindLicense.Name = "btnFindLicense";
-            this.btnFindLicense.Size = new System.Drawing.Size(55, 40);
+            this.btnFindLicense.Size = new System.Drawing.Size(82, 62);
             this.btnFindLicense.TabIndex = 2;
             this.btnFindLicense.UseVisualStyleBackColor = true;
             this.btnFindLicense.Click += new System.EventHandler(this.btnFindLicense_Click);
@@ -87,20 +85,18 @@
             // tbLicenseID
             // 
             this.tbLicenseID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbLicenseID.Location = new System.Drawing.Point(83, 34);
-            this.tbLicenseID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbLicenseID.Location = new System.Drawing.Point(124, 52);
             this.tbLicenseID.Name = "tbLicenseID";
-            this.tbLicenseID.Size = new System.Drawing.Size(211, 20);
+            this.tbLicenseID.Size = new System.Drawing.Size(316, 26);
             this.tbLicenseID.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(4, 34);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(6, 52);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 15);
+            this.label2.Size = new System.Drawing.Size(125, 21);
             this.label2.TabIndex = 0;
             this.label2.Text = "License ID : ";
             // 
@@ -118,11 +114,9 @@
             this.groupBox2.Controls.Add(this.lblApplicationFees);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(8, 473);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Location = new System.Drawing.Point(12, 728);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(585, 118);
+            this.groupBox2.Size = new System.Drawing.Size(878, 182);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Application Info";
@@ -130,40 +124,36 @@
             // lblLocalLicenseID
             // 
             this.lblLocalLicenseID.AutoSize = true;
-            this.lblLocalLicenseID.Location = new System.Drawing.Point(431, 52);
-            this.lblLocalLicenseID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblLocalLicenseID.Location = new System.Drawing.Point(646, 80);
             this.lblLocalLicenseID.Name = "lblLocalLicenseID";
-            this.lblLocalLicenseID.Size = new System.Drawing.Size(31, 13);
+            this.lblLocalLicenseID.Size = new System.Drawing.Size(45, 20);
             this.lblLocalLicenseID.TabIndex = 2;
             this.lblLocalLicenseID.Text = "????";
             // 
             // lblCreatedBy
             // 
             this.lblCreatedBy.AutoSize = true;
-            this.lblCreatedBy.Location = new System.Drawing.Point(431, 84);
-            this.lblCreatedBy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCreatedBy.Location = new System.Drawing.Point(646, 129);
             this.lblCreatedBy.Name = "lblCreatedBy";
-            this.lblCreatedBy.Size = new System.Drawing.Size(31, 13);
+            this.lblCreatedBy.Size = new System.Drawing.Size(45, 20);
             this.lblCreatedBy.TabIndex = 2;
             this.lblCreatedBy.Text = "????";
             // 
             // lblAppFees
             // 
             this.lblAppFees.AutoSize = true;
-            this.lblAppFees.Location = new System.Drawing.Point(125, 83);
-            this.lblAppFees.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAppFees.Location = new System.Drawing.Point(188, 128);
             this.lblAppFees.Name = "lblAppFees";
-            this.lblAppFees.Size = new System.Drawing.Size(31, 13);
+            this.lblAppFees.Size = new System.Drawing.Size(45, 20);
             this.lblAppFees.TabIndex = 2;
             this.lblAppFees.Text = "????";
             // 
             // lblAppDate
             // 
             this.lblAppDate.AutoSize = true;
-            this.lblAppDate.Location = new System.Drawing.Point(125, 51);
-            this.lblAppDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAppDate.Location = new System.Drawing.Point(188, 78);
             this.lblAppDate.Name = "lblAppDate";
-            this.lblAppDate.Size = new System.Drawing.Size(31, 13);
+            this.lblAppDate.Size = new System.Drawing.Size(45, 20);
             this.lblAppDate.TabIndex = 2;
             this.lblAppDate.Text = "????";
             // 
@@ -171,10 +161,9 @@
             // 
             this.lblRenewLicenseID.AutoSize = true;
             this.lblRenewLicenseID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRenewLicenseID.Location = new System.Drawing.Point(431, 25);
-            this.lblRenewLicenseID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblRenewLicenseID.Location = new System.Drawing.Point(646, 38);
             this.lblRenewLicenseID.Name = "lblRenewLicenseID";
-            this.lblRenewLicenseID.Size = new System.Drawing.Size(28, 13);
+            this.lblRenewLicenseID.Size = new System.Drawing.Size(39, 20);
             this.lblRenewLicenseID.TabIndex = 1;
             this.lblRenewLicenseID.Text = "???";
             // 
@@ -182,10 +171,9 @@
             // 
             this.lbRenewLAppID.AutoSize = true;
             this.lbRenewLAppID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbRenewLAppID.Location = new System.Drawing.Point(125, 25);
-            this.lbRenewLAppID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbRenewLAppID.Location = new System.Drawing.Point(188, 38);
             this.lbRenewLAppID.Name = "lbRenewLAppID";
-            this.lbRenewLAppID.Size = new System.Drawing.Size(28, 13);
+            this.lbRenewLAppID.Size = new System.Drawing.Size(39, 20);
             this.lbRenewLAppID.TabIndex = 1;
             this.lbRenewLAppID.Text = "???";
             // 
@@ -193,10 +181,9 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("72 Condensed", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(343, 83);
-            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label12.Location = new System.Drawing.Point(514, 128);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(66, 14);
+            this.label12.Size = new System.Drawing.Size(98, 21);
             this.label12.TabIndex = 0;
             this.label12.Text = "Created By : ";
             // 
@@ -204,10 +191,9 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("72 Condensed", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(298, 24);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Location = new System.Drawing.Point(447, 37);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(108, 14);
+            this.label10.Size = new System.Drawing.Size(165, 21);
             this.label10.TabIndex = 0;
             this.label10.Text = "Replaced License ID : ";
             // 
@@ -215,10 +201,9 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("72 Condensed", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(327, 51);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Location = new System.Drawing.Point(490, 78);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(80, 14);
+            this.label8.Size = new System.Drawing.Size(122, 21);
             this.label8.TabIndex = 0;
             this.label8.Text = "Old License ID : ";
             // 
@@ -226,10 +211,9 @@
             // 
             this.lblApplicationFees.AutoSize = true;
             this.lblApplicationFees.Font = new System.Drawing.Font("72 Condensed", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApplicationFees.Location = new System.Drawing.Point(15, 83);
-            this.lblApplicationFees.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblApplicationFees.Location = new System.Drawing.Point(22, 128);
             this.lblApplicationFees.Name = "lblApplicationFees";
-            this.lblApplicationFees.Size = new System.Drawing.Size(92, 14);
+            this.lblApplicationFees.Size = new System.Drawing.Size(138, 21);
             this.lblApplicationFees.TabIndex = 0;
             this.lblApplicationFees.Text = "Application Fees : ";
             // 
@@ -237,10 +221,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("72 Condensed", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(17, 51);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(26, 78);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 14);
+            this.label4.Size = new System.Drawing.Size(138, 21);
             this.label4.TabIndex = 0;
             this.label4.Text = "Application Date : ";
             // 
@@ -248,20 +231,18 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("72 Condensed", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(15, 24);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(22, 37);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 14);
+            this.label3.Size = new System.Drawing.Size(146, 21);
             this.label3.TabIndex = 0;
             this.label3.Text = "R.L.Application ID : ";
             // 
             // llblLicenseHistory
             // 
             this.llblLicenseHistory.AutoSize = true;
-            this.llblLicenseHistory.Location = new System.Drawing.Point(15, 618);
-            this.llblLicenseHistory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.llblLicenseHistory.Location = new System.Drawing.Point(22, 951);
             this.llblLicenseHistory.Name = "llblLicenseHistory";
-            this.llblLicenseHistory.Size = new System.Drawing.Size(107, 13);
+            this.llblLicenseHistory.Size = new System.Drawing.Size(158, 20);
             this.llblLicenseHistory.TabIndex = 17;
             this.llblLicenseHistory.TabStop = true;
             this.llblLicenseHistory.Text = "show License History";
@@ -271,10 +252,9 @@
             // 
             this.llblShowLicenseInfo.AutoSize = true;
             this.llblShowLicenseInfo.Enabled = false;
-            this.llblShowLicenseInfo.Location = new System.Drawing.Point(137, 618);
-            this.llblShowLicenseInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.llblShowLicenseInfo.Location = new System.Drawing.Point(206, 951);
             this.llblShowLicenseInfo.Name = "llblShowLicenseInfo";
-            this.llblShowLicenseInfo.Size = new System.Drawing.Size(93, 13);
+            this.llblShowLicenseInfo.Size = new System.Drawing.Size(137, 20);
             this.llblShowLicenseInfo.TabIndex = 18;
             this.llblShowLicenseInfo.TabStop = true;
             this.llblShowLicenseInfo.Text = "show License Info";
@@ -284,10 +264,9 @@
             // 
             this.button3.Image = global::DVLD__Presentation_Tier.Properties.Resources.btnClose_Image;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.Location = new System.Drawing.Point(285, 607);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Location = new System.Drawing.Point(428, 934);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(128, 35);
+            this.button3.Size = new System.Drawing.Size(192, 54);
             this.button3.TabIndex = 15;
             this.button3.Text = "Cancel";
             this.button3.UseVisualStyleBackColor = true;
@@ -299,10 +278,9 @@
             this.btnIssueReplacement.Font = new System.Drawing.Font("Microsoft JhengHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIssueReplacement.Image = global::DVLD__Presentation_Tier.Properties.Resources.IssueDrivingLicense32;
             this.btnIssueReplacement.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnIssueReplacement.Location = new System.Drawing.Point(441, 606);
-            this.btnIssueReplacement.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnIssueReplacement.Location = new System.Drawing.Point(662, 932);
             this.btnIssueReplacement.Name = "btnIssueReplacement";
-            this.btnIssueReplacement.Size = new System.Drawing.Size(151, 35);
+            this.btnIssueReplacement.Size = new System.Drawing.Size(226, 54);
             this.btnIssueReplacement.TabIndex = 16;
             this.btnIssueReplacement.Text = "Issue Replacement";
             this.btnIssueReplacement.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -314,10 +292,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Malgun Gothic", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label1.Location = new System.Drawing.Point(102, 18);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(153, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(377, 25);
+            this.label1.Size = new System.Drawing.Size(560, 38);
             this.label1.TabIndex = 19;
             this.label1.Text = "Replace For Damage or Lost Application";
             // 
@@ -326,11 +303,9 @@
             this.gbReplacementType.Controls.Add(this.rbtnLost);
             this.gbReplacementType.Controls.Add(this.rbtnDamage);
             this.gbReplacementType.Enabled = false;
-            this.gbReplacementType.Location = new System.Drawing.Point(441, 71);
-            this.gbReplacementType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbReplacementType.Location = new System.Drawing.Point(662, 109);
             this.gbReplacementType.Name = "gbReplacementType";
-            this.gbReplacementType.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.gbReplacementType.Size = new System.Drawing.Size(133, 72);
+            this.gbReplacementType.Size = new System.Drawing.Size(200, 111);
             this.gbReplacementType.TabIndex = 20;
             this.gbReplacementType.TabStop = false;
             this.gbReplacementType.Text = "Replace For ";
@@ -338,10 +313,9 @@
             // rbtnLost
             // 
             this.rbtnLost.AutoSize = true;
-            this.rbtnLost.Location = new System.Drawing.Point(4, 40);
-            this.rbtnLost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbtnLost.Location = new System.Drawing.Point(6, 62);
             this.rbtnLost.Name = "rbtnLost";
-            this.rbtnLost.Size = new System.Drawing.Size(85, 17);
+            this.rbtnLost.Size = new System.Drawing.Size(124, 24);
             this.rbtnLost.TabIndex = 0;
             this.rbtnLost.Text = "Lost License";
             this.rbtnLost.UseVisualStyleBackColor = true;
@@ -350,10 +324,9 @@
             // 
             this.rbtnDamage.AutoSize = true;
             this.rbtnDamage.Checked = true;
-            this.rbtnDamage.Location = new System.Drawing.Point(4, 21);
-            this.rbtnDamage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbtnDamage.Location = new System.Drawing.Point(6, 32);
             this.rbtnDamage.Name = "rbtnDamage";
-            this.rbtnDamage.Size = new System.Drawing.Size(111, 17);
+            this.rbtnDamage.Size = new System.Drawing.Size(163, 24);
             this.rbtnDamage.TabIndex = 0;
             this.rbtnDamage.TabStop = true;
             this.rbtnDamage.Text = "Damaged License";
@@ -362,19 +335,28 @@
             // 
             // ctrlDriverLicenseInfo1
             // 
-            this.ctrlDriverLicenseInfo1.Location = new System.Drawing.Point(8, 154);
-            this.ctrlDriverLicenseInfo1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.ctrlDriverLicenseInfo1.Location = new System.Drawing.Point(12, 237);
+            this.ctrlDriverLicenseInfo1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ctrlDriverLicenseInfo1.Name = "ctrlDriverLicenseInfo1";
-            this.ctrlDriverLicenseInfo1.Size = new System.Drawing.Size(585, 315);
+            this.ctrlDriverLicenseInfo1.Size = new System.Drawing.Size(878, 485);
             this.ctrlDriverLicenseInfo1.TabIndex = 13;
+            // 
+            // mgAccessDenied
+            // 
+            this.mgAccessDenied.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
+            this.mgAccessDenied.Caption = null;
+            this.mgAccessDenied.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
+            this.mgAccessDenied.Parent = null;
+            this.mgAccessDenied.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
+            this.mgAccessDenied.Text = "Access Denied";
             // 
             // frmReplaceLicense
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(600, 645);
+            this.ClientSize = new System.Drawing.Size(900, 992);
             this.Controls.Add(this.gbReplacementType);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.llblLicenseHistory);
@@ -385,7 +367,6 @@
             this.Controls.Add(this.ctrlDriverLicenseInfo1);
             this.Controls.Add(this.gbFinder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmReplaceLicense";
@@ -431,5 +412,6 @@
         private System.Windows.Forms.GroupBox gbReplacementType;
         private System.Windows.Forms.RadioButton rbtnLost;
         private System.Windows.Forms.RadioButton rbtnDamage;
+        private Guna.UI2.WinForms.Guna2MessageDialog mgAccessDenied;
     }
 }

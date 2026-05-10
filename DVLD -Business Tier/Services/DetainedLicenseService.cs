@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Data_Tier.Repositories;
 
@@ -23,6 +24,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<int> AddDetainLicense(DetainedLicense detainedLicense)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.DeatainLicense))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (!_isDetainedValid(detainedLicense))
             {
                 return -1;
@@ -47,11 +52,19 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<List<DetainedLicense>> GetAllDetainedLicenses()
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.DetainedLicenseList))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             return await _repo.GetAllDetainedLicensesAsync();
         }
 
         public async Task<int> ReleaseDetainedLicenseAsync(DVLD__Core.Models.Application newApplication,DetainedLicense detainedLicense)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.ReleaseDetainedLicense))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (detainedLicense.DetainID <= 0 || newApplication.Person_ID <= 0)
             {
                 throw new ArgumentException("Invalid Passed Data");

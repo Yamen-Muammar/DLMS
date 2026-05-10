@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Data_Tier.Repositories;
 
@@ -24,6 +25,10 @@ namespace DVLD__Business_Tier.Services
         }
         public  async Task<bool> UpdateTestTypeAsync(TestType testType)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.UpdateTestType))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (!_validateTestType(testType))
             {
                 return false;
@@ -37,6 +42,10 @@ namespace DVLD__Business_Tier.Services
         }
         public  async Task<List<TestType>> GetAllTestTypesAsync()
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.ManageTestTypes))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             List<TestType> testTypes; 
 
             testTypes = await _repository.GetAllTestTypes();

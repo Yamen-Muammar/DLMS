@@ -22,6 +22,10 @@ namespace DVLD__Business_Tier.Services
         // CRUD Operations
         public async Task<int> AddPerson(Person person)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.AddPerson))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             int NewPersonID = -1;
 
             if (await _personRepo.IsPersonExist(person.NationalNO))
@@ -51,6 +55,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<Person> Find(int id)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.ShowPersonDetails))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (id == 0)
             {
                 throw new Exception("No Data Passed");
@@ -67,6 +75,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<Person> Find(string nationalNO)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.ShowPersonDetails))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             if (string.IsNullOrEmpty(nationalNO))
             {
                 throw new ArgumentNullException();
@@ -82,6 +94,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<List<clsPersonView>> GetAll()
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.PeopleList))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             List<clsPersonView> PeopleList = new List<clsPersonView>();
             PeopleList = await _personRepo.GetAllPeople();
             return PeopleList;
@@ -89,6 +105,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<bool> Delete(int id)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.DeletePerson))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             bool isPersonDeleted = false;
             if (!await _deleteImage(id))
             {
@@ -114,6 +134,10 @@ namespace DVLD__Business_Tier.Services
 
         public async Task<bool> Update(Person person)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.EditePersonInforamtio))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
             bool isPersonUpdated = false;
 
             if (!IsPersonInfoValid(person))

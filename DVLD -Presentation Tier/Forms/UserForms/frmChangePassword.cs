@@ -21,19 +21,23 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
         public frmChangePassword()
         {
             InitializeComponent();
-            _userService = new UserService();
-            _clsPasswordHasher = new clsPasswordHasher();
+
         }
         public frmChangePassword(int userId)
         {
             InitializeComponent(userId);
-            _userService = new UserService();
-            _clsPasswordHasher = new clsPasswordHasher();
             _passedUserID = userId;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
+            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.ChangeUserPassword))
+            {
+                throw new UnauthorizedAccessException("Access Denied");
+            }
+            _userService = new UserService();
+            _clsPasswordHasher = new clsPasswordHasher();
+
             btnSave.Enabled = false;
             try
             {
@@ -58,6 +62,12 @@ namespace DVLD__Presentation_Tier.Forms.UserForms
                     MessageBox.Show("Password updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show(ex.Message, "Access", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
             }
             catch (Exception ex)
             {

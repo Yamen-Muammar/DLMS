@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DVLD__Core;
 using DVLD__Core.Models;
 using DVLD__Data_Tier.Repositories;
 using static System.Net.Mime.MediaTypeNames;
@@ -83,6 +84,10 @@ namespace DVLD__Business_Tier.Services
             // 2. Direct Traffic
             if (test.TestID == -1)
             {
+                if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.SetTestResult))
+                {
+                    throw new UnauthorizedAccessException("Access Denied");
+                }
                 return await _AddNewTestAsync(test);
             }
             else if (test.TestID > 0)

@@ -41,6 +41,7 @@
             this.guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.cbRoles = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.mgAccessDenied = new Guna.UI2.WinForms.Guna2MessageDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPermissions)).BeginInit();
             this.guna2GradientPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -81,8 +82,7 @@
             this.dgvPermissions.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvPermissions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPermissions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvPermissions.Location = new System.Drawing.Point(0, 112);
-            this.dgvPermissions.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvPermissions.Location = new System.Drawing.Point(0, 172);
             this.dgvPermissions.Name = "dgvPermissions";
             this.dgvPermissions.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -96,7 +96,7 @@
             this.dgvPermissions.RowHeadersVisible = false;
             this.dgvPermissions.RowHeadersWidth = 62;
             this.dgvPermissions.RowTemplate.Height = 40;
-            this.dgvPermissions.Size = new System.Drawing.Size(842, 444);
+            this.dgvPermissions.Size = new System.Drawing.Size(1263, 683);
             this.dgvPermissions.TabIndex = 2;
             this.dgvPermissions.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvPermissions.ThemeStyle.AlternatingRowsStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -172,11 +172,10 @@
             this.guna2CircleButton1.FillColor = System.Drawing.Color.SteelBlue;
             this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(733, 8);
-            this.guna2CircleButton1.Margin = new System.Windows.Forms.Padding(2);
+            this.guna2CircleButton1.Location = new System.Drawing.Point(1100, 12);
             this.guna2CircleButton1.Name = "guna2CircleButton1";
             this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(99, 96);
+            this.guna2CircleButton1.Size = new System.Drawing.Size(148, 148);
             this.guna2CircleButton1.TabIndex = 1;
             this.guna2CircleButton1.Text = "Save";
             this.guna2CircleButton1.UseTransparentBackground = true;
@@ -189,9 +188,8 @@
             this.guna2GradientPanel1.Controls.Add(this.guna2CircleButton1);
             this.guna2GradientPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.guna2GradientPanel1.Location = new System.Drawing.Point(0, 0);
-            this.guna2GradientPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.guna2GradientPanel1.Name = "guna2GradientPanel1";
-            this.guna2GradientPanel1.Size = new System.Drawing.Size(842, 112);
+            this.guna2GradientPanel1.Size = new System.Drawing.Size(1263, 172);
             this.guna2GradientPanel1.TabIndex = 1;
             // 
             // label1
@@ -199,10 +197,9 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(2, 46);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(3, 71);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 25);
+            this.label1.Size = new System.Drawing.Size(202, 38);
             this.label1.TabIndex = 3;
             this.label1.Text = "Selected Role :";
             // 
@@ -218,23 +215,30 @@
             this.cbRoles.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cbRoles.ForeColor = System.Drawing.Color.White;
             this.cbRoles.ItemHeight = 30;
-            this.cbRoles.Location = new System.Drawing.Point(142, 35);
-            this.cbRoles.Margin = new System.Windows.Forms.Padding(2);
+            this.cbRoles.Location = new System.Drawing.Point(213, 54);
             this.cbRoles.Name = "cbRoles";
-            this.cbRoles.Size = new System.Drawing.Size(181, 36);
+            this.cbRoles.Size = new System.Drawing.Size(270, 36);
             this.cbRoles.TabIndex = 2;
             this.cbRoles.SelectedIndexChanged += new System.EventHandler(this.cbRoles_SelectedIndexChanged);
             // 
+            // mgAccessDenied
+            // 
+            this.mgAccessDenied.Buttons = Guna.UI2.WinForms.MessageDialogButtons.OK;
+            this.mgAccessDenied.Caption = null;
+            this.mgAccessDenied.Icon = Guna.UI2.WinForms.MessageDialogIcon.Information;
+            this.mgAccessDenied.Parent = null;
+            this.mgAccessDenied.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
+            this.mgAccessDenied.Text = "Access Denied";
+            // 
             // frmManagePermissions
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(842, 556);
+            this.ClientSize = new System.Drawing.Size(1263, 855);
             this.Controls.Add(this.dgvPermissions);
             this.Controls.Add(this.guna2GradientPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmManagePermissions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmManagePermissions";
@@ -258,5 +262,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPermissionName;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colAssign;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCode;
+        private Guna.UI2.WinForms.Guna2MessageDialog mgAccessDenied;
     }
 }

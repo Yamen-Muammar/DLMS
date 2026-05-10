@@ -56,13 +56,16 @@ namespace DVLD__Presentation_Tier
 
         private void userToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Auth.IsAuth(Global.User.Role, Auth.enOperations.UsersList))
+            try
+            {
+                frmManageUsers frmManageUsers = new frmManageUsers();
+                frmManageUsers.ShowDialog();
+            }
+            catch (Exception)
             {
                 mgAccessDenied.Show();
                 return;
             }
-            frmManageUsers frmManageUsers = new frmManageUsers();
-            frmManageUsers.ShowDialog();
         }
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)

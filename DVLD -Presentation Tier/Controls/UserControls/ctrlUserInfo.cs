@@ -17,20 +17,18 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
         public ctrlUserInfo()
         {
             InitializeComponent();
-            _userService = new UserService();
-            _personService = new PersonService();
             _userId = -1;
         }
 
         public ctrlUserInfo(int UserId)
         {
             InitializeComponent();
-            _userService = new UserService();
-            _personService = new PersonService();
             _userId = UserId;
         }
         private async void ctrlUserInfo_Load(object sender, EventArgs e)
         {
+            _userService = new UserService();
+            _personService = new PersonService();
             if (_userId == -1)
             {
                 UserInfo = Global.User;

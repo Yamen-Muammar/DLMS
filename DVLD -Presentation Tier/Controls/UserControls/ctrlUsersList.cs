@@ -48,6 +48,10 @@ namespace DVLD__Presentation_Tier.Controls.UserControls
             try
             {
                 list=await _userService.GetAllUsers();
+
+            }catch(UnauthorizedAccessException)
+            {
+                throw;             
             }
             catch (Exception ex)
             {
